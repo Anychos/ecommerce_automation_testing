@@ -1,0 +1,14 @@
+import pytest
+
+from src.api.clients.authentication.client import AuthenticationAPIClient, get_authentication_client
+
+
+@pytest.fixture
+def auth_client() -> AuthenticationAPIClient:
+    """
+    Возвращает готовый HTTP клиент для доступа к API аутентификации
+
+    :return: HTTP клиент для работы с API аутентификации
+    """
+
+    return get_authentication_client()

@@ -1,0 +1,66 @@
+from playwright.sync_api import Page, expect
+
+from src.ui.components.cart_page.cart_product_item import CartProductItem
+from src.ui.components.cart_page.confirm_cleaning_modal_window import ConfirmCleaningModalWindow
+from src.ui.components.common.empty_view import EmptyView
+from src.ui.components.common.footer import Footer
+from src.ui.components.common.header import Header
+from src.ui.components.common.order_summary import OrderSummary
+from src.ui.pages.base import BasePage
+
+
+class CartPage(BasePage):
+    def __init__(self, page: Page):
+        super().__init__(page)
+
+        self.header = Header(self.page)
+
+        self.confirm_cleaning_cart_modal = ConfirmCleaningModalWindow(self.page)
+        self.remove_product_success_message = self.page.get_by_test_id("cart-notification")
+
+        self.page_title = self.page.get_by_test_id("cart-title")
+
+        self.empty_view = EmptyView(self.page, "cart")
+        self.go_to_products_button = self.page.get_by_test_id("browse-products-button")
+
+        self.items_container = self.page.get_by_test_id("cart-items-card")
+        self.cart_title = self.items_container.get_by_test_id("cart-number")
+        self.items_count_text = self.items_container.get_by_test_id("items-count")
+        self.clear_cart_button = self.items_container.get_by_test_id("clear-cart-button")
+
+        self.product_item = CartProductItem(self.page)
+
+        self.summary_info = OrderSummary(self.page, self.page.get_by_test_id("cart-summary-card"))
+
+        self.footer = Footer(self.page)
+
+    def check_visibility(self, *, is_empty: bool = False, is_free_delivery: bool = False):
+        expect(self.page_title).to_be_visible()
+        if is_empty:
+            self.empty_view.check_visibility()
+            expect(self.go_to_products_button).to_be_visible()
+            expect(self.go_to_products_button).to_have_text("Перейти к товарам")
+        else:
+            expect(self.cart_title).to_be_visible()
+            expect(self.items_count_text).to_be_visible()
+            expect(self.clear_cart_button).to_be_visible()
+            self.product_item.check_visibility()
+            self.summary_info.check_visibility(page_name="cart", is_free_delivery=is_free_delivery)
+
+    def click_go_to_products_button(self):
+        expect(self.go_to_products_button).to_be_enabled()
+        self.go_to_products_button.click()
+
+    def click_clear_cart_button(self):
+        expect(self.clear_cart_button).to_be_enabled()
+        self.clear_cart_button.click()
+
+    def check_success_removing_notification(self):
+        expect(self.remove_product_success_message).to_be_visible()
+        expect(self.remove_product_success_message).to_have_text("Товар удален из корзины")
+
+    def check_success_cleaning_notification(self):
+        expect(self.remove_product_success_message).to_be_visible()
+        expect(self.remove_product_success_message).to_have_text("Корзина очищена")
+
+

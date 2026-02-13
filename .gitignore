@@ -1,0 +1,14 @@
+.venv
+.idea
+__pycache__
+*~
+browser-state.json
+
+allure-results
+allure-report
+
+coverage-history.json
+coverage-report.json
+coverage-results
+index.html
+

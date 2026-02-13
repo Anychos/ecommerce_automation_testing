@@ -1,0 +1,120 @@
+from http import HTTPStatus
+from typing import Callable
+
+import allure
+import pytest
+from pydantic import TypeAdapter
+
+from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
+from src.api.clients.order.client import OrderAPIClient
+from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderResponseSchema, GetOrderResponseSchema, \
+    GetOrdersResponseSchema
+from src.api.fixtures.cart import CartFixture
+from src.api.fixtures.order import OrderFixture
+from src.api.fixtures.product import CreateProductFixture
+from src.api.tools.allure.epic import Epic
+from src.api.tools.allure.feature import Feature
+from src.api.tools.allure.severity import Severity
+from src.api.tools.allure.story import Story
+from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
+from src.api.tools.assertions.order import assert_create_order_response, assert_get_order_response, \
+    assert_empty_cart_order_response, assert_unavailable_product_order_response, assert_get_orders_response
+
+
+@pytest.mark.api
+@pytest.mark.regression
+@pytest.mark.cart
+@allure.epic(Epic.USER)
+@allure.feature(Feature.CARTS)
+class TestOrderPositive:
+    @pytest.mark.smoke
+    @allure.story(Story.CREATE_ENTITY)
+    @allure.severity(Severity.BLOCKER)
+    @allure.title("Создание заказа")
+    def test_create_order(self,
+                          private_order_client: OrderAPIClient,
+                          create_cart: CartFixture
+                          ) -> None:
+        request = CreateOrderRequestSchema(cart_id=create_cart.cart_id)
+
+        response = private_order_client.create_order_api(request=request)
+        assert_status_code(response.status_code, HTTPStatus.OK)
+
+        response_data = CreateOrderResponseSchema.model_validate_json(response.text)
+        assert_create_order_response(actual=response_data, expected=request)
+        assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
+
+    @allure.story(Story.GET_ENTITY)
+    @allure.severity(Severity.CRITICAL)
+    @allure.title("Получение заказа по id")
+    def test_get_order_by_id(self,
+                             private_order_client: OrderAPIClient,
+                             create_order: OrderFixture
+                             ) -> None:
+        response = private_order_client.get_order_api(order_id=create_order.order_id)
+        assert_status_code(response.status_code, HTTPStatus.OK)
+
+        response_data = GetOrderResponseSchema.model_validate_json(response.text)
+        assert_get_order_response(actual=response_data, expected=create_order.response)
+        assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
+
+    @allure.story(Story.GET_ENTITIES)
+    @allure.severity(Severity.NORMAL)
+    @allure.title("Получение списка заказов")
+    def test_get_orders(self,
+                        private_order_client: OrderAPIClient,
+                        create_order: OrderFixture
+                        ) -> None:
+        response = private_order_client.get_orders_api()
+        assert_status_code(response.status_code, HTTPStatus.OK)
+
+        response_data = TypeAdapter(GetOrdersResponseSchema).validate_json(response.text)
+        assert_get_orders_response(
+            get_orders_response=response_data,
+            create_order_responses=[create_order.response]
+        )
+        order_schema = TypeAdapter(GetOrdersResponseSchema).json_schema()
+        assert_json_schema(actual=response.json(), schema=order_schema)
+
+
+@pytest.mark.api
+@pytest.mark.regression
+@pytest.mark.cart
+@allure.epic(Epic.USER)
+@allure.feature(Feature.CARTS)
+class TestOrderNegative:
+    @allure.story(Story.CREATE_ENTITY)
+    @allure.severity(Severity.NORMAL)
+    @allure.title("Создание заказа если один из продуктов недоступен")
+    def test_create_order_without_availability_items_in_cart(self,
+                                                             private_order_client: OrderAPIClient,
+                                                             create_cart: CartFixture,
+                                                             update_product_factory: Callable[..., CreateProductFixture]
+                                                             ) -> None:
+        update_product_factory(product_id=create_cart.item_id, is_available=False, stock_quantity=0)
+
+        request = CreateOrderRequestSchema(cart_id=create_cart.cart_id)
+
+        response = private_order_client.create_order_api(request=request)
+        assert_status_code(response.status_code, HTTPStatus.BAD_REQUEST)
+
+        response_data = HTTPValidationErrorResponseSchema.model_validate_json(response.text)
+        assert_unavailable_product_order_response(response_data)
+        assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
+
+    @allure.story(Story.CREATE_ENTITY)
+    @allure.severity(Severity.NORMAL)
+    @allure.title("Создание заказа с удаленной корзиной")
+    def test_create_order_with_empty_cart(self,
+                                          private_order_client: OrderAPIClient,
+                                          empty_cart: CartFixture
+                                          ) -> None:
+        request = CreateOrderRequestSchema(cart_id=empty_cart.cart_id)
+
+        response = private_order_client.create_order_api(request=request)
+        assert_status_code(response.status_code, HTTPStatus.BAD_REQUEST)
+
+        response_data = HTTPValidationErrorResponseSchema.model_validate_json(response.text)
+        assert_empty_cart_order_response(response_data)
+        assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
+
