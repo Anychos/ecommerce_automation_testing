@@ -2,7 +2,8 @@
 .idea
 __pycache__
 *~
-browser-state.json
+function-browser-state.json
+session-browser-state.json
 
 allure-results
 allure-report
