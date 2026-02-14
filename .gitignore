@@ -2,6 +2,7 @@
 .idea
 __pycache__
 *~
+.env
 function-browser-state.json
 session-browser-state.json
 
