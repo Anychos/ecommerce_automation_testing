@@ -51,8 +51,8 @@ class OrderSummary(BaseComponent):
             expect(self.label_value("total")).to_have_text(re.compile(r"\d+\.\d+\s₽"))
 
             if is_free_delivery:
-                expect(self.delivery_info_container).not_to_be_visible()
-                expect(self.label("delivery")).to_have_text("Бесплатно")
+                expect(self.delivery_info_container).to_be_visible()
+                expect(self.delivery_info_text).to_have_text(re.compile(r"Добавьте товаров на \d+\.\d+\s₽ для бесплатной доставки"))
             else:
                 expect(self.label_value("delivery")).to_have_text(re.compile(r"\d+\s₽"))
                 expect(self.delivery_info_container).to_be_visible()

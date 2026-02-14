@@ -1,6 +1,5 @@
 import pytest
 
-from src.ui.fixtures.data import UserData
 from src.ui.pages.home import HomePage
 from src.ui.pages.registration import RegistrationPage
 from src.ui.tools.routes import Route
@@ -16,7 +15,7 @@ class TestRegistration:
     def test_registration_success(self,
                                   registration_page: RegistrationPage,
                                   home_page: HomePage,
-                                  user_data_function: UserData
+                                  user_data_function
                                   ):
         registration_page.open_url(Route.Registration)
 
@@ -25,7 +24,7 @@ class TestRegistration:
             name=user_data_function.name,
             phone=user_data_function.phone,
             password=user_data_function.password,
-            confirm_password=user_data_function.confirm_password
+            confirm_password=user_data_function.password
         )
         registration_page.registration_form.check_filled(
             email=user_data_function.email,

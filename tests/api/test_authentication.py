@@ -1,4 +1,10 @@
+from __future__ import annotations
+
 from http import HTTPStatus
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.user import UserFixture
 
 import allure
 import pytest
@@ -7,7 +13,6 @@ from src.api.clients.authentication.client import AuthenticationAPIClient
 from src.api.clients.authentication.schemas import LoginRequestSchema, LoginResponseSchema, RegistrationRequestSchema, \
     RegistrationResponseSchema
 from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
-from src.api.fixtures.user import UserFixture
 from src.api.tools.allure.epic import Epic
 from src.api.tools.allure.feature import Feature
 from src.api.tools.allure.severity import Severity

@@ -1,5 +1,13 @@
+from __future__ import annotations
+
 from http import HTTPStatus
 from typing import Callable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.cart import CartFixture
+    from src.api.fixtures.order import OrderFixture
+    from src.api.fixtures.product import CreateProductFixture
 
 import allure
 import pytest
@@ -9,9 +17,6 @@ from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
 from src.api.clients.order.client import OrderAPIClient
 from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderResponseSchema, GetOrderResponseSchema, \
     GetOrdersResponseSchema
-from src.api.fixtures.cart import CartFixture
-from src.api.fixtures.order import OrderFixture
-from src.api.fixtures.product import CreateProductFixture
 from src.api.tools.allure.epic import Epic
 from src.api.tools.allure.feature import Feature
 from src.api.tools.allure.severity import Severity

@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.product import CreateProductFixture
+
 import pytest
 from playwright.sync_api import Page
 
@@ -29,20 +36,20 @@ def home_page(chromium_page: Page) -> HomePage:
 
 
 @pytest.fixture
-def home_page_with_state(session_chromium_page_with_state: Page) -> HomePage:
-    return HomePage(session_chromium_page_with_state)
+def home_page_with_state(function_chromium_page_with_state: Page) -> HomePage:
+    return HomePage(function_chromium_page_with_state)
 
 
 @pytest.fixture
-def cart_page(session_chromium_page_with_state: Page) -> CartPage:
-    return CartPage(session_chromium_page_with_state)
+def cart_page(function_chromium_page_with_state: Page) -> CartPage:
+    return CartPage(function_chromium_page_with_state)
 
 
 @pytest.fixture
-def cart_page_with_product(home_page_with_state: HomePage, cart_page: CartPage) -> CartPage:
+def cart_page_with_product(create_available_product: CreateProductFixture, home_page_with_state: HomePage, cart_page: CartPage) -> CartPage:
     home_page_with_state.open_url(Route.Home)
 
-    home_page_with_state.product_card.click_add_to_cart_button()
+    home_page_with_state.get_product_card(create_available_product.product_id).click_add_to_cart_button()
     home_page_with_state.check_add_to_cart_success_notification()
 
     return cart_page
@@ -54,8 +61,8 @@ def product_detail_page(chromium_page: Page) -> ProductDetailPage:
 
 
 @pytest.fixture
-def product_detail_page_with_state(session_chromium_page_with_state: Page) -> ProductDetailPage:
-    return ProductDetailPage(session_chromium_page_with_state)
+def product_detail_page_with_state(function_chromium_page_with_state: Page) -> ProductDetailPage:
+    return ProductDetailPage(function_chromium_page_with_state)
 
 
 @pytest.fixture
@@ -64,8 +71,8 @@ def checkout_page(cart_page_with_product: CartPage) -> CheckoutPage:
 
 
 @pytest.fixture
-def order_list_page(session_chromium_page_with_state: Page) -> OrdersPage:
-    return OrdersPage(session_chromium_page_with_state)
+def order_list_page(function_chromium_page_with_state: Page) -> OrdersPage:
+    return OrdersPage(function_chromium_page_with_state)
 
 
 @pytest.fixture

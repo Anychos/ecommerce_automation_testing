@@ -1,5 +1,12 @@
+from __future__ import annotations
+
 from http import HTTPStatus
 from typing import Callable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.cart import CartFixture
+    from src.api.fixtures.product import CreateProductFixture
 
 import allure
 import pytest
@@ -8,8 +15,6 @@ from src.api.clients.cart.client import CartAPIClient
 from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema, DeleteCartItemResponseSchema, \
     UpdateCartItemRequestSchema, UpdateCartItemResponseSchema, DeleteCartResponseSchema, GetCartResponseSchema
 from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
-from src.api.fixtures.cart import CartFixture
-from src.api.fixtures.product import CreateProductFixture
 from src.api.tools.allure.epic import Epic
 from src.api.tools.allure.feature import Feature
 from src.api.tools.allure.severity import Severity

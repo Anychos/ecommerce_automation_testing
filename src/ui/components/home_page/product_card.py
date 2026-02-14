@@ -6,10 +6,10 @@ from src.ui.components.base import BaseComponent
 
 
 class ProductCard(BaseComponent):
-    def __init__(self, page: Page):
+    def __init__(self, page: Page, product_id: int):
         super().__init__(page)
 
-        self.root = self.page.locator("div.product-card").first
+        self.root = self.page.get_by_test_id(f"product-card-{product_id}")
 
         self.image = self.root.locator('[data-testid^="product-image-link-"]')
         self.stock_badge = self.root.get_by_test_id("in-stock-badge")

@@ -1,4 +1,9 @@
-from typing import Callable
+from __future__ import annotations
+
+from typing import Callable, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.user import UserFixture
 
 import pytest
 from pydantic import BaseModel
@@ -6,7 +11,6 @@ from pydantic import BaseModel
 from src.api.clients.product.client import ProductAPIClient, get_public_product_client, get_private_product_client
 from src.api.clients.product.schemas import CreateProductRequestSchema, CreateProductResponseSchema, \
     FullUpdateProductRequestSchema, UpdateProductResponseSchema
-from src.api.fixtures.user import UserFixture
 
 
 class CreateProductFixture(BaseModel):
@@ -80,7 +84,8 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
     def _create_product(
             *,
             is_available: bool = True,
-            stock_quantity: int = 1
+            stock_quantity: int = 1,
+            price: float = 500
     ) -> CreateProductFixture:
         """
         Создает продукт с указанными параметрами
@@ -92,7 +97,8 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
 
         request = CreateProductRequestSchema(
             is_available=is_available,
-            stock_quantity=stock_quantity
+            stock_quantity=stock_quantity,
+            price=price
         )
         response = admin_private_product_client.create_product(request=request)
         return CreateProductFixture(request=request, response=response)

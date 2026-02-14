@@ -1,6 +1,5 @@
 import pytest
 
-from config import settings
 from src.ui.pages.home import HomePage
 from src.ui.pages.login import LoginPage
 from src.ui.tools.routes import Route
@@ -14,18 +13,19 @@ class TestLogin:
         login_page.login_form.check_visibility()
 
     def test_login_success(self,
+                           user,
                            login_page: LoginPage,
                            home_page: HomePage
                            ):
         login_page.open_url(Route.Login)
 
         login_page.login_form.fill(
-            email=settings.test_user_login.email,
-            password=settings.test_user_login.password
+            email=user.email,
+            password=user.password
         )
         login_page.login_form.check_filled(
-            email=settings.test_user_login.email,
-            password=settings.test_user_login.password
+            email=user.email,
+            password=user.password
         )
         login_page.login_form.click_login_button()
 

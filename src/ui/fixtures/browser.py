@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import Page, Playwright
 
 from config import settings
+from src.ui.models.user_data import UserData
 from src.ui.pages.home import HomePage
 from src.ui.pages.registration import RegistrationPage
 from src.ui.tools.data_generator import fake_ru
@@ -58,11 +59,12 @@ def session_get_browser_state(playwright: Playwright) -> None:
 
 
 @pytest.fixture
-def function_get_browser_state(playwright: Playwright) -> None:
+def function_get_browser_state(playwright: Playwright, user_data_function: UserData) -> None:
     """
     Запускает Chromium браузер, создает и сохраняет состояние браузера зарегистрированного пользователя
 
     :param playwright: Экземпляр Playwright, предоставляемый pytest-playwright
+    :param user_data_function: Данные пользователя для регистрации
     :return: Файл с состоянием браузера
     """
 
@@ -73,13 +75,12 @@ def function_get_browser_state(playwright: Playwright) -> None:
     home_page = HomePage(page)
 
     registration_page.open_url(Route.Registration)
-    password = fake_ru.password()
     registration_page.registration_form.fill(
-        email=fake_ru.email(),
-        name=fake_ru.first_name(),
-        phone=fake_ru.phone_number(),
-        password=password,
-        confirm_password=password
+        email=user_data_function.email,
+        name=user_data_function.name,
+        phone=user_data_function.phone,
+        password=user_data_function.password,
+        confirm_password=user_data_function.confirm_password
     )
     registration_page.registration_form.click_registration_button()
     home_page.check_success_registration_message()

@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import pytest
 from pydantic import BaseModel
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.api.fixtures.user import UserFixture
+    from src.api.fixtures.product import CreateProductFixture
 
 from src.api.clients.cart.client import CartAPIClient, get_public_cart_client, get_private_cart_client
 from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema
-from src.api.fixtures.product import CreateProductFixture
-from src.api.fixtures.user import UserFixture
 
 
 class CartFixture(BaseModel):

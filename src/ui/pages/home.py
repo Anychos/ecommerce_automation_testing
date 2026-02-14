@@ -20,9 +20,11 @@ class HomePage(BasePage):
 
         self.products_list_title = self.page.get_by_test_id("products-title")
         self.empty_list_view = EmptyView(self.page, "products")
-        self.product_card = ProductCard(self.page)
 
         self.footer = Footer(self.page)
+
+    def get_product_card(self, product_id: int) -> ProductCard:
+        return ProductCard(self.page, product_id)
 
     def add_to_cart_notification(self, alert_type: str):
         return self.page.locator(f".alert-{alert_type}").first
@@ -37,7 +39,7 @@ class HomePage(BasePage):
         if is_empty:
             self.empty_list_view.check_visibility()
         else:
-            self.product_card.check_visibility()
+            self.get_product_card(1).check_visibility()
 
     def check_success_registration_message(self):
         expect(self.success_message).to_be_visible()
