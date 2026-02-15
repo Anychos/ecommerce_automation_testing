@@ -14,7 +14,7 @@ from src.ui.pages.checkout import CheckoutPage
 from src.ui.pages.home import HomePage
 from src.ui.pages.login import LoginPage
 from src.ui.pages.order_detail import OrderDetailPage
-from src.ui.pages.orders import OrdersPage
+from src.ui.pages.orders import OrdersListPage
 from src.ui.pages.product_detail import ProductDetailPage
 from src.ui.pages.registration import RegistrationPage
 from src.ui.tools.data_generator import fake_ru
@@ -72,22 +72,22 @@ def checkout_page(cart_page_with_product: CartPage) -> CheckoutPage:
 
 
 @pytest.fixture
-def order_list_page(function_chromium_page_with_state: Page) -> OrdersPage:
-    return OrdersPage(function_chromium_page_with_state)
+def order_list_page(function_chromium_page_with_state: Page) -> OrdersListPage:
+    return OrdersListPage(function_chromium_page_with_state)
 
 
 @pytest.fixture
-def empty_order_list_page(function_chromium_page_with_state: Page) -> OrdersPage:
-    return OrdersPage(function_chromium_page_with_state)
+def empty_order_list_page(function_chromium_page_with_state: Page) -> OrdersListPage:
+    return OrdersListPage(function_chromium_page_with_state)
 
 
 @pytest.fixture
-def order_detail_page(order_list_page_with_order: OrdersPage) -> OrderDetailPage:
+def order_detail_page(order_list_page_with_order: OrdersListPage) -> OrderDetailPage:
     return OrderDetailPage(order_list_page_with_order.page)
 
 
 @pytest.fixture
-def order_list_page_with_order(checkout_page: CheckoutPage, order_list_page: OrdersPage) -> OrdersPage:
+def order_list_page_with_order(checkout_page: CheckoutPage, order_list_page: OrdersListPage) -> OrdersListPage:
     checkout_page.open_url(Route.Checkout)
 
     checkout_page.delivery_details_form.fill(

@@ -14,6 +14,8 @@ from src.ui.tools.routes import Route
 
 
 @pytest.mark.ui
+@pytest.mark.home
+@pytest.mark.regression
 class TestHomePage:
     def test_check_home_page_with_products(self,
                              create_available_product: CreateProductFixture,
@@ -23,6 +25,7 @@ class TestHomePage:
 
         home_page.check_visibility()
 
+    @pytest.mark.smoke
     @pytest.mark.parametrize(
         "click_action",
         [
@@ -55,6 +58,7 @@ class TestHomePage:
 
         home_page.check_add_to_cart_fail_notification()
 
+    @pytest.mark.smoke
     def test_click_add_to_cart_button_authorized(self,
                                                  create_available_product: CreateProductFixture,
                                                  home_page_with_state: HomePage

@@ -1,9 +1,14 @@
 import re
 
+import pytest
+
 from src.ui.pages.home import HomePage
 from src.ui.tools.routes import Route
 
 
+@pytest.mark.ui
+@pytest.mark.header
+@pytest.mark.regression
 class TestHeader:
     def test_header_visibility_unauthorized(self, home_page: HomePage):
         home_page.open_url(Route.Home)

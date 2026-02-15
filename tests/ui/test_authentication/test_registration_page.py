@@ -6,12 +6,15 @@ from src.ui.tools.routes import Route
 
 
 @pytest.mark.ui
+@pytest.mark.registration
+@pytest.mark.regression
 class TestRegistration:
     def test_registration_page_view(self, registration_page: RegistrationPage):
         registration_page.open_url(Route.Registration)
 
         registration_page.registration_form.check_visibility()
 
+    @pytest.mark.smoke
     def test_registration_success(self,
                                   registration_page: RegistrationPage,
                                   home_page: HomePage,

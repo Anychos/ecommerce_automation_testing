@@ -6,6 +6,8 @@ from src.ui.tools.routes import Route
 
 
 @pytest.mark.ui
+@pytest.mark.cart
+@pytest.mark.regression
 class TestCartPage:
     def test_check_empty_cart(self, cart_page: CartPage):
         cart_page.open_url(Route.Cart)
@@ -33,6 +35,7 @@ class TestCartPage:
         cart_page_with_product.product_item.click_remove_button()
         cart_page_with_product.check_success_removing_notification()
 
+    @pytest.mark.smoke
     def test_click_checkout(self, cart_page_with_product: CartPage, checkout_page: CheckoutPage):
         cart_page_with_product.open_url(Route.Cart)
 

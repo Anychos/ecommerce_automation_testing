@@ -8,6 +8,8 @@ from src.ui.tools.routes import Route
 
 
 @pytest.mark.ui
+@pytest.mark.checkout
+@pytest.mark.regression
 class TestCheckoutPage:
     def test_check_checkout_page(self, checkout_page: CheckoutPage):
         checkout_page.open_url(Route.Checkout)
@@ -15,6 +17,7 @@ class TestCheckoutPage:
         checkout_page.delivery_details_form.check_visibility()
         checkout_page.summary_info.check_visibility(page_name="checkout")
 
+    @pytest.mark.smoke
     def test_make_order_required_data(self, checkout_page: CheckoutPage):
         checkout_page.open_url(Route.Checkout)
 

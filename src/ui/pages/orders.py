@@ -7,7 +7,7 @@ from src.ui.components.orders_list_page.order_item import OrderItem
 from src.ui.pages.base import BasePage
 
 
-class OrdersPage(BasePage):
+class OrdersListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
