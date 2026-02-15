@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -98,7 +99,7 @@ def order_list_page_with_order(checkout_page: CheckoutPage, order_list_page: Ord
     checkout_page.delivery_details_form.click_terms_checkbox()
     checkout_page.summary_info.click_button("place-order")
     checkout_page.check_success_order_notification()
-    order_list_page.check_current_page_url("orders")
+    order_list_page.check_url_matches(re.compile(r"/orders/\d+"))
 
     return order_list_page
 

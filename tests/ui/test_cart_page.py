@@ -37,5 +37,5 @@ class TestCartPage:
         cart_page_with_product.open_url(Route.Cart)
 
         cart_page_with_product.summary_info.click_button("checkout")
-        checkout_page.check_current_page_url("checkout")
+        checkout_page.check_url_exact(Route.Checkout)
 

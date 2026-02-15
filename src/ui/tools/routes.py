@@ -10,3 +10,4 @@ class Route(str, Enum):
     Checkout = "/checkout"
     OrdersList = "/orders"
     OrderDetail = "/orders/"
+    UserProfile = "/profile"

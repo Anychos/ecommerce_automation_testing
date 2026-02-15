@@ -14,6 +14,7 @@ class HomePage(BasePage):
         self.header = Header(self.page)
 
         self.success_message = self.page.get_by_test_id("flash-message-success")
+        self.success_logout_message = self.page.get_by_test_id("flash-message-info")
 
         self.hero_title = self.page.get_by_test_id("main-title")
         self.hero_text = self.page.get_by_test_id("main-subtitle")
@@ -56,5 +57,9 @@ class HomePage(BasePage):
     def check_add_to_cart_fail_notification(self):
         expect(self.add_to_cart_notification("warning")).to_be_visible()
         expect(self.add_to_cart_notification("warning")).to_have_text("Необходимо авторизоваться")
+
+    def check_success_logout_message(self):
+        expect(self.success_logout_message).to_be_visible()
+        expect(self.success_logout_message).to_have_text("Вы вышли из системы")
 
 

@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from src.ui.pages.checkout import CheckoutPage
@@ -25,4 +27,4 @@ class TestCheckoutPage:
         checkout_page.delivery_details_form.click_terms_checkbox()
         checkout_page.summary_info.click_button("place-order")
         checkout_page.check_success_order_notification()
-        checkout_page.check_current_page_url("orders")
+        checkout_page.check_url_matches(re.compile(r"/orders/\d+"))

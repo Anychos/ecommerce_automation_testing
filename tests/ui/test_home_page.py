@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -42,7 +43,7 @@ class TestHomePage:
 
         click_action(home_page.get_product_card(create_available_product.product_id))
 
-        product_detail_page.check_current_page_url("product")
+        product_detail_page.check_url_matches(re.compile(r"/product/\d+"))
 
     def test_click_add_to_cart_button_unauthorized(self,
                                                    create_available_product: CreateProductFixture,

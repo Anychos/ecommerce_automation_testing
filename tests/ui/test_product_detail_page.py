@@ -49,5 +49,5 @@ class TestProductDetailPage:
         home_page.get_product_card(create_available_product.product_id).click_image()
         product_detail_page.product_info_block.click_login_to_add_button()
 
-        login_page.check_current_page_url("login")
+        login_page.check_url_exact(Route.Login)
 
