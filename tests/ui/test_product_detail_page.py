@@ -2,6 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import allure
+
+from utils.allure.epic import Epic
+from utils.allure.severity import Severity
+from utils.allure.feature import Feature
+from utils.allure.story import Story
+
 if TYPE_CHECKING:
     from src.api.fixtures.product import CreateProductFixture
 
@@ -16,7 +23,12 @@ from src.ui.tools.routes import Route
 @pytest.mark.ui
 @pytest.mark.product_detail
 @pytest.mark.regression
+@allure.epic(Epic.STORE_FRONT)
 class TestProductDetailPage:
+    @allure.feature(Feature.PRODUCT_DETAIL_PAGE)
+    @allure.story(Story.PAGE_VISIBILITY)
+    @allure.severity(Severity.MAJOR)
+    @allure.title("Отображение страницы товара с авторизацией")
     def test_check_product_detail_page_authorized(self,
                                                   create_available_product: CreateProductFixture,
                                                   home_page_with_state: HomePage,
@@ -29,6 +41,10 @@ class TestProductDetailPage:
         product_detail_page_with_state.check_visibility(is_authorized=True)
 
     @pytest.mark.smoke
+    @allure.feature(Feature.USER_PRODUCTS)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
+    @allure.severity(Severity.BLOCKER)
+    @allure.title("Добавление товара в корзину с авторизацией")
     def test_click_add_to_cart_button_authorized(self,
                                                  create_available_product: CreateProductFixture,
                                                  home_page_with_state: HomePage,
@@ -41,6 +57,10 @@ class TestProductDetailPage:
 
         product_detail_page_with_state.check_add_to_cart_success_message()
 
+    @allure.feature(Feature.USER_PRODUCTS)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
+    @allure.severity(Severity.MAJOR)
+    @allure.title("Добавление товара в корзину без авторизации")
     def test_click_add_to_cart_button_unauthorized(self,
                                                    create_available_product: CreateProductFixture,
                                                    home_page: HomePage,

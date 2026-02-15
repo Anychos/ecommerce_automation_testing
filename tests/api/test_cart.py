@@ -15,10 +15,10 @@ from src.api.clients.cart.client import CartAPIClient
 from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema, DeleteCartItemResponseSchema, \
     UpdateCartItemRequestSchema, UpdateCartItemResponseSchema, DeleteCartResponseSchema, GetCartResponseSchema
 from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
-from src.api.tools.allure.epic import Epic
-from src.api.tools.allure.feature import Feature
-from src.api.tools.allure.severity import Severity
-from src.api.tools.allure.story import Story
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
 from src.api.tools.assertions.cart import assert_add_item_to_cart_response, assert_delete_item_cart_response, \
     assert_update_cart_response, assert_delete_cart_response, \
@@ -28,11 +28,11 @@ from src.api.tools.assertions.cart import assert_add_item_to_cart_response, asse
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.cart
-@allure.epic(Epic.USER)
-@allure.feature(Feature.CARTS)
+@allure.epic(Epic.BACKEND_API)
+@allure.feature(Feature.USER_CART)
 class TestCartPositive:
     @pytest.mark.smoke
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Добавление единицы продукта в корзину")
     def test_add_item_to_cart(self,
@@ -49,7 +49,7 @@ class TestCartPositive:
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
     @pytest.mark.smoke
-    @allure.story(Story.GET_ENTITY)
+    @allure.story(Story.USER_GET_CART)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Получение данных корзины")
     def test_get_cart(self,
@@ -63,7 +63,7 @@ class TestCartPositive:
         assert_get_cart_response(actual=response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.DELETE_ENTITY)
+    @allure.story(Story.USER_REMOVE_PRODUCT_FROM_CART)
     @allure.severity(Severity.NORMAL)
     @allure.title("Удаление единицы продукта из корзины")
     def test_remove_item_from_cart(self,
@@ -77,7 +77,7 @@ class TestCartPositive:
         assert_delete_item_cart_response(response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.UPDATE_ENTITY)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.CRITICAL)
     @allure.title("Обновление количества единицы продукта в корзине")
     def test_update_cart(self,
@@ -93,7 +93,7 @@ class TestCartPositive:
         assert_update_cart_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.DELETE_ENTITY)
+    @allure.story(Story.USER_CLEAR_CART)
     @allure.severity(Severity.NORMAL)
     @allure.title("Удаление корзины")
     def test_delete_cart(self,
@@ -111,10 +111,10 @@ class TestCartPositive:
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.cart
-@allure.epic(Epic.USER)
-@allure.feature(Feature.CARTS)
+@allure.epic(Epic.BACKEND_API)
+@allure.feature(Feature.USER_CART)
 class TestCartNegative:
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.NORMAL)
     @allure.title("Добавление товара без наличия в корзину")
     def test_add_not_available_product_to_cart(self,
@@ -131,7 +131,7 @@ class TestCartNegative:
         assert_not_found_product_response(response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.NORMAL)
     @allure.title("Добавление несуществующего товара в корзину")
     def test_add_not_existing_product_to_cart(self, private_cart_client: CartAPIClient) -> None:
@@ -144,7 +144,7 @@ class TestCartNegative:
         assert_not_found_product_response(response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.NORMAL)
     @allure.title("Добавление количества одного товара в корзину больше чем доступно")
     def test_add_more_than_available_product_to_cart(self,

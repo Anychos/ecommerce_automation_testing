@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from src.ui.pages.cart import CartPage
@@ -8,11 +9,16 @@ from src.ui.pages.order_detail import OrderDetailPage
 from src.ui.pages.orders import OrdersListPage
 from src.ui.pages.product_detail import ProductDetailPage
 from src.ui.pages.registration import RegistrationPage
+from utils.allure.epic import Epic
+from utils.allure.severity import Severity
 
 
 @pytest.mark.ui
 @pytest.mark.e2e
+@allure.epic(Epic.STORE_FRONT)
 class TestE2E:
+    @allure.severity(Severity.BLOCKER)
+    @allure.title("E2E путь пользователя")
     def test_e2e_user_flow(self,
                            home_page: HomePage,
                            registration_page: RegistrationPage,

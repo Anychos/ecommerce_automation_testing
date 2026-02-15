@@ -1,8 +1,13 @@
 import re
 
+import allure
 import pytest
 
 from src.ui.pages.checkout import CheckoutPage
+from utils.allure.epic import Epic
+from utils.allure.severity import Severity
+from utils.allure.feature import Feature
+from utils.allure.story import Story
 from src.ui.tools.data_generator import fake_ru
 from src.ui.tools.routes import Route
 
@@ -10,7 +15,12 @@ from src.ui.tools.routes import Route
 @pytest.mark.ui
 @pytest.mark.checkout
 @pytest.mark.regression
+@allure.epic(Epic.STORE_FRONT)
+@allure.feature(Feature.USER_ORDERS)
 class TestCheckoutPage:
+    @allure.story(Story.PAGE_VISIBILITY)
+    @allure.severity(Severity.MAJOR)
+    @allure.title("Отображение страницы оформления заказа")
     def test_check_checkout_page(self, checkout_page: CheckoutPage):
         checkout_page.open_url(Route.Checkout)
 
@@ -18,6 +28,9 @@ class TestCheckoutPage:
         checkout_page.summary_info.check_visibility(page_name="checkout")
 
     @pytest.mark.smoke
+    @allure.story(Story.USER_CREATE_ORDER)
+    @allure.severity(Severity.BLOCKER)
+    @allure.title("Оформление заказа")
     def test_make_order_required_data(self, checkout_page: CheckoutPage):
         checkout_page.open_url(Route.Checkout)
 

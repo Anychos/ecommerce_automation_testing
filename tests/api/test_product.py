@@ -16,10 +16,10 @@ from src.api.clients.product.schemas import CreateProductRequestSchema, CreatePr
     GetProductResponseSchema, \
     FullUpdateProductRequestSchema, UpdateProductResponseSchema, DeleteProductResponseSchema, \
     PartialUpdateProductRequestSchema, GetProductsResponseSchema
-from src.api.tools.allure.epic import Epic
-from src.api.tools.allure.feature import Feature
-from src.api.tools.allure.severity import Severity
-from src.api.tools.allure.story import Story
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
 from src.api.tools.assertions.product import assert_create_product_response, assert_get_product_response, \
     assert_full_update_product_response, assert_delete_product_response, assert_wrong_data_format_response, \
@@ -31,11 +31,11 @@ from src.api.tools.data_generator import fake_ru
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.product
-@allure.feature(Feature.PRODUCTS)
+@allure.epic(Epic.BACKEND_API)
 class TestProductPositive:
     @pytest.mark.smoke
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_CREATE_PRODUCT)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Создание продукта с валидными данными")
     def test_create_product(self, admin_private_product_client: ProductAPIClient) -> None:
@@ -49,8 +49,8 @@ class TestProductPositive:
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
     @pytest.mark.smoke
-    @allure.epic(Epic.USER)
-    @allure.story(Story.GET_ENTITY)
+    @allure.feature(Feature.USER_PRODUCTS)
+    @allure.story(Story.USER_GET_PRODUCT_BY_ID)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Получение существующего продукта")
     def test_get_product(self,
@@ -65,8 +65,8 @@ class TestProductPositive:
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
     @pytest.mark.smoke
-    @allure.epic(Epic.USER)
-    @allure.story(Story.GET_ENTITIES)
+    @allure.feature(Feature.USER_PRODUCTS)
+    @allure.story(Story.USER_GET_PRODUCTS_LIST)
     @allure.severity(Severity.CRITICAL)
     @allure.title("Получение списка продуктов")
     def test_get_products(self,
@@ -84,8 +84,8 @@ class TestProductPositive:
         product_schema = TypeAdapter(GetProductsResponseSchema).json_schema()
         assert_json_schema(actual=response.json(), schema=product_schema)
 
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.UPDATE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_UPDATE_PRODUCT_FULL)
     @allure.severity(Severity.NORMAL)
     @allure.title("Полное обновление существующего продукта")
     def test_full_update_product(self,
@@ -101,8 +101,8 @@ class TestProductPositive:
         assert_full_update_product_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.UPDATE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_UPDATE_PRODUCT_PARTIAL)
     @allure.severity(Severity.NORMAL)
     @allure.title("Частичное обновление существующего продукта")
     def test_partial_update_product(self,
@@ -118,8 +118,8 @@ class TestProductPositive:
         assert_partial_update_product_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.DELETE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_DELETE_PRODUCT)
     @allure.severity(Severity.NORMAL)
     @allure.title("Удаление существующего продукта")
     def test_delete_product(self,
@@ -137,10 +137,10 @@ class TestProductPositive:
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.product
-@allure.feature(Feature.PRODUCTS)
+@allure.epic(Epic.BACKEND_API)
 class TestProductNegative:
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_CREATE_PRODUCT)
     @allure.severity(Severity.NORMAL)
     @pytest.mark.parametrize("name, description, price, wrong_field, wrong_value",
                              [
@@ -180,8 +180,8 @@ class TestProductNegative:
         )
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.epic(Epic.ADMIN)
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_CREATE_PRODUCT)
     @allure.severity(Severity.NORMAL)
     @pytest.mark.parametrize("name, description, price, image_url, wrong_field, wrong_value",
                              [
@@ -225,6 +225,9 @@ class TestProductNegative:
                              ["example.com/image.jpg",
                               "https://example.com/image.gif"]
                              )
+    @allure.feature(Feature.ADMIN_PRODUCTS)
+    @allure.story(Story.ADMIN_CREATE_PRODUCT)
+    @allure.severity(Severity.NORMAL)
     @allure.title("Создание продукта с некорректным URL изображения")
     def test_create_product_with_wrong_image_url(self,
                                                  admin_private_product_client: ProductAPIClient,

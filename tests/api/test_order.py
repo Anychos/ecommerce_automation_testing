@@ -17,10 +17,10 @@ from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
 from src.api.clients.order.client import OrderAPIClient
 from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderResponseSchema, GetOrderResponseSchema, \
     GetOrdersResponseSchema
-from src.api.tools.allure.epic import Epic
-from src.api.tools.allure.feature import Feature
-from src.api.tools.allure.severity import Severity
-from src.api.tools.allure.story import Story
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
 from src.api.tools.assertions.order import assert_create_order_response, assert_get_order_response, \
     assert_empty_cart_order_response, assert_unavailable_product_order_response, assert_get_orders_response
@@ -29,11 +29,11 @@ from src.api.tools.assertions.order import assert_create_order_response, assert_
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.cart
-@allure.epic(Epic.USER)
-@allure.feature(Feature.CARTS)
+@allure.epic(Epic.BACKEND_API)
+@allure.feature(Feature.USER_ORDERS)
 class TestOrderPositive:
     @pytest.mark.smoke
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_CREATE_ORDER)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Создание заказа")
     def test_create_order(self,
@@ -49,7 +49,7 @@ class TestOrderPositive:
         assert_create_order_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.GET_ENTITY)
+    @allure.story(Story.USER_GET_ORDER_BY_ID)
     @allure.severity(Severity.CRITICAL)
     @allure.title("Получение заказа по id")
     def test_get_order_by_id(self,
@@ -63,7 +63,7 @@ class TestOrderPositive:
         assert_get_order_response(actual=response_data, expected=create_order.response)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.GET_ENTITIES)
+    @allure.story(Story.USER_GET_ORDERS_LIST)
     @allure.severity(Severity.NORMAL)
     @allure.title("Получение списка заказов")
     def test_get_orders(self,
@@ -85,10 +85,10 @@ class TestOrderPositive:
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.cart
-@allure.epic(Epic.USER)
-@allure.feature(Feature.CARTS)
+@allure.epic(Epic.BACKEND_API)
+@allure.feature(Feature.USER_ORDERS)
 class TestOrderNegative:
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_CREATE_ORDER)
     @allure.severity(Severity.NORMAL)
     @allure.title("Создание заказа если один из продуктов недоступен")
     def test_create_order_without_availability_items_in_cart(self,
@@ -107,7 +107,7 @@ class TestOrderNegative:
         assert_unavailable_product_order_response(response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.USER_CREATE_ORDER)
     @allure.severity(Severity.NORMAL)
     @allure.title("Создание заказа с удаленной корзиной")
     def test_create_order_with_empty_cart(self,

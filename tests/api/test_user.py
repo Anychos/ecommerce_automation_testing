@@ -13,10 +13,10 @@ from src.api.clients.error_shemas import InputValidationErrorResponseSchema, HTT
 from src.api.clients.user.client import UserAPIClient
 from src.api.clients.user.schemas import CreateUserRequestSchema, CreateUserResponseSchema, GetUserResponseSchema, \
     UpdateUserResponseSchema, UpdateUserRequestSchema
-from src.api.tools.allure.epic import Epic
-from src.api.tools.allure.feature import Feature
-from src.api.tools.allure.severity import Severity
-from src.api.tools.allure.story import Story
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 from src.api.tools.assertions.authentication import assert_invalid_email_format_response
 from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
 from src.api.tools.assertions.user import assert_create_user_response, assert_get_user_response, \
@@ -27,11 +27,11 @@ from src.api.tools.assertions.user import assert_create_user_response, assert_ge
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.user
-@allure.epic(Epic.USER)
-@allure.feature(Feature.USERS)
+@allure.epic(Epic.BACKEND_API)
 class TestUserPositive:
     @pytest.mark.smoke
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.feature(Feature.ADMIN_USERS)
+    @allure.story(Story.ADMIN_CREATE_USER)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Создание пользователя с валидными данными")
     def test_create_user(self, private_admin_client: UserAPIClient) -> None:
@@ -44,7 +44,8 @@ class TestUserPositive:
         assert_create_user_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.GET_ENTITY)
+    @allure.feature(Feature.ADMIN_USERS)
+    @allure.story(Story.ADMIN_GET_USER_BY_ID)
     @allure.severity(Severity.CRITICAL)
     @allure.title("Получение существующего пользователя")
     def test_get_user_by_id(self,
@@ -58,7 +59,8 @@ class TestUserPositive:
         assert_get_user_response(actual=response_data, expected=user.response)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.GET_ENTITY)
+    @allure.feature(Feature.USER_PROFILE)
+    @allure.story(Story.USER_GET_PROFILE)
     @allure.severity(Severity.CRITICAL)
     @allure.title("Получение текущего пользователя")
     def test_get_user_me(self,
@@ -72,7 +74,8 @@ class TestUserPositive:
         assert_get_user_response(actual=response_data, expected=user.response)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.UPDATE_ENTITY)
+    @allure.feature(Feature.USER_PROFILE)
+    @allure.story(Story.USER_UPDATE_PROFILE_FULL)
     @allure.severity(Severity.NORMAL)
     @allure.title("Обновление данных существующего пользователя")
     def test_update_user(self,
@@ -88,7 +91,8 @@ class TestUserPositive:
         assert_update_user_response(actual=response_data, expected=request)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.DELETE_ENTITY)
+    @allure.feature(Feature.USER_PROFILE)
+    @allure.story(Story.USER_DELETE_PROFILE)
     @allure.severity(Severity.MINOR)
     @allure.title("Удаление существующего пользователя")
     def test_delete_user(self,
@@ -102,10 +106,10 @@ class TestUserPositive:
 @pytest.mark.api
 @pytest.mark.regression
 @pytest.mark.user
-@allure.epic(Epic.USER)
-@allure.feature(Feature.USERS)
+@allure.epic(Epic.BACKEND_API)
+@allure.feature(Feature.ADMIN_USERS)
 class TestUserNegative:
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.ADMIN_CREATE_USER)
     @allure.severity(Severity.NORMAL)
     @pytest.mark.parametrize("email",
                              ["test@mail",
@@ -127,7 +131,7 @@ class TestUserNegative:
         assert_invalid_email_format_response(actual=response_data, email=email)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.ADMIN_CREATE_USER)
     @allure.severity(Severity.NORMAL)
     @pytest.mark.parametrize("password",
                              ["qwert",
@@ -148,7 +152,7 @@ class TestUserNegative:
         assert_wrong_password_response(actual=response_data, password=password)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.ADMIN_CREATE_USER)
     @allure.severity(Severity.NORMAL)
     @pytest.mark.parametrize("phone",
                              ["phonenumber",
@@ -171,7 +175,7 @@ class TestUserNegative:
         assert_wrong_phone_response(actual=response_data, phone=phone)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
-    @allure.story(Story.CREATE_ENTITY)
+    @allure.story(Story.ADMIN_CREATE_USER)
     @allure.severity(Severity.NORMAL)
     @allure.title("Создание пользователя с уже зарегистрированным email")
     def test_create_user_existing_email(self,
