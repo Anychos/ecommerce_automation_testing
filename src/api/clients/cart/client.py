@@ -4,7 +4,8 @@ from httpx import Response
 from src.api.clients.api_coverage import tracker
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.base_client import BaseAPIClient
-from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema, UpdateCartItemRequestSchema
+from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema, \
+    UpdateCartItemRequestSchema
 from src.api.clients.private_builder import private_user_client_builder
 from src.api.clients.public_builder import public_client_builder
 from src.api.tools.routes import Routes

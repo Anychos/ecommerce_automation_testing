@@ -3,11 +3,11 @@ import pytest
 
 from src.ui.pages.cart import CartPage
 from src.ui.pages.checkout import CheckoutPage
-from utils.allure.epic import Epic
-from utils.allure.severity import Severity
-from utils.allure.feature import Feature
-from utils.allure.story import Story
 from src.ui.tools.routes import Route
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 
 
 @pytest.mark.ui

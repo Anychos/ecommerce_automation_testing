@@ -21,11 +21,6 @@ class TestUser(BaseModel):
     confirm_password: str
 
 
-class TestUserLogin(BaseModel):
-    email: str
-    password: str
-
-
 class HTTPClientSettings(BaseModel):
     """
     Настройки HTTP клиента
@@ -63,7 +58,6 @@ class Settings(BaseSettings):
     session_browser_state_file: FilePath
     function_browser_state_file: FilePath
     test_user: TestUser
-    test_user_login: TestUserLogin
     http_client: HTTPClientSettings
     allure_results_dir: DirectoryPath = DirectoryPath("allure-results")
     admin_data: AdminLoginSchema

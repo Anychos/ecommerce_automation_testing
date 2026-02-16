@@ -27,7 +27,7 @@ from src.api.tools.assertions.cart import assert_add_item_to_cart_response, asse
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.cart
+@pytest.mark.cart_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.USER_CART)
 class TestCartPositive:
@@ -110,7 +110,7 @@ class TestCartPositive:
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.cart
+@pytest.mark.cart_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.USER_CART)
 class TestCartNegative:

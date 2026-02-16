@@ -24,7 +24,7 @@ from src.api.tools.assertions.base_assertions import assert_status_code, assert_
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.authentication
+@pytest.mark.authentication_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.AUTHENTICATION)
 class TestAuthenticationPositive:
@@ -81,7 +81,7 @@ class TestAuthenticationPositive:
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.authentication
+@pytest.mark.authentication_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.AUTHENTICATION)
 class TestAuthenticationNegative:

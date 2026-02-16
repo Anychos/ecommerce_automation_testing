@@ -2,9 +2,6 @@ import re
 
 from playwright.sync_api import Page, expect
 
-from config import settings
-from src.ui.tools.routes import Route
-
 
 class BasePage:
     """

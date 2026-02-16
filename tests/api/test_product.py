@@ -30,7 +30,7 @@ from src.api.tools.data_generator import fake_ru
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.product
+@pytest.mark.product_api
 @allure.epic(Epic.BACKEND_API)
 class TestProductPositive:
     @pytest.mark.smoke
@@ -136,7 +136,7 @@ class TestProductPositive:
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.product
+@pytest.mark.product_api
 @allure.epic(Epic.BACKEND_API)
 class TestProductNegative:
     @allure.feature(Feature.ADMIN_PRODUCTS)

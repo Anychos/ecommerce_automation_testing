@@ -26,7 +26,7 @@ from src.api.tools.assertions.user import assert_create_user_response, assert_ge
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.user
+@pytest.mark.user_api
 @allure.epic(Epic.BACKEND_API)
 class TestUserPositive:
     @pytest.mark.smoke
@@ -105,7 +105,7 @@ class TestUserPositive:
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.user
+@pytest.mark.user_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.ADMIN_USERS)
 class TestUserNegative:

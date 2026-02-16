@@ -28,7 +28,7 @@ from src.api.tools.assertions.order import assert_create_order_response, assert_
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.cart
+@pytest.mark.order_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.USER_ORDERS)
 class TestOrderPositive:
@@ -84,7 +84,7 @@ class TestOrderPositive:
 
 @pytest.mark.api
 @pytest.mark.regression
-@pytest.mark.cart
+@pytest.mark.order_api
 @allure.epic(Epic.BACKEND_API)
 @allure.feature(Feature.USER_ORDERS)
 class TestOrderNegative:

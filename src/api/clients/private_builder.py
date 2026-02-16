@@ -1,9 +1,9 @@
 from httpx import Client
 
+from config import settings
 from src.api.clients.authentication.client import get_authentication_client
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.event_hooks import request_curl_event_hook
-from config import settings
 
 
 def private_user_client_builder(

@@ -1,14 +1,19 @@
+# common
 .venv
 .idea
 __pycache__
 *~
 .env
-function-browser-state.json
-session-browser-state.json
 
+# allure
 allure-results
 allure-report
 
+# ui
+function-browser-state.json
+session-browser-state.json
+
+# api
 coverage-history.json
 coverage-report.json
 coverage-results

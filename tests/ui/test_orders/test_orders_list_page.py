@@ -2,11 +2,11 @@ import allure
 import pytest
 
 from src.ui.pages.orders import OrdersListPage
-from utils.allure.epic import Epic
-from utils.allure.severity import Severity
-from utils.allure.feature import Feature
-from utils.allure.story import Story
 from src.ui.tools.routes import Route
+from utils.allure.epic import Epic
+from utils.allure.feature import Feature
+from utils.allure.severity import Severity
+from utils.allure.story import Story
 
 
 @pytest.mark.ui

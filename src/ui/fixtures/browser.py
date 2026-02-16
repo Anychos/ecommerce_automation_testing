@@ -5,7 +5,6 @@ from config import settings
 from src.ui.models.user_data import UserData
 from src.ui.pages.home import HomePage
 from src.ui.pages.registration import RegistrationPage
-from src.ui.tools.data_generator import fake_ru
 from src.ui.tools.routes import Route
 
 

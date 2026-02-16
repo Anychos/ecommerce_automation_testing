@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 import allure
 
 from utils.allure.epic import Epic
-from utils.allure.severity import Severity
 from utils.allure.feature import Feature
+from utils.allure.severity import Severity
 from utils.allure.story import Story
 
 if TYPE_CHECKING:
