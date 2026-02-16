@@ -1,9 +1,13 @@
+import allure
 from playwright.sync_api import Page, expect, Locator
 
 from src.ui.components.base import BaseComponent
 
 
 class Header(BaseComponent):
+    """
+    Компонент хедера
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -17,6 +21,7 @@ class Header(BaseComponent):
     def dropdown_menu_link(self, link_name: str) -> Locator:
         return self.user_profile_dropdown_menu.get_by_test_id(f"dropdown-{link_name}-item")
 
+    @allure.step("Проверка видимости элементов хедера")
     def check_visibility(self, *, is_logged_in: bool = False):
         expect(self.shop_logo).to_be_visible()
         expect(self.nav_link("home")).to_be_visible()
@@ -34,16 +39,20 @@ class Header(BaseComponent):
             expect(self.nav_link("register")).to_be_visible()
             expect(self.nav_link("register")).to_have_text("Регистрация")
 
+    @allure.step("Клик по логотипу магазина")
     def click_shop_logo(self):
         self.shop_logo.click()
 
+    @allure.step("Клик по ссылке в хедере")
     def click_nav_link(self, link_name: str):
         self.nav_link(link_name).click()
 
+    @allure.step("Открытие дропдаун меню профиля пользователя")
     def click_user_profile_dropdown_button(self):
         self.user_profile_dropdown_button.click()
         expect(self.user_profile_dropdown_menu).to_be_visible()
 
+    @allure.step("Клик по ссылке в дропдаун меню профиля пользователя")
     def click_dropdown_menu_link(self, link_name: str):
         expect(self.dropdown_menu_link(link_name)).to_be_visible()
         self.dropdown_menu_link(link_name).click()

@@ -1,11 +1,15 @@
 import re
 
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.base import BaseComponent
 
 
 class ProductInfoBlock(BaseComponent):
+    """
+    Компонент блока информации о товаре
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -26,6 +30,7 @@ class ProductInfoBlock(BaseComponent):
         self.login_to_add_button = self.info_container.get_by_test_id("login-to-add-button")
         self.additional_info_section = self.info_container.get_by_test_id("additional-info-section")
 
+    @allure.step("Проверка видимости элементов блока информации о товаре")
     def check_visibility(self, *, is_authorized: bool = False):
         expect(self.image).to_be_visible()
         expect(self.stock_badge).to_be_visible()
@@ -51,9 +56,11 @@ class ProductInfoBlock(BaseComponent):
 
         expect(self.additional_info_section).to_be_visible()
 
+    @allure.step("Клик по кнопке добавить в корзину")
     def click_add_to_cart_button(self):
         self.add_to_cart_button.click()
 
+    @allure.step("Клик по кнопке войдите, чтобы добавить в корзину")
     def click_login_to_add_button(self):
         self.login_to_add_button.click()
 

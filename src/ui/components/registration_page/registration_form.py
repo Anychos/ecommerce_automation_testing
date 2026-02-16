@@ -1,9 +1,13 @@
+import allure
 from playwright.sync_api import Page, expect, Locator
 
 from src.ui.components.base import BaseComponent
 
 
 class RegistrationForm(BaseComponent):
+    """
+    Компонент формы регистрации
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -18,6 +22,7 @@ class RegistrationForm(BaseComponent):
     def input(self, input_id: str) -> Locator:
         return self.page.locator(f"input#{input_id}")
 
+    @allure.step("Проверка видимости элементов формы регистрации")
     def check_visibility(self):
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text("Регистрация")
@@ -48,6 +53,7 @@ class RegistrationForm(BaseComponent):
         expect(self.already_registered_text).to_be_visible()
         expect(self.already_registered_text).to_have_text("Уже есть аккаунт? Войдите")
 
+    @allure.step("Заполнение формы регистрации")
     def fill(self, *, email: str, name: str, phone: str, password: str, confirm_password: str):
         expect(self.input("email")).to_be_editable()
         self.input("email").fill(email)
@@ -64,6 +70,7 @@ class RegistrationForm(BaseComponent):
         expect(self.input("confirm_password")).to_be_editable()
         self.input("confirm_password").fill(confirm_password)
 
+    @allure.step("Проверка заполнения формы регистрации")
     def check_filled(self, *, email: str, name: str, phone: str, password: str, confirm_password: str):
         expect(self.input("email")).to_have_value(email)
         expect(self.input("name")).to_have_value(name)
@@ -71,8 +78,10 @@ class RegistrationForm(BaseComponent):
         expect(self.input("password")).to_have_value(password)
         expect(self.input("confirm_password")).to_have_value(confirm_password)
 
+    @allure.step("Клик по кнопке зарегистрироваться")
     def click_registration_button(self):
         self.registration_button.click()
 
+    @allure.step("Клик по ссылке войдите")
     def click_login_link(self):
         self.login_link.click()

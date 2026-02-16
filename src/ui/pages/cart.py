@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.cart_page.cart_product_item import CartProductItem
@@ -10,6 +11,9 @@ from src.ui.pages.base import BasePage
 
 
 class CartPage(BasePage):
+    """
+    Класс страницы корзины
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -34,6 +38,7 @@ class CartPage(BasePage):
 
         self.footer = Footer(self.page)
 
+    @allure.step("Проверка видимости элементов страницы корзины")
     def check_visibility(self, *, is_empty: bool = False, is_free_delivery: bool = False):
         expect(self.page_title).to_be_visible()
         if is_empty:
@@ -47,18 +52,22 @@ class CartPage(BasePage):
             self.product_item.check_visibility()
             self.summary_info.check_visibility(page_name="cart", is_free_delivery=is_free_delivery)
 
+    @allure.step("Клик по кнопке перейти к товарам")
     def click_go_to_products_button(self):
         expect(self.go_to_products_button).to_be_enabled()
         self.go_to_products_button.click()
 
+    @allure.step("Клик по кнопке очистить корзину")
     def click_clear_cart_button(self):
         expect(self.clear_cart_button).to_be_enabled()
         self.clear_cart_button.click()
 
+    @allure.step("Проверка нотификации успешного удаления товара из корзины")
     def check_success_removing_notification(self):
         expect(self.remove_product_success_message).to_be_visible()
         expect(self.remove_product_success_message).to_have_text("Товар удален из корзины")
 
+    @allure.step("Проверка нотификации успешной очистки корзины")
     def check_success_cleaning_notification(self):
         expect(self.remove_product_success_message).to_be_visible()
         expect(self.remove_product_success_message).to_have_text("Корзина очищена")

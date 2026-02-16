@@ -1,11 +1,15 @@
 import re
 
+import allure
 from playwright.sync_api import Page, Locator, expect
 
 from src.ui.pages.base import BasePage
 
 
 class OrderDetailPage(BasePage):
+    """
+    Класс страницы деталей заказа
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -27,6 +31,7 @@ class OrderDetailPage(BasePage):
     def button(self, test_id: str) -> Locator:
         return self.page.get_by_test_id(f"{test_id}-button")
 
+    @allure.step("Проверка видимости элементов страницы деталей заказа")
     def check_visibility(self):
         expect(self.icon).to_be_visible()
         expect(self.title).to_be_visible()
@@ -71,6 +76,7 @@ class OrderDetailPage(BasePage):
         expect(self.button("email")).to_be_visible()
         expect(self.button("email")).to_have_text("support@example.com")
 
+    @allure.step("Клик по кнопке {test_id}")
     def click_button(self, test_id: str):
         expect(self.button(test_id)).to_be_visible()
         self.button(test_id).click()

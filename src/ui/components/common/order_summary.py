@@ -1,11 +1,15 @@
 import re
 
+import allure
 from playwright.sync_api import Page, Locator, expect
 
 from src.ui.components.base import BaseComponent
 
 
 class OrderSummary(BaseComponent):
+    """
+    Компонент итоговой информации о заказе
+    """
     def __init__(self, page: Page, root: Locator):
         super().__init__(page)
 
@@ -31,6 +35,7 @@ class OrderSummary(BaseComponent):
     def button(self, test_id: str) -> Locator:
         return self.root.get_by_test_id(f"{test_id}-button")
 
+    @allure.step("Проверка видимости элементов итоговой информации о заказе на странице {page_name}")
     def check_visibility(self, *, page_name: str, is_free_delivery: bool = False):
         if page_name == "cart":
             expect(self.title("summary")).to_be_visible()
@@ -111,6 +116,7 @@ class OrderSummary(BaseComponent):
             expect(self.button("back-to-cart")).to_be_visible()
             expect(self.button("back-to-cart")).to_have_text("Вернуться в корзину")
 
+    @allure.step("Клик по кнопке {test_id}")
     def click_button(self, test_id: str):
         expect(self.button(test_id)).to_be_visible()
         self.button(test_id).click()

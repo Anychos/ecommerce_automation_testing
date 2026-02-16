@@ -9,8 +9,6 @@ from src.ui.pages.base import BasePage
 class RegistrationPage(BasePage):
     """
     Класс страницы регистрации
-
-    Описывает ее локаторы, компоненты и методы взаимодействия
     """
     def __init__(self, page: Page):
         super().__init__(page)

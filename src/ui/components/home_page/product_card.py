@@ -1,11 +1,15 @@
 import re
 
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.base import BaseComponent
 
 
 class ProductCard(BaseComponent):
+    """
+    Компонент карточки товара на главной странице
+    """
     def __init__(self, page: Page, product_id: int):
         super().__init__(page)
 
@@ -20,6 +24,7 @@ class ProductCard(BaseComponent):
         self.add_to_cart_button = self.root.locator('[data-testid^="add-to-cart-button-"]')
         self.details_link = self.root.locator('[data-testid^="product-details-link-"]')
 
+    @allure.step("Проверка видимости элементов карточки товара")
     def check_visibility(self):
         expect(self.image).to_be_visible()
         expect(self.stock_badge).to_be_visible()
@@ -38,14 +43,18 @@ class ProductCard(BaseComponent):
         expect(self.details_link).to_be_visible()
         expect(self.details_link).to_have_text("Подробнее")
 
+    @allure.step("Клик по изображению товара")
     def click_image(self):
         self.image.click()
 
+    @allure.step("Клик по названию товара")
     def click_title(self):
         self.title.click()
 
+    @allure.step("Клик по кнопке подробнее")
     def click_details_link(self):
         self.details_link.click()
 
+    @allure.step("Клик по кнопке добавления товара в корзину")
     def click_add_to_cart_button(self):
         self.add_to_cart_button.click()

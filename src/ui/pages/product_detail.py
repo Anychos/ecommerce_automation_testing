@@ -1,3 +1,4 @@
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.common.footer import Footer
@@ -7,6 +8,9 @@ from src.ui.pages.base import BasePage
 
 
 class ProductDetailPage(BasePage):
+    """
+    Класс страницы деталей товара
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -20,15 +24,18 @@ class ProductDetailPage(BasePage):
 
         self.footer = Footer(self.page)
 
+    @allure.step("Проверка видимости элементов страницы деталей товара")
     def check_visibility(self, *, is_authorized: bool = False):
         expect(self.navigation_chain).to_be_visible()
         expect(self.navigation_chain_home_link).to_be_visible()
         expect(self.navigation_chain_current).to_be_visible()
         self.product_info_block.check_visibility(is_authorized=is_authorized)
 
+    @allure.step("Клик по ссылке домой")
     def click_home_link(self):
         self.navigation_chain_home_link.click()
 
+    @allure.step("Проверка нотификации успешного добавления товара в корзину")
     def check_add_to_cart_success_message(self):
         expect(self.add_to_cart_success_message).to_be_visible()
         expect(self.add_to_cart_success_message).to_have_text("Товар добавлен в корзину")

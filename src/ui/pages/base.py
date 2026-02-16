@@ -1,5 +1,6 @@
 import re
 
+import allure
 from playwright.sync_api import Page, expect
 
 
@@ -11,9 +12,11 @@ class BasePage:
 
         self.page = page
 
+    @allure.step("Открытие страницы {url}")
     def open_url(self, url: str):
         self.page.goto(url, wait_until="domcontentloaded")
 
+    @allure.step("Перезагрузка страницы")
     def reload_page(self):
         self.page.reload(wait_until="domcontentloaded")
 
@@ -47,12 +50,15 @@ class BasePage:
                 timeout=timeout
             )
 
+    @allure.step("Проверка что URL содержит {value}")
     def check_url_contains(self, value: str):
         self.check_current_url(value)
 
+    @allure.step("Проверка что URL соответствует {value}")
     def check_url_exact(self, value: str):
         self.check_current_url(value, exact=True)
 
+    @allure.step("Проверка что URL соответствует паттерну {pattern}")
     def check_url_matches(self, pattern: re.Pattern):
         self.check_current_url(pattern)
 

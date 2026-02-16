@@ -1,11 +1,15 @@
 import re
 
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.base import BaseComponent
 
 
 class OrderItem(BaseComponent):
+    """
+    Компонент элемента списка заказов
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -17,6 +21,7 @@ class OrderItem(BaseComponent):
         self.status = self.root.get_by_test_id("default-status-badge")
         self.detail_button = self.root.locator("[data-testid^=view-order-button-]")
 
+    @allure.step("Проверка видимости элементов элемента списка заказов")
     def check_visibility(self):
         expect(self.order_id).to_be_visible()
         expect(self.order_id).to_have_text(re.compile(r"#\d+"))
@@ -28,6 +33,7 @@ class OrderItem(BaseComponent):
         expect(self.detail_button).to_be_visible()
         expect(self.detail_button).to_have_text("Просмотр")
 
+    @allure.step("Клик по кнопке просмотра заказа")
     def click_detail_button(self):
         expect(self.detail_button).to_be_visible()
         self.detail_button.click()

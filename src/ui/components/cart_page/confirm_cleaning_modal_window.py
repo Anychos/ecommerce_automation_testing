@@ -1,9 +1,13 @@
+import allure
 from playwright.sync_api import Page, expect
 
 from src.ui.components.base import BaseComponent
 
 
 class ConfirmCleaningModalWindow(BaseComponent):
+    """
+    Компонент модального окна подтверждения очистки корзины
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -16,6 +20,7 @@ class ConfirmCleaningModalWindow(BaseComponent):
         self.cancel_button = self.root.get_by_test_id("cancel-clear-button")
         self.confirm_button = self.root.get_by_test_id("confirm-clear-button")
 
+    @allure.step("Проверка видимости элементов модального окна")
     def check_visibility(self):
         expect(self.title).to_be_visible()
         expect(self.close_button).to_be_visible()
@@ -25,14 +30,17 @@ class ConfirmCleaningModalWindow(BaseComponent):
         expect(self.cancel_button).to_be_visible()
         expect(self.confirm_button).to_be_visible()
 
+    @allure.step("Клик на кнопку закрытия модального окна")
     def click_close_button(self):
         self.close_button.click()
         expect(self.root).not_to_be_visible()
 
+    @allure.step("Клик на кнопку отмены очистки корзины")
     def click_cancel_button(self):
         self.cancel_button.click()
         expect(self.root).not_to_be_visible()
 
+    @allure.step("Клик на кнопку подтверждения очистки корзины")
     def click_confirm_button(self):
         self.confirm_button.click()
 

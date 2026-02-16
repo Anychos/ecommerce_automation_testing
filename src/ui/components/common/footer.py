@@ -1,9 +1,13 @@
+import allure
 from playwright.sync_api import Page, expect, Locator
 
 from src.ui.components.base import BaseComponent
 
 
 class Footer(BaseComponent):
+    """
+    Компонент футера
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -19,6 +23,7 @@ class Footer(BaseComponent):
     def menu_link(self, section_name: str) -> Locator:
         return self.page.get_by_test_id(f"{section_name}-links").locator("li").first
 
+    @allure.step("Проверка видимости элементов футера")
     def check_visibility(self):
         expect(self.menu_section("contacts")).to_be_visible()
         expect(self.menu_title("contacts")).to_be_visible()
@@ -32,5 +37,6 @@ class Footer(BaseComponent):
         expect(self.menu_title("legal")).to_be_visible()
         expect(self.menu_link("legal")).to_be_visible()
 
+    @allure.step("Клик по ссылке в футере")
     def click_link(self, section_name: str):
         self.menu_link(section_name).click()

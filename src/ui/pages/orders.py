@@ -1,5 +1,6 @@
 import re
 
+import allure
 from playwright.sync_api import Page, Locator, expect
 
 from src.ui.components.common.empty_view import EmptyView
@@ -8,6 +9,9 @@ from src.ui.pages.base import BasePage
 
 
 class OrdersListPage(BasePage):
+    """
+    Класс страницы списка заказов
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -23,6 +27,7 @@ class OrdersListPage(BasePage):
     def column_name(self, test_id: str) -> Locator:
         return self.page.get_by_test_id(f"order-{test_id}-header")
 
+    @allure.step("Проверка видимости элементов страницы списка заказов")
     def check_visibility(self, *, is_empty: bool = False):
         expect(self.page_title).to_be_visible()
         expect(self.page_title).to_have_text("Мои заказы")

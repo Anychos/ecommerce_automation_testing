@@ -1,9 +1,13 @@
+import allure
 from playwright.sync_api import Page, expect, Locator
 
 from src.ui.components.base import BaseComponent
 
 
 class DeliveryDetailsForm(BaseComponent):
+    """
+    Компонент формы ввода данных для доставки
+    """
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -28,6 +32,7 @@ class DeliveryDetailsForm(BaseComponent):
     def radio_button(self, test_id: str) -> Locator:
         return self.page.get_by_test_id(f"{test_id}-radio")
 
+    @allure.step("Проверка видимости элементов формы")
     def check_visibility(self):
         expect(self.title("form")).to_be_visible()
         expect(self.title("form")).to_have_text("Данные для доставки")
@@ -80,6 +85,7 @@ class DeliveryDetailsForm(BaseComponent):
         expect(self.field_label("terms")).to_be_visible()
         expect(self.field_label("terms")).to_have_text("Я соглашаюсь с условиями обработки персональных данных и политикой конфиденциальности *")
 
+    @allure.step("Заполнение формы")
     def fill(self, *, name: str, phone: str, email: str, address: str, zip: str = "", comment: str = "", is_full_data: bool = False):
         expect(self.field_input("name")).to_be_editable()
         self.field_input("name").fill(name)
@@ -100,6 +106,7 @@ class DeliveryDetailsForm(BaseComponent):
             expect(self.comment_input).to_be_editable()
             self.comment_input.fill(comment)
 
+    @allure.step("Проверка заполнения формы")
     def check_filled(self, *, name: str, phone: str, email: str, address: str, zip: str = "", comment: str = "", is_full_data: bool = False):
         if is_full_data:
             expect(self.field_input("name")).to_have_value(name)
@@ -110,11 +117,13 @@ class DeliveryDetailsForm(BaseComponent):
             expect(self.field_input("zip")).to_have_value(zip)
             expect(self.comment_input).to_have_value(comment)
 
+    @allure.step("Выбор способа оплаты")
     def select_payment_method(self, payment_method: str):
         expect(self.radio_button(payment_method)).to_be_visible()
         self.radio_button(payment_method).click()
         expect(self.radio_button(payment_method)).to_be_checked()
 
+    @allure.step("Клик по чекбоксу согласия на обработку персональных данных")
     def click_terms_checkbox(self):
         expect(self.terms_checkbox).to_be_visible()
         self.terms_checkbox.click()
