@@ -8,6 +8,7 @@ class ConfirmCleaningModalWindow(BaseComponent):
     """
     Компонент модального окна подтверждения очистки корзины
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -21,7 +22,11 @@ class ConfirmCleaningModalWindow(BaseComponent):
         self.confirm_button = self.root.get_by_test_id("confirm-clear-button")
 
     @allure.step("Проверка видимости элементов модального окна")
-    def check_visibility(self):
+    def check_visibility(self) -> None:
+        """
+        Проверяет видимость всех элементов модального окна
+        """
+
         expect(self.title).to_be_visible()
         expect(self.close_button).to_be_visible()
         expect(self.message).to_be_visible()
@@ -31,16 +36,29 @@ class ConfirmCleaningModalWindow(BaseComponent):
         expect(self.confirm_button).to_be_visible()
 
     @allure.step("Клик на кнопку закрытия модального окна")
-    def click_close_button(self):
+    def click_close_button(self) -> None:
+        """
+        Кликает по кнопке закрытия модального окна
+        """
+
+        expect(self.close_button).to_be_enabled()
         self.close_button.click()
         expect(self.root).not_to_be_visible()
 
     @allure.step("Клик на кнопку отмены очистки корзины")
-    def click_cancel_button(self):
+    def click_cancel_button(self) -> None:
+        """
+        Кликает по кнопке отмены очистки корзины
+        """
+
         self.cancel_button.click()
         expect(self.root).not_to_be_visible()
 
     @allure.step("Клик на кнопку подтверждения очистки корзины")
-    def click_confirm_button(self):
+    def click_confirm_button(self) -> None:
+        """
+        Кликает по кнопке подтверждения очистки корзины
+        """
+
         self.confirm_button.click()
 

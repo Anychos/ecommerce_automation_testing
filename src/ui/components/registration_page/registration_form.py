@@ -8,6 +8,7 @@ class RegistrationForm(BaseComponent):
     """
     Компонент формы регистрации
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -23,7 +24,11 @@ class RegistrationForm(BaseComponent):
         return self.page.locator(f"input#{input_id}")
 
     @allure.step("Проверка видимости элементов формы регистрации")
-    def check_visibility(self):
+    def check_visibility(self) -> None:
+        """
+        Проверяет видимость элементов формы регистрации
+        """
+
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text("Регистрация")
 
@@ -54,7 +59,24 @@ class RegistrationForm(BaseComponent):
         expect(self.already_registered_text).to_have_text("Уже есть аккаунт? Войдите")
 
     @allure.step("Заполнение формы регистрации")
-    def fill(self, *, email: str, name: str, phone: str, password: str, confirm_password: str):
+    def fill(self,
+             *,
+             email: str,
+             name: str,
+             phone: str,
+             password: str,
+             confirm_password: str
+             ) -> None:
+        """
+        Заполняет форму регистрации
+
+        :param email: Email пользователя
+        :param name: Имя пользователя
+        :param phone: Телефон пользователя
+        :param password: Пароль пользователя
+        :param confirm_password: Подтверждение пароля
+        """
+
         expect(self.input("email")).to_be_editable()
         self.input("email").fill(email)
 
@@ -71,7 +93,24 @@ class RegistrationForm(BaseComponent):
         self.input("confirm_password").fill(confirm_password)
 
     @allure.step("Проверка заполнения формы регистрации")
-    def check_filled(self, *, email: str, name: str, phone: str, password: str, confirm_password: str):
+    def check_filled(self,
+                     *,
+                     email: str,
+                     name: str,
+                     phone: str,
+                     password: str,
+                     confirm_password: str
+                     ) -> None:
+        """
+        Проверяет заполнение формы регистрации
+
+        :param email: Email пользователя
+        :param name: Имя пользователя
+        :param phone: Телефон пользователя
+        :param password: Пароль пользователя
+        :param confirm_password: Подтверждение пароля
+        """
+
         expect(self.input("email")).to_have_value(email)
         expect(self.input("name")).to_have_value(name)
         expect(self.input("phone")).to_have_value(phone)
@@ -79,9 +118,17 @@ class RegistrationForm(BaseComponent):
         expect(self.input("confirm_password")).to_have_value(confirm_password)
 
     @allure.step("Клик по кнопке зарегистрироваться")
-    def click_registration_button(self):
+    def click_registration_button(self) -> None:
+        """
+        Кликает на кнопку регистрации
+        """
+
         self.registration_button.click()
 
     @allure.step("Клик по ссылке войдите")
-    def click_login_link(self):
+    def click_login_link(self) -> None:
+        """
+        Кликает на ссылку входа
+        """
+
         self.login_link.click()

@@ -8,6 +8,7 @@ class Header(BaseComponent):
     """
     Компонент хедера
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -22,7 +23,16 @@ class Header(BaseComponent):
         return self.user_profile_dropdown_menu.get_by_test_id(f"dropdown-{link_name}-item")
 
     @allure.step("Проверка видимости элементов хедера")
-    def check_visibility(self, *, is_logged_in: bool = False):
+    def check_visibility(self,
+                         *,
+                         is_logged_in: bool = False
+                         ) -> None:
+        """
+        Проверяет видимость элементов хедера
+
+        :param is_logged_in: Флаг авторизации пользователя
+        """
+
         expect(self.shop_logo).to_be_visible()
         expect(self.nav_link("home")).to_be_visible()
         expect(self.nav_link("home")).to_have_text("Главная")
@@ -40,20 +50,40 @@ class Header(BaseComponent):
             expect(self.nav_link("register")).to_have_text("Регистрация")
 
     @allure.step("Клик по логотипу магазина")
-    def click_shop_logo(self):
+    def click_shop_logo(self) -> None:
+        """
+        Кликает по логотипу магазина
+        """
+
         self.shop_logo.click()
 
     @allure.step("Клик по ссылке в хедере")
-    def click_nav_link(self, link_name: str):
+    def click_nav_link(self, link_name: str) -> None:
+        """
+        Кликает по ссылке в хедере
+
+        :param link_name: Название ссылки
+        """
+
         self.nav_link(link_name).click()
 
     @allure.step("Открытие дропдаун меню профиля пользователя")
-    def click_user_profile_dropdown_button(self):
+    def click_user_profile_dropdown_button(self) -> None:
+        """
+        Кликает по кнопке открытия дропдаун меню профиля пользователя
+        """
+
         self.user_profile_dropdown_button.click()
         expect(self.user_profile_dropdown_menu).to_be_visible()
 
     @allure.step("Клик по ссылке в дропдаун меню профиля пользователя")
-    def click_dropdown_menu_link(self, link_name: str):
+    def click_dropdown_menu_link(self, link_name: str) -> None:
+        """
+        Кликает по ссылке в дропдаун меню профиля пользователя
+
+        :param link_name: Название ссылки
+        """
+
         expect(self.dropdown_menu_link(link_name)).to_be_visible()
         self.dropdown_menu_link(link_name).click()
 

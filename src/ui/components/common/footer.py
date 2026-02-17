@@ -8,6 +8,7 @@ class Footer(BaseComponent):
     """
     Компонент футера
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -24,7 +25,11 @@ class Footer(BaseComponent):
         return self.page.get_by_test_id(f"{section_name}-links").locator("li").first
 
     @allure.step("Проверка видимости элементов футера")
-    def check_visibility(self):
+    def check_visibility(self) -> None:
+        """
+        Проверяет видимость элементов футера
+        """
+
         expect(self.menu_section("contacts")).to_be_visible()
         expect(self.menu_title("contacts")).to_be_visible()
         expect(self.contact_menu_item()).to_be_visible()
@@ -38,5 +43,11 @@ class Footer(BaseComponent):
         expect(self.menu_link("legal")).to_be_visible()
 
     @allure.step("Клик по ссылке в футере")
-    def click_link(self, section_name: str):
+    def click_link(self, section_name: str) -> None:
+        """
+        Кликает на ссылку в определенной секции футера
+
+        :param section_name: Название секции
+        """
+
         self.menu_link(section_name).click()

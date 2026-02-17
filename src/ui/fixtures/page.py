@@ -47,7 +47,10 @@ def cart_page(function_chromium_page_with_state: Page) -> CartPage:
 
 
 @pytest.fixture
-def cart_page_with_product(create_available_product: CreateProductFixture, home_page_with_state: HomePage, cart_page: CartPage) -> CartPage:
+def cart_page_with_product(create_available_product: CreateProductFixture,
+                           home_page_with_state: HomePage,
+                           cart_page: CartPage
+                           ) -> CartPage:
     home_page_with_state.open_url(Route.Home)
 
     home_page_with_state.get_product_card(create_available_product.product_id).click_add_to_cart_button()
@@ -87,7 +90,9 @@ def order_detail_page(order_list_page_with_order: OrdersListPage) -> OrderDetail
 
 
 @pytest.fixture
-def order_list_page_with_order(checkout_page: CheckoutPage, order_list_page: OrdersListPage) -> OrdersListPage:
+def order_list_page_with_order(checkout_page: CheckoutPage,
+                               order_list_page: OrdersListPage
+                               ) -> OrdersListPage:
     checkout_page.open_url(Route.Checkout)
 
     checkout_page.delivery_details_form.fill(

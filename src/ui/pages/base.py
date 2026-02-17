@@ -6,27 +6,37 @@ from playwright.sync_api import Page, expect
 
 class BasePage:
     """
-    Базовый класс для работы со страницами
+    Базовый класс для работы со страницей
     """
+
     def __init__ (self, page: Page):
 
         self.page = page
 
     @allure.step("Открытие страницы {url}")
-    def open_url(self, url: str):
+    def open_url(self, url: str) -> None:
+        """
+        Открытие страницы
+
+        :param url: URL страницы
+        """
+
         self.page.goto(url, wait_until="domcontentloaded")
 
     @allure.step("Перезагрузка страницы")
-    def reload_page(self):
+    def reload_page(self) -> None:
+        """
+        Перезагружает страницу
+        """
+
         self.page.reload(wait_until="domcontentloaded")
 
-    def check_current_url(
-        self,
-        expected: str | re.Pattern,
-        *,
-        exact: bool = False,
-        timeout: int = 5000
-    ) -> None:
+    def check_current_url(self,
+                          expected: str | re.Pattern,
+                          *,
+                          exact: bool = False,
+                          timeout: int = 5000
+                          ) -> None:
         """
         Проверяет текущий URL страницы
 
@@ -51,14 +61,32 @@ class BasePage:
             )
 
     @allure.step("Проверка что URL содержит {value}")
-    def check_url_contains(self, value: str):
+    def check_url_contains(self, value: str) -> None:
+        """
+        Проверяет что текущий URL содержит заданный текст
+
+        :param value: Ожидаемое в URL значение
+        """
+
         self.check_current_url(value)
 
     @allure.step("Проверка что URL соответствует {value}")
-    def check_url_exact(self, value: str):
-        self.check_current_url(value, exact=True)
+    def check_url_exact(self, url: str) -> None:
+        """
+        Проверяет что текущий URL соответствует заданному значению
+
+        :param url: Ожидаемый URL
+        """
+
+        self.check_current_url(url, exact=True)
 
     @allure.step("Проверка что URL соответствует паттерну {pattern}")
-    def check_url_matches(self, pattern: re.Pattern):
+    def check_url_matches(self, pattern: re.Pattern) -> None:
+        """
+        Проверяет что текущий URL соответствует заданному паттерну
+
+        :param pattern: Ожидаемый в URL паттерн
+        """
+
         self.check_current_url(pattern)
 

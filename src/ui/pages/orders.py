@@ -12,6 +12,7 @@ class OrdersListPage(BasePage):
     """
     Класс страницы списка заказов
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -28,7 +29,16 @@ class OrdersListPage(BasePage):
         return self.page.get_by_test_id(f"order-{test_id}-header")
 
     @allure.step("Проверка видимости элементов страницы списка заказов")
-    def check_visibility(self, *, is_empty: bool = False):
+    def check_visibility(self,
+                         *,
+                         is_empty: bool = False
+                         ) -> None:
+        """
+        Проверяет видимость элементов страницы списка заказов
+
+        :param is_empty: Флаг пустого списка заказов
+        """
+
         expect(self.page_title).to_be_visible()
         expect(self.page_title).to_have_text("Мои заказы")
 

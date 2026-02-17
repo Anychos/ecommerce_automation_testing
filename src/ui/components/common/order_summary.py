@@ -8,8 +8,9 @@ from src.ui.components.base import BaseComponent
 
 class OrderSummary(BaseComponent):
     """
-    Компонент итоговой информации о заказе
+    Компонент блока с итоговой информацией о заказе
     """
+
     def __init__(self, page: Page, root: Locator):
         super().__init__(page)
 
@@ -36,7 +37,18 @@ class OrderSummary(BaseComponent):
         return self.root.get_by_test_id(f"{test_id}-button")
 
     @allure.step("Проверка видимости элементов итоговой информации о заказе на странице {page_name}")
-    def check_visibility(self, *, page_name: str, is_free_delivery: bool = False):
+    def check_visibility(self,
+                         *,
+                         page_name: str,
+                         is_free_delivery: bool = False
+                         ) -> None:
+        """
+        Проверяет видимость элементов блока с итоговой информацией о заказе
+
+        :param page_name: Название страницы
+        :param is_free_delivery: Флаг бесплатной доставки
+        """
+
         if page_name == "cart":
             expect(self.title("summary")).to_be_visible()
             expect(self.title("summary")).to_have_text("Итого")
@@ -117,6 +129,12 @@ class OrderSummary(BaseComponent):
             expect(self.button("back-to-cart")).to_have_text("Вернуться в корзину")
 
     @allure.step("Клик по кнопке {test_id}")
-    def click_button(self, test_id: str):
+    def click_button(self, test_id: str) -> None:
+        """
+        Кликает по кнопке
+
+        :param test_id: ID с названием кнопки
+        """
+
         expect(self.button(test_id)).to_be_visible()
         self.button(test_id).click()

@@ -11,6 +11,7 @@ class ProductDetailPage(BasePage):
     """
     Класс страницы деталей товара
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -25,18 +26,35 @@ class ProductDetailPage(BasePage):
         self.footer = Footer(self.page)
 
     @allure.step("Проверка видимости элементов страницы деталей товара")
-    def check_visibility(self, *, is_authorized: bool = False):
+    def check_visibility(self,
+                         *,
+                         is_authorized: bool = False
+                         ) -> None:
+        """
+        Проверяет видимость элементов страницы деталей товара
+
+        :param is_authorized: Флаг авторизации пользователя
+        """
+
         expect(self.navigation_chain).to_be_visible()
         expect(self.navigation_chain_home_link).to_be_visible()
         expect(self.navigation_chain_current).to_be_visible()
         self.product_info_block.check_visibility(is_authorized=is_authorized)
 
     @allure.step("Клик по ссылке домой")
-    def click_home_link(self):
+    def click_home_link(self) -> None:
+        """
+        Кликает по ссылке домой
+        """
+
         self.navigation_chain_home_link.click()
 
     @allure.step("Проверка нотификации успешного добавления товара в корзину")
-    def check_add_to_cart_success_message(self):
+    def check_add_to_cart_success_message(self) -> None:
+        """
+        Проверяет нотификацию успешного добавления товара в корзину
+        """
+
         expect(self.add_to_cart_success_message).to_be_visible()
         expect(self.add_to_cart_success_message).to_have_text("Товар добавлен в корзину")
 

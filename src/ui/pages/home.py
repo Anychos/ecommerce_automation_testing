@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, Locator
 
 from src.ui.components.common.empty_view import EmptyView
 from src.ui.components.common.footer import Footer
@@ -12,6 +12,7 @@ class HomePage(BasePage):
     """
     Класс главной страницы
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -31,11 +32,20 @@ class HomePage(BasePage):
     def get_product_card(self, product_id: int) -> ProductCard:
         return ProductCard(self.page, product_id)
 
-    def add_to_cart_notification(self, alert_type: str):
+    def add_to_cart_notification(self, alert_type: str ) -> Locator:
         return self.page.locator(f".alert-{alert_type}").first
 
     @allure.step("Проверка видимости элементов главной страницы")
-    def check_visibility(self, *, is_empty: bool = False):
+    def check_visibility(self,
+                         *,
+                         is_empty: bool = False
+                         ) -> None:
+        """
+        Проверяет видимость элементов главной страницы
+
+        :param is_empty: Флаг пустого списка товаров
+        """
+
         expect(self.hero_title).to_be_visible()
         expect(self.hero_text).to_be_visible()
 
@@ -48,27 +58,47 @@ class HomePage(BasePage):
             self.get_product_card(1).check_visibility()
 
     @allure.step("Проверка нотификации успешной регистрации")
-    def check_success_registration_message(self):
+    def check_success_registration_message(self) -> None:
+        """
+        Проверяет нотификацию успешной регистрации
+        """
+
         expect(self.success_message).to_be_visible()
         expect(self.success_message).to_have_text("Регистрация успешна!")
 
     @allure.step("Проверка нотификации успешного входа")
-    def check_success_login_message(self):
+    def check_success_login_message(self) -> None:
+        """
+        Проверяет нотификацию успешного входа
+        """
+
         expect(self.success_message).to_be_visible()
         expect(self.success_message).to_have_text("Вход выполнен успешно!")
 
     @allure.step("Проверка нотификации успешного добавления товара в корзину")
-    def check_add_to_cart_success_notification(self):
+    def check_add_to_cart_success_notification(self) -> None:
+        """
+        Проверяет нотификацию успешного добавления товара в корзину
+        """
+
         expect(self.add_to_cart_notification("success")).to_be_visible()
         expect(self.add_to_cart_notification("success")).to_have_text("Товар добавлен в корзину")
 
     @allure.step("Проверка нотификации неуспешного добавления товара в корзину")
-    def check_add_to_cart_fail_notification(self):
+    def check_add_to_cart_fail_notification(self) -> None:
+        """
+        Проверяет нотификацию неуспешного добавления товара в корзину
+        """
+
         expect(self.add_to_cart_notification("warning")).to_be_visible()
         expect(self.add_to_cart_notification("warning")).to_have_text("Необходимо авторизоваться")
 
     @allure.step("Проверка нотификации успешного выхода из системы")
-    def check_success_logout_message(self):
+    def check_success_logout_message(self) -> None:
+        """
+        Проверяет нотификацию успешного выхода из системы
+        """
+
         expect(self.success_logout_message).to_be_visible()
         expect(self.success_logout_message).to_have_text("Вы вышли из системы")
 

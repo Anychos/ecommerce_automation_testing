@@ -10,6 +10,7 @@ class ProductCard(BaseComponent):
     """
     Компонент карточки товара на главной странице
     """
+
     def __init__(self, page: Page, product_id: int):
         super().__init__(page)
 
@@ -25,7 +26,11 @@ class ProductCard(BaseComponent):
         self.details_link = self.root.locator('[data-testid^="product-details-link-"]')
 
     @allure.step("Проверка видимости элементов карточки товара")
-    def check_visibility(self):
+    def check_visibility(self) -> None:
+        """
+        Проверяет видимость элементов карточки товара
+        """
+
         expect(self.image).to_be_visible()
         expect(self.stock_badge).to_be_visible()
         expect(self.stock_badge).to_have_text("В наличии")
@@ -44,17 +49,33 @@ class ProductCard(BaseComponent):
         expect(self.details_link).to_have_text("Подробнее")
 
     @allure.step("Клик по изображению товара")
-    def click_image(self):
+    def click_image(self) -> None:
+        """
+        Кликает по изображению товара
+        """
+
         self.image.click()
 
     @allure.step("Клик по названию товара")
-    def click_title(self):
+    def click_title(self) -> None:
+        """
+        Кликает по названию товара
+        """
+
         self.title.click()
 
     @allure.step("Клик по кнопке подробнее")
-    def click_details_link(self):
+    def click_details_link(self) -> None:
+        """
+        Кликает по кнопке подробнее
+        """
+
         self.details_link.click()
 
     @allure.step("Клик по кнопке добавления товара в корзину")
-    def click_add_to_cart_button(self):
+    def click_add_to_cart_button(self) -> None:
+        """
+        Кликает по кнопке добавления товара в корзину
+        """
+
         self.add_to_cart_button.click()

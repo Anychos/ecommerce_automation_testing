@@ -8,6 +8,7 @@ class LoginForm(BaseComponent):
     """
     Компонент формы логина
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -25,7 +26,11 @@ class LoginForm(BaseComponent):
         return self.page.locator(f'input#{input_id}')
 
     @allure.step("Проверка видимости элементов формы логина")
-    def check_visibility(self):
+    def check_visibility(self) -> None:
+        """
+        Проверка видимости элементов формы логина
+        """
+
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text("Вход в систему")
 
@@ -49,7 +54,18 @@ class LoginForm(BaseComponent):
         expect(self.registration_text).to_have_text("Нет аккаунта? Зарегистрируйтесь")
 
     @allure.step("Заполнение формы логина")
-    def fill(self, *, email: str, password: str):
+    def fill(self,
+             *,
+             email: str,
+             password: str
+             ) -> None:
+        """
+        Заполняет форму логина
+
+        :param email: Email пользователя
+        :param password: Пароль пользователя
+        """
+
         expect(self.input("email")).to_be_editable()
         self.input("email").fill(email)
 
@@ -57,25 +73,57 @@ class LoginForm(BaseComponent):
         self.input("password").fill(password)
 
     @allure.step("Проверка заполнения формы логина")
-    def check_filled(self, *, email: str, password: str):
+    def check_filled(self,
+                     *,
+                     email: str,
+                     password: str
+                     ) -> None:
+        """
+        Проверяет заполнение формы логина
+
+        :param email: Email пользователя
+        :param password: Пароль пользователя
+        """
+
         expect(self.input("email")).to_have_value(email)
         expect(self.input("password")).to_have_value(password)
 
     @allure.step("Клик по чекбоксу запомнить меня")
-    def click_remember_me_checkbox(self):
+    def click_remember_me_checkbox(self) -> None:
+        """
+        Кликает по чекбоксу запомнить меня
+        """
+
         self.remember_me_checkbox.click()
 
     @allure.step("Проверка состояния чекбокса запомнить меня")
-    def check_remember_me_checkbox(self, *, is_checked: bool = False):
+    def check_remember_me_checkbox(self,
+                                   *,
+                                   is_checked: bool = False
+                                   ) -> None:
+        """
+        Проверяет состояние чекбокса запомнить меня
+
+        :param is_checked: Флаг активности чекбокса
+        """
+
         if is_checked:
             expect(self.remember_me_checkbox).to_be_checked()
         else:
             expect(self.remember_me_checkbox).not_to_be_checked()
 
     @allure.step("Клик по кнопке войти")
-    def click_login_button(self):
+    def click_login_button(self) -> None:
+        """
+        Кликает по кнопке войти
+        """
+
         self.login_button.click()
 
     @allure.step("Клик по ссылке регистрации")
-    def click_registration_link(self):
+    def click_registration_link(self) -> None:
+        """
+        Кликает по ссылке регистрации
+        """
+
         self.registration_link.click()

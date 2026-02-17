@@ -10,6 +10,7 @@ class OrderDetailPage(BasePage):
     """
     Класс страницы деталей заказа
     """
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -33,6 +34,10 @@ class OrderDetailPage(BasePage):
 
     @allure.step("Проверка видимости элементов страницы деталей заказа")
     def check_visibility(self):
+        """
+        Проверяет видимость элементов страницы деталей заказа
+        """
+
         expect(self.icon).to_be_visible()
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text("Заказ успешно оформлен!")
@@ -77,7 +82,13 @@ class OrderDetailPage(BasePage):
         expect(self.button("email")).to_have_text("support@example.com")
 
     @allure.step("Клик по кнопке {test_id}")
-    def click_button(self, test_id: str):
+    def click_button(self, test_id: str) -> None:
+        """
+        Кликает по кнопке
+
+        :param test_id: ID с названием кнопки
+        """
+
         expect(self.button(test_id)).to_be_visible()
         self.button(test_id).click()
 
