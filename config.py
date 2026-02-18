@@ -13,6 +13,12 @@ class Browser(str, Enum):
     SAFARI = "webkit"
 
 
+class BrowserViewport(BaseModel):
+    width: int
+    height: int
+    device_scale_factor: float = 1.0
+
+
 class TestUser(BaseModel):
     email: str
     name: str
@@ -22,9 +28,6 @@ class TestUser(BaseModel):
 
 
 class HTTPClientSettings(BaseModel):
-    """
-    Настройки HTTP клиента
-    """
     base_url: HttpUrl
     timeout: int
 
@@ -55,6 +58,7 @@ class Settings(BaseSettings):
     base_url: HttpUrl
     headless: bool
     browser: List[Browser]
+    browser_viewport: BrowserViewport
     session_browser_state_file: FilePath
     function_browser_state_file: FilePath
     test_user: TestUser

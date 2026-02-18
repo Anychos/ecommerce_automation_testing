@@ -11,3 +11,6 @@ class Route(str, Enum):
     OrdersList = "/orders"
     OrderDetail = "/orders/"
     UserProfile = "/profile"
+
+    def __str__(self):
+        return self.value

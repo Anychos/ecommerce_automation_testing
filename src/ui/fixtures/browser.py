@@ -17,8 +17,10 @@ def chromium_page(playwright: Playwright) -> Page:
     :return: Объект Page для взаимодействия со страницей
     """
 
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context(base_url=settings.get_base_url())
+    browser = playwright.chromium.launch(headless=settings.headless)
+    context = browser.new_context(base_url=settings.get_base_url(),
+                                  viewport=settings.browser_viewport.model_dump()
+                                  )
     page = context.new_page()
     yield page
     context.close()
@@ -34,7 +36,7 @@ def session_get_browser_state(playwright: Playwright) -> None:
     :return: Файл с состоянием браузера
     """
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=settings.headless)
     context = browser.new_context(base_url=settings.get_base_url())
     page = context.new_page()
     registration_page = RegistrationPage(page)
@@ -67,7 +69,7 @@ def function_get_browser_state(playwright: Playwright, user_data_function: UserD
     :return: Файл с состоянием браузера
     """
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=settings.headless)
     context = browser.new_context(base_url=settings.get_base_url())
     page = context.new_page()
     registration_page = RegistrationPage(page)
@@ -100,10 +102,11 @@ def session_chromium_page_with_state(session_get_browser_state, playwright: Play
     :return: Объект Page для взаимодействия со страницей
     """
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=settings.headless)
     context = browser.new_context(
         base_url=settings.get_base_url(),
-        storage_state=settings.session_browser_state_file
+        storage_state=settings.session_browser_state_file,
+        viewport=settings.browser_viewport.model_dump()
     )
     page = context.new_page()
     yield page
@@ -121,10 +124,11 @@ def function_chromium_page_with_state(function_get_browser_state, playwright: Pl
     :return: Объект Page для взаимодействия со страницей
     """
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=settings.headless)
     context = browser.new_context(
         base_url=settings.get_base_url(),
-        storage_state=settings.function_browser_state_file
+        storage_state=settings.function_browser_state_file,
+        viewport=settings.browser_viewport.model_dump()
     )
     page = context.new_page()
     yield page

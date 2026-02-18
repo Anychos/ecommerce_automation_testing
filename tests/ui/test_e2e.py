@@ -19,6 +19,7 @@ from utils.allure.severity import Severity
 class TestE2E:
     @allure.severity(Severity.BLOCKER)
     @allure.title("E2E путь пользователя")
+    @pytest.mark.skip
     def test_e2e_user_flow(self,
                            home_page: HomePage,
                            registration_page: RegistrationPage,

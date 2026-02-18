@@ -1,0 +1,118 @@
+name: Ecommerce Shop Test Automation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U test_user -d test_db"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Получение репозитория
+        uses: actions/checkout@v6
+
+      - name: Установка Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.13
+
+      - name: Клонирование репозитория с сервером
+        run: git clone https://github.com/Anychos/practice_api_test_server.git
+
+      - name: Установка зависимостей сервера
+        run: |
+          cd practice_api_test_server
+          pip install -r requirements.txt
+
+      - name: Применение миграций
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          ADMIN_EMAIL: test_admin@mail.ru
+          ADMIN_PASSWORD: test_admin_password
+          ADMIN_NAME: Admin
+          ADMIN_PHONE: +71234567890
+        run: |
+          cd practice_api_test_server
+          alembic upgrade head
+
+      - name: Запуск сервера
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          HTTP_CLIENT.BASE_URL: http://localhost:8080
+          HTTP_CLIENT.TIMEOUT: 15
+        run: |
+          cd practice_api_test_server
+          python app.py &
+
+      - name: Ожидание старта сервера
+        run: |
+          for i in {1..20}; do
+            curl -s http://localhost:8080/health && exit 0
+            sleep 1
+          done
+          exit 1
+
+      - name: Клонирование репозитория с frontend
+        run: git clone https://github.com/Anychos/practice_ui_test_server.git
+
+      - name: Установка зависимостей сервера
+        run: |
+          cd test_ui_server_3
+          pip install -r requirements.txt
+
+      - name: Запуск сервера c frontend
+        env:
+          API_BASE_URL: http://localhost:8080
+          SECRET_KEY: your-secret-key-here-change-me
+        run: |
+          cd test_ui_server_3
+          python app.py &
+
+      - name: Установка зависимостей для тестов
+        run: pip install -r requirements.txt
+
+      - name: Запуск тестов
+        run: pytest -m regression --alluredir=allure-results --numprocesses=4 --reruns 2 --reruns-delay 3
+
+      - name: Получение истории Allure отчетов
+        uses: actions/checkout@v6
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Генерация Allure отчета с историей
+        uses: simple-elf/allure-report-action@v1.13
+        if: always()
+        continue-on-error: true
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+
+      - name: Публикация Allure отчета
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-history
+          publish_branch: gh-pages

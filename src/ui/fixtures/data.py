@@ -8,8 +8,6 @@ from src.ui.tools.data_generator import fake_ru
 def user_data_function() -> UserData:
     """
     Возвращает тестовые данные пользователя в пределах функции
-
-    :return: Готовые для использования данные пользователя
     """
 
     password = fake_ru.password()
@@ -26,8 +24,6 @@ def user_data_function() -> UserData:
 def user_data_session() -> UserData:
     """
     Возвращает тестовые данные пользователя в пределах сессии
-
-    :return: Готовые для использования данные пользователя
     """
 
     password = fake_ru.password()
