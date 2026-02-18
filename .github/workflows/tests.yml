@@ -85,7 +85,7 @@ jobs:
           API_BASE_URL: http://localhost:8080
           SECRET_KEY: your-secret-key-here-change-me
         run: |
-          cd test_ui_server_3
+          cd practice_ui_test_server
           python app.py &
 
       - name: Установка зависимостей для тестов
