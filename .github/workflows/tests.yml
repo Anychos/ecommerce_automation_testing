@@ -91,6 +91,39 @@ jobs:
       - name: Установка зависимостей для тестов
         run: pip install -r requirements.txt
 
+      - name: Создание .env файла для тестов
+        run: |
+          cat <<EOF > .env
+          BASE_URL=http://127.0.0.1:5000
+          HEADLESS=true
+          BROWSER=["chromium"]
+          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
+          
+          SESSION_BROWSER_STATE_FILE=session-browser-state.json
+          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
+          
+          TEST_USER.EMAIL=test_user_1@example.com
+          TEST_USER.NAME=test name
+          TEST_USER.PHONE=71234567890
+          TEST_USER.PASSWORD=test_password_123
+          TEST_USER.CONFIRM_PASSWORD=test_password_123
+          
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
+          HTTP_CLIENT.TIMEOUT=10
+          
+          SWAGGER_COVERAGE_SERVICES=[
+              {
+                  "key":"online_shop_test_api",
+                  "name":"Online Shop Test API",
+                  "repository":"https://github.com/Anychos/practice_api_test_server.git",
+                  "swagger_url":"http://localhost:8080/openapi.json"
+              }
+          ]
+          
+          ADMIN_DATA.EMAIL=test_admin@mail.ru
+          ADMIN_DATA.PASSWORD=test_admin_password
+          EOF
+
       - name: Запуск тестов
         run: pytest -m regression --alluredir=allure-results --numprocesses=4 --reruns 2 --reruns-delay 3
 
