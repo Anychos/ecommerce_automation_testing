@@ -66,9 +66,7 @@ class OrderAPIClient(BaseAPIClient):
 
 def get_public_order_client() -> OrderAPIClient:
     """
-    Создает публичный HTTP клиент для доступа к API заказов
-
-    :return: Публичный HTTP клиент
+    Создает HTTP клиент для доступа к публичному API заказа
     """
 
     return OrderAPIClient(client=public_client_builder())
@@ -78,10 +76,9 @@ def get_private_order_client(
         user: LoginRequestSchema
 ) -> OrderAPIClient:
     """
-    Создает приватный HTTP клиент для доступа к API заказов
+    Создает HTTP клиент для доступа к приватному API заказа
 
     :param user: Данные пользователя для авторизации
-    :return: Приватный HTTP клиент
     """
 
     return OrderAPIClient(client=private_user_client_builder(user=user))

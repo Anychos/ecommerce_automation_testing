@@ -7,8 +7,6 @@ from httpx import Client, URL, Response
 class BaseAPIClient:
     """
     Базовый API клиент
-
-    Описывает все используемые в проекте HTTP методы
     """
 
     def __init__(self, client: Client):

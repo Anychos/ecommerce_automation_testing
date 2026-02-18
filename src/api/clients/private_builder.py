@@ -14,7 +14,6 @@ def private_user_client_builder(
     Создает HTTP клиент пользователя для доступа к приватному API
 
     :param user: Данные пользователя для авторизации
-    :return: Приватный HTTP клиент
     """
 
     client = get_authentication_client()
@@ -33,8 +32,6 @@ def private_user_client_builder(
 def private_admin_client_builder() -> Client:
     """
     Создает HTTP клиент администратора для доступа к приватному API
-
-    :return: Приватный HTTP клиент
     """
 
     client = get_authentication_client()

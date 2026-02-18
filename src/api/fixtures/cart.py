@@ -33,9 +33,7 @@ class CartFixture(BaseModel):
 @pytest.fixture
 def public_cart_client() -> CartAPIClient:
     """
-    Возвращает готовый публичный HTTP клиент для доступа к API корзины
-
-    :return: Публичный HTTP клиент для работы с API корзины
+    Возвращает готовый HTTP клиент для доступа к публичному API корзины
     """
 
     return get_public_cart_client()
@@ -43,10 +41,9 @@ def public_cart_client() -> CartAPIClient:
 @pytest.fixture
 def private_cart_client(user: UserFixture) -> CartAPIClient:
     """
-    Возвращает готовый приватный HTTP клиент для доступа к API корзины
+    Возвращает готовый HTTP клиент для доступа к приватному API корзины
 
     :param user: Созданный пользователь
-    :return: Приватный HTTP клиент для работы с API корзины
     """
 
     return get_private_cart_client(user=user.user_schema)

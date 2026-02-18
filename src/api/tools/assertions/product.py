@@ -14,6 +14,13 @@ def assert_product(
         actual: ProductSchema,
         expected: ProductSchema
 ) -> None:
+    """
+    Проверяет данные продукта по схеме
+
+    :param actual: Фактические данные продукта
+    :param expected: Ожидаемые данные продукта
+    """
+
     assert_value(actual.name, expected.name, "name")
     assert_value(actual.description, expected.description, "description")
     assert_value(actual.price, expected.price, "price")
@@ -28,6 +35,13 @@ def assert_create_product_response(
         actual: CreateProductResponseSchema,
         expected: CreateProductRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос создания продукта
+
+    :param actual: Фактический ответ на запрос создания продукта
+    :param expected: Ожидаемый ответ на запрос создания продукта
+    """
+
     assert_field_exists(actual.id, "id")
     assert_product(actual, expected)
 
@@ -38,6 +52,13 @@ def assert_get_product_response(
         actual: GetProductResponseSchema,
         expected: CreateProductResponseSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос получения продукта
+
+    :param actual: Фактический ответ на запрос получения продукта
+    :param expected: Ожидаемый ответ на запрос получения продукта
+    """
+
     assert_value(actual.id, expected.id, "id")
     assert_product(actual, expected)
 
@@ -48,6 +69,13 @@ def assert_get_products_response(
         get_products_response: GetProductsResponseSchema,
         create_product_responses: List[CreateProductResponseSchema]
 ) -> None:
+    """
+    Проверяет ответ на запрос списка продуктов
+
+    :param get_products_response: Фактический ответ на запрос списка продуктов
+    :param create_product_responses: Ожидаемый ответ на запрос списка продуктов
+    """
+
     assert get_products_response, "Список продуктов пуст"
 
     products_by_id = {
@@ -69,6 +97,13 @@ def assert_full_update_product_response(
         actual: UpdateProductResponseSchema,
         expected: FullUpdateProductRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос полного обновления продукта
+
+    :param actual: Фактический ответ на запрос полного обновления продукта
+    :param expected: Ожидаемый ответ на запрос полного обновления продукта
+    """
+
     assert_field_exists(actual.id, "id")
     assert_product(actual, expected)
 
@@ -79,6 +114,13 @@ def assert_partial_update_product_response(
         actual: UpdateProductResponseSchema,
         expected: PartialUpdateProductRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос частичного обновления продукта
+
+    :param actual: Фактический ответ на запрос частичного обновления продукта
+    :param expected: Ожидаемый ответ на запрос частичного обновления продукта
+    """
+
     expected_data = expected.model_dump(exclude_none=True)
 
     for field, expected_value in expected_data.items():
@@ -88,6 +130,12 @@ def assert_partial_update_product_response(
 
 @allure.step("Проверка ответа на запрос удаления продукта")
 def assert_delete_product_response(actual: DeleteProductResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос удаления продукта
+
+    :param actual: Фактический ответ на запрос удаления продукта
+    """
+
     assert_value(actual.message, "Продукт удален", "message")
 
 
@@ -98,6 +146,14 @@ def assert_wrong_data_format_response(
         wrong_field: str,
         wrong_value: Any
 ) -> None:
+    """
+    Проверяет ответ на запрос создания продукта с некорректным форматом в данных
+
+    :param actual: Фактический ответ на запрос создания продукта с некорректным форматом в данных
+    :param wrong_field: Название поля с некорректным форматом
+    :param wrong_value: Значение поля с некорректным форматом
+    """
+
     error_messages = [
         "Input should be a valid string",
         "Input should be a valid number, unable to parse string as a number"
@@ -123,6 +179,14 @@ def assert_empty_required_field_response(
         wrong_field: str,
         wrong_value: Any
 ) -> None:
+    """
+    Проверяет ответ на запрос создания продукта с пустым обязательным полем
+
+    :param actual: Фактический ответ на запрос создания продукта с пустым обязательным полем
+    :param wrong_field: Название поля с пустым обязательным полем
+    :param wrong_value: Значение поля с пустым обязательным полем
+    """
+
     error_messages = [
         "String should have at least 2 characters",
         "String should have at least 10 characters",
@@ -155,6 +219,13 @@ def assert_invalid_image_url_response(
         actual: InputValidationErrorResponseSchema,
         image_url: str
 ) -> None:
+    """
+    Проверяет ответ на запрос создания продукта с некорректным URL изображения
+
+    :param actual: Фактический ответ на запрос создания продукта с некорректным URL изображения
+    :param image_url: Некорректный URL изображения
+    """
+
     error_messages = [
         "Value error, URL должен быть в формате: jpg, jpeg, png, webp",
         "Value error, Некорректный URL изображения"

@@ -95,9 +95,7 @@ class CartAPIClient(BaseAPIClient):
 
 def get_public_cart_client() -> CartAPIClient:
     """
-    Создает публичный HTTP клиент для доступа к API корзины
-
-    :return: Публичный HTTP клиент
+    Создает HTTP клиент для доступа к публичному API корзины
     """
 
     return CartAPIClient(client=public_client_builder())
@@ -107,10 +105,9 @@ def get_private_cart_client(
         user: LoginRequestSchema
 ) -> CartAPIClient:
     """
-    Создает приватный HTTP клиент для доступа к API корзины
+    Создает HTTP клиент для доступа к приватному API корзины
 
     :param user: Данные пользователя для авторизации
-    :return: Приватный HTTP клиент
     """
 
     return CartAPIClient(client=private_user_client_builder(user=user))

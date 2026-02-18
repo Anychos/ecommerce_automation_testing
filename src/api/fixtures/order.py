@@ -29,9 +29,7 @@ class OrderFixture(BaseModel):
 @pytest.fixture
 def public_order_client() -> OrderAPIClient:
     """
-    Возвращает готовый публичный HTTP клиент для доступа к API заказа
-
-    :return: Публичный HTTP клиент для работы с API заказа
+    Возвращает готовый HTTP клиент для доступа к публичному API заказа
     """
 
     return get_public_order_client()
@@ -39,10 +37,9 @@ def public_order_client() -> OrderAPIClient:
 @pytest.fixture
 def private_order_client(user: UserFixture) -> OrderAPIClient:
     """
-    Возвращает готовый приватный HTTP клиент для доступа к API заказов
+    Возвращает готовый HTTP клиент для доступа к приватному API заказов
 
     :param user: Созданный пользователь
-    :return: Приватный HTTP клиент для работы с API заказа
     """
 
     return get_private_order_client(user=user.user_schema)

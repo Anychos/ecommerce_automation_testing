@@ -125,9 +125,7 @@ class ProductAPIClient(BaseAPIClient):
 
 def get_public_product_client() -> ProductAPIClient:
     """
-    Создает публичный HTTP клиент для доступа к API продуктов
-
-    :return: Публичный HTTP клиент
+    Создает HTTP клиент для доступа к публичному API продукта
     """
 
     return ProductAPIClient(client=public_client_builder())
@@ -137,10 +135,9 @@ def get_private_product_client(
         user: LoginRequestSchema
 ) -> ProductAPIClient:
     """
-    Создает приватный HTTP клиент для доступа к API продуктов
+    Создает HTTP клиент для доступа к приватному API продукта
 
     :param user: Данные пользователя для авторизации
-    :return: Приватный HTTP клиент
     """
 
     return ProductAPIClient(client=private_user_client_builder(user=user))

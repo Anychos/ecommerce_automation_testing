@@ -13,12 +13,30 @@ def assert_add_item_to_cart_response(
         actual: AddItemCartResponseSchema,
         expected: AddItemCartRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос добавления продукта в корзину
+
+    :param actual: Фактический ответ на запрос добавления продукта в корзину
+    :param expected: Ожидаемый ответ на запрос добавления продукта в корзину
+    """
+
     assert_field_exists(actual.product_id, "item_id")
     assert_value(actual.product_id, expected.product_id, "product_id")
     assert_value(actual.quantity, expected.quantity, "quantity")
 
 
-def assert_product_in_cart(actual: GetCartResponseSchema, index: int):
+def assert_product_in_cart(
+        *,
+        actual: GetCartResponseSchema,
+        index: int
+) -> None:
+    """
+    Проверяет наличие продукта в корзине
+
+    :param actual: Фактический ответ на запрос получения корзины
+    :param index: Индекс продукта в корзине
+    """
+
     assert_value(actual.items[index].product_id, actual.items[index].product_id, "product_id")
     assert_value(actual.items[index].quantity, actual.items[index].quantity, "quantity")
     assert_value(actual.items[index].product_name, actual.items[index].product_name, "price")
@@ -31,13 +49,19 @@ def assert_product_in_cart(actual: GetCartResponseSchema, index: int):
 
 @allure.step("Проверка ответа на запрос получения корзины")
 def assert_get_cart_response(actual: GetCartResponseSchema):
+    """
+    Проверяет ответ на запрос получения корзины
+
+    :param actual: Фактический ответ на запрос получения корзины
+    """
+
     assert_field_exists(actual.id, "id")
     assert_field_exists(actual.user_id, "user_id")
     assert_field_exists(actual.total_quantity, "total_quantity")
     assert_field_exists(actual.total_price, "total_price")
     assert_field_exists(actual.items, "items")
 
-    assert_product_in_cart(actual, 0)
+    assert_product_in_cart(actual=actual, index=0)
 
 
 @allure.step("Проверка ответа на запрос обновления продукта в корзине")
@@ -46,6 +70,13 @@ def assert_update_cart_response(
         actual: UpdateCartItemResponseSchema,
         expected: UpdateCartItemRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос обновления продукта в корзине
+
+    :param actual: Фактический ответ на запрос обновления продукта в корзине
+    :param expected: Ожидаемый ответ на запрос обновления продукта в корзине
+    """
+
     assert_field_exists(actual.product_id, "item_id")
     assert_field_exists(actual.product_id, "product_id")
     assert_value(actual.quantity, expected.quantity, "quantity")
@@ -53,6 +84,12 @@ def assert_update_cart_response(
 
 @allure.step("Проверка ответа на запрос удаления корзины")
 def assert_delete_cart_response(actual: DeleteCartResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос удаления корзины
+
+    :param actual: Фактический ответ на запрос удаления корзины
+    """
+
     expected = DeleteCartResponseSchema(
         message="Корзина очищена"
     )
@@ -61,6 +98,12 @@ def assert_delete_cart_response(actual: DeleteCartResponseSchema) -> None:
 
 @allure.step("Проверка ответа на запрос удаления продукта из корзины")
 def assert_delete_item_cart_response(actual: DeleteCartItemResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос удаления продукта из корзины
+
+    :param actual: Фактический ответ на запрос удаления продукта из корзины
+    """
+
     expected = DeleteCartItemResponseSchema(
         message="Продукт удален из корзины"
     )
@@ -69,14 +112,26 @@ def assert_delete_item_cart_response(actual: DeleteCartItemResponseSchema) -> No
 
 @allure.step("Проверка ответа на запрос с добавлением несуществующего продукта в корзину")
 def assert_not_found_product_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос с добавлением несуществующего продукта в корзину
+
+    :param actual: Фактический ответ на запрос с добавлением несуществующего продукта в корзину
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Продукт не найден или недоступен"
     )
     assert_http_validation_error_response(actual=actual, expected=expected)
 
 
-@allure.step("Проверка ответа на запрос с добавлением в корзину больше чем имеется продукта")
+@allure.step("Проверка ответа на запрос с добавлением в корзину больше чем имеется в наличии")
 def assert_not_enough_product_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос с добавлением в корзину больше чем имеется в наличии
+
+    :param actual: Фактический ответ на запрос с добавлением в корзину больше чем имеется в наличии
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Недостаточно товара в наличии"
     )

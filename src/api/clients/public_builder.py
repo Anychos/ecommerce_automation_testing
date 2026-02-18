@@ -7,8 +7,6 @@ from src.api.clients.event_hooks import request_curl_event_hook
 def public_client_builder() -> Client:
     """
     Создает HTTP клиент для доступа к публичному API
-
-    :return: Публичный HTTP клиент
     """
 
     return Client(

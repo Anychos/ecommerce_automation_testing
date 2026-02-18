@@ -118,19 +118,16 @@ def get_private_user_client(
         user: LoginRequestSchema
 ) -> UserAPIClient:
     """
-    Создает приватный HTTP клиент пользователя для доступа к API пользователей
+    Создает HTTP клиент пользователя для доступа к приватному API пользователя
 
     :param user: Данные пользователя для авторизации
-    :return: Приватный HTTP клиент
     """
 
     return UserAPIClient(client=private_user_client_builder(user=user))
 
 def get_private_admin_client() -> UserAPIClient:
     """
-    Создает приватный HTTP клиент администратора для доступа к API пользователей
-
-    :return: Приватный HTTP клиент
+    Создает HTTP клиент администратора для доступа к приватному API пользователя
     """
 
     return UserAPIClient(client=private_admin_client_builder())

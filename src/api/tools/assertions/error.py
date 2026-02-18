@@ -6,6 +6,13 @@ def assert_error(
         actual: ErrorSchema,
         expected: ErrorSchema
 ) -> None:
+    """
+    Проверяет соответствие ошибки в ответе
+
+    :param actual: Фактическая ошибка
+    :param expected: Ожидаемая ошибка
+    """
+
     assert_value(actual.type, expected.type, "type")
     assert_value(actual.location, expected.location, "location")
     assert_value(actual.message, expected.message, "message")

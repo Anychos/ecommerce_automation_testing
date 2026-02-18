@@ -8,6 +8,7 @@ def get_curl_from_request(request: Request) -> str:
     :param request: Запрос для извлечения cURL команды
     :return: cURL команда
     """
+
     result: list[str] = [f"curl -X '{request.method}' '{request.url}'"]
 
     for header, value in request.headers.items():

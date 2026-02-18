@@ -3,6 +3,8 @@ import re
 import allure
 from playwright.sync_api import Page, expect
 
+from config import settings
+
 
 class BasePage:
     """
@@ -70,7 +72,7 @@ class BasePage:
 
         self.check_current_url(value)
 
-    @allure.step("Проверка что URL соответствует {value}")
+    @allure.step("Проверка что URL соответствует {url}")
     def check_url_exact(self, url: str) -> None:
         """
         Проверяет что текущий URL соответствует заданному значению

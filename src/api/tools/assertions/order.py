@@ -15,6 +15,13 @@ def assert_create_order_response(
         actual: CreateOrderResponseSchema,
         expected: CreateOrderRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос создания заказа
+
+    :param actual: Фактический ответ на запрос создания заказа
+    :param expected: Ожидаемый ответ на запрос создания заказа
+    """
+
     assert_value(actual.cart_id, expected.cart_id, "cart_id")
     assert_field_exists(actual.id, "order_id")
     assert_field_exists(actual.user_id, "user_id")
@@ -27,6 +34,13 @@ def assert_get_order_response(
         actual: GetOrderResponseSchema,
         expected: CreateOrderResponseSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос получения заказа
+
+    :param actual: Фактический ответ на запрос получения заказа
+    :param expected: Ожидаемый ответ на запрос получения заказа
+    """
+
     assert_value(actual.id, expected.id, "id")
     assert_value(actual.cart_id, expected.cart_id, "cart_id")
     assert_value(actual.created_at, expected.created_at, "created_at")
@@ -39,6 +53,13 @@ def assert_get_orders_response(
         get_orders_response: GetOrdersResponseSchema,
         create_order_responses: List[CreateOrderResponseSchema]
 ) -> None:
+    """
+    Проверяет ответ на запрос получения списка заказов
+
+    :param get_orders_response: Фактический ответ на запрос получения списка заказов
+    :param create_order_responses: Ожидаемый ответ на запрос получения списка заказов
+    """
+
     assert get_orders_response, "Список заказов пуст"
 
     orders_by_id = {
@@ -56,6 +77,12 @@ def assert_get_orders_response(
 
 @allure.step("Проверка ответа на запрос создания заказа с пустой корзиной")
 def assert_empty_cart_order_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос создания заказа с пустой корзиной
+
+    :param actual: Фактический ответ на запрос создания заказа с пустой корзиной
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Нельзя создать заказ с пустой корзиной"
     )
@@ -64,6 +91,12 @@ def assert_empty_cart_order_response(actual: HTTPValidationErrorResponseSchema) 
 
 @allure.step("Проверка ответа на запрос создания заказа с недоступным продуктом")
 def assert_unavailable_product_order_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос создания заказа с недоступным продуктом
+
+    :param actual: Фактический ответ на запрос создания заказа с недоступным продуктом
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="В корзине есть недоступные для заказа товары"
     )

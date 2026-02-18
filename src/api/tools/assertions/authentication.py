@@ -15,6 +15,13 @@ def assert_login_response(
         actual: LoginResponseSchema,
         expected: CreateUserResponseSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос логина пользователя
+
+    :param actual: Фактический ответ на запрос логина пользователя
+    :param expected: Ожидаемый ответ на запрос логина пользователя
+    """
+
     assert_field_exists(actual.access_token, "access_token")
     assert_value(actual.token_type, "bearer", "token_type")
     assert_field_exists(actual.user.id, "user_id")
@@ -27,6 +34,13 @@ def assert_register_response(
         actual: RegistrationResponseSchema,
         expected: RegistrationRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос регистрации пользователя
+
+    :param actual: Фактический ответ на запрос регистрации пользователя
+    :param expected: Ожидаемый ответ на запрос регистрации пользователя
+    """
+
     assert_field_exists(actual.access_token, "access_token")
     assert_value(actual.token_type, "bearer", "token_type")
     assert_field_exists(actual.user.id, "user_id")
@@ -38,6 +52,12 @@ def assert_register_response(
 
 @allure.step("Проверка ответа на запрос логина пользователя с некорректными данными")
 def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос логина пользователя с некорректными данными
+
+    :param actual: Фактический ответ на запрос логина пользователя с некорректными данными
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Невалидный логин или пароль"
     )
@@ -46,6 +66,12 @@ def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) 
 
 @allure.step("Проверка ответа на запрос регистрации пользователя с уже зарегистрированным email")
 def assert_already_registered_email_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос регистрации пользователя с уже зарегистрированным email
+
+    :param actual: Фактический ответ на запрос регистрации пользователя с уже зарегистрированным email
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Email уже зарегистрирован"
     )
@@ -58,6 +84,13 @@ def assert_invalid_email_format_response(
         actual: InputValidationErrorResponseSchema,
         email: str
 ) -> None:
+    """
+    Проверяет ответ на запрос логина пользователя с некорректным форматом email
+
+    :param actual: Фактический ответ на запрос логина пользователя с некорректным форматом email
+    :param email: Некорректный email
+    """
+
     error_messages = [
         "The part after the @-sign is not valid. It should have a period.",
         "An email address cannot end with a period.",

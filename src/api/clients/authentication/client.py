@@ -62,8 +62,6 @@ class AuthenticationAPIClient(BaseAPIClient):
 def get_authentication_client() -> AuthenticationAPIClient:
     """
     Создает публичный HTTP клиент для доступа к API аутентификации
-
-    :return: Публичный HTTP клиент
     """
 
     return AuthenticationAPIClient(client=public_client_builder())

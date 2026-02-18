@@ -12,6 +12,13 @@ def assert_user(
         actual: UserSchema,
         expected: UserSchema
 ) -> None:
+    """
+    Проверяет данные пользователя по схеме
+
+    :param actual: Фактические данные пользователя
+    :param expected: Ожидаемые данные пользователя
+    """
+
     assert_value(actual.email, expected.email, "email")
     assert_value(actual.name, expected.name, "name")
     assert_value(actual.phone, expected.phone, "phone")
@@ -23,6 +30,13 @@ def assert_create_user_response(
         actual: CreateUserResponseSchema,
         expected: CreateUserRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос создания пользователя
+
+    :param actual: Фактический ответ на запрос создания пользователя
+    :param expected: Ожидаемый ответ на запрос создания пользователя
+    """
+
     assert_field_exists(actual.id, "id")
     assert_value(actual.is_admin, expected.is_admin, "is_admin")
     assert_user(actual, expected)
@@ -34,6 +48,13 @@ def assert_get_user_response(
         actual: GetUserResponseSchema,
         expected: CreateUserResponseSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос получения пользователя
+
+    :param actual: Фактический ответ на запрос получения пользователя
+    :param expected: Ожидаемый ответ на запрос получения пользователя
+    """
+
     assert_value(actual.id, expected.id, "id")
     assert_value(actual.is_admin, expected.is_admin, "is_admin")
     assert_user(actual, expected)
@@ -45,6 +66,13 @@ def assert_update_user_response(
         actual: UpdateUserResponseSchema,
         expected: UpdateUserRequestSchema
 ) -> None:
+    """
+    Проверяет ответ на запрос обновления пользователя
+
+    :param actual: Фактический ответ на запрос обновления пользователя
+    :param expected: Ожидаемый ответ на запрос обновления пользователя
+    """
+
     assert_field_exists(actual.id, "id")
     assert_value(actual.email, expected.email, "email")
     assert_value(actual.name, expected.name, "name")
@@ -63,6 +91,13 @@ def assert_wrong_password_response(
         actual: InputValidationErrorResponseSchema,
         password: str
 ) -> None:
+    """
+    Проверяет ответ на запрос с некорректным паролем
+
+    :param actual: Фактический ответ на запрос с некорректным паролем
+    :param password: Некорректный пароль
+    """
+
     error_messages = [
         "Value error, Пароль должен содержать не менее 6 символов",
         "Value error, Пароль должен содержать не более 128 символов",
@@ -90,6 +125,13 @@ def assert_wrong_phone_response(
         actual: InputValidationErrorResponseSchema,
         phone: str
 ) -> None:
+    """
+    Проверяет ответ на запрос с некорректным номером телефона
+
+    :param actual: Фактический ответ на запрос с некорректным номером телефона
+    :param phone: Некорректный номер телефона
+    """
+
     error_messages = [
         "Value error, Номер телефона должен содержать не более 12 цифр",
         "Value error, Номер телефона должен содержать не менее 10 цифр",
@@ -114,6 +156,12 @@ def assert_wrong_phone_response(
 
 @allure.step("Проверка ответа на запрос с уже зарегистрированным email")
 def assert_email_exists_response(actual: HTTPValidationErrorResponseSchema) -> None:
+    """
+    Проверяет ответ на запрос с уже зарегистрированным email
+
+    :param actual: Фактический ответ на запрос с уже зарегистрированным email
+    """
+
     expected = HTTPValidationErrorResponseSchema(
         detail="Email уже зарегистрирован"
     )

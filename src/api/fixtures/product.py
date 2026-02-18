@@ -42,9 +42,7 @@ class UpdateProductFixture(BaseModel):
 @pytest.fixture
 def public_product_client() -> ProductAPIClient:
     """
-    Возвращает готовый публичный HTTP клиент для доступа к API продукта
-
-    :return: Публичный HTTP клиент для работы с API продукта
+    Возвращает готовый HTTP клиент для доступа к публичному API продукта
     """
 
     return get_public_product_client()
@@ -52,10 +50,9 @@ def public_product_client() -> ProductAPIClient:
 @pytest.fixture
 def admin_private_product_client(admin: UserFixture) -> ProductAPIClient:
     """
-    Возвращает готовый приватный HTTP клиент для доступа администратора к API продукта
+    Возвращает готовый HTTP клиент для доступа администратора к приватному API продукта
 
     :param admin: Созданный администратор
-    :return: Приватный HTTP клиент администратора для работы с API продукта
     """
 
     return get_private_product_client(user=admin.user_schema)
@@ -63,7 +60,7 @@ def admin_private_product_client(admin: UserFixture) -> ProductAPIClient:
 @pytest.fixture
 def user_private_product_client(user: UserFixture) -> ProductAPIClient:
     """
-    Возвращает готовый приватный HTTP клиент для доступа пользователя к API продукта
+    Возвращает готовый HTTP клиент для доступа пользователя к приватному API продукта
 
     :param user: Созданный пользователь
     :return: Приватный HTTP клиент пользователя для работы с API продукта
@@ -78,7 +75,6 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
     Возвращает фабрику для создания продукта
 
     :param admin_private_product_client: Приватный HTTP клиент для доступа к API продукта
-    :return: Фабрика для создания продукта
     """
 
     def _create_product(
@@ -124,7 +120,6 @@ def update_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
     Возвращает фабрику для обновления продукта
 
     :param admin_private_product_client: Приватный HTTP клиент для доступа к API продукта
-    :return: Фабрика для обновления продукта
     """
 
     def _update_product(
