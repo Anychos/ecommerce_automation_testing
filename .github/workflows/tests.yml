@@ -62,7 +62,7 @@ jobs:
           SECRET_KEY: test-secret
         run: |
           cd practice_api_test_server
-          nohup python app.py > api.log 2>&1 &
+          python app.py &
 
       - name: Wait for API
         run: |
@@ -88,7 +88,7 @@ jobs:
           BROWSER=["chromium"]
           BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
           TEST_USER.EMAIL=test_user_1@example.com
-          TEST_USER.NAME=Test User
+          TEST_USER.NAME='Test User'
           TEST_USER.PHONE=71234567890
           TEST_USER.PASSWORD=test_password_123
           TEST_USER.CONFIRM_PASSWORD=test_password_123
@@ -101,7 +101,7 @@ jobs:
         run: |
           pytest tests/api \
                  --alluredir=allure-results-api \
-                 -n auto \
+                 -n 4 \
                  --reruns 2 \
                  --reruns-delay 2
 
@@ -138,7 +138,7 @@ jobs:
         run: |
           cd practice_ui_test_server
           pip install -r requirements.txt
-          nohup python app.py > ui.log 2>&1 &
+          python app.py &
 
       - name: Wait for UI server
         run: |
@@ -164,7 +164,7 @@ jobs:
           BROWSER=["chromium"]
           BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
           TEST_USER.EMAIL=test_user_1@example.com
-          TEST_USER.NAME=Test User
+          TEST_USER.NAME='Test User'
           TEST_USER.PHONE=71234567890
           TEST_USER.PASSWORD=test_password_123
           TEST_USER.CONFIRM_PASSWORD=test_password_123
@@ -177,7 +177,7 @@ jobs:
         run: |
           pytest tests/ui \
                  --alluredir=allure-results-ui \
-                 -n auto \
+                 -n 3 \
                  --reruns 2 \
                  --reruns-delay 3
 
