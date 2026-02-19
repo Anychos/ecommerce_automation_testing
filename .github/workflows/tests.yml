@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-  API_URL: http://localhost:8080
-  UI_URL: http://localhost:5000
-
 jobs:
 
 # API TESTS
@@ -38,7 +33,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -52,24 +47,45 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run migrations
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          ADMIN_EMAIL: test_admin@mail.ru
+          ADMIN_PASSWORD: test_admin_password
+          ADMIN_NAME: Admin
+          ADMIN_PHONE: +71234567890
         run: |
           cd practice_api_test_server
+          until pg_isready -h localhost -p 5432 -U test_user; do
+            sleep 2
+          done
           alembic upgrade head
 
       - name: Start API server
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          HTTP_CLIENT_BASE_URL: http://localhost:8080
+          HTTP_CLIENT_TIMEOUT: 15
         run: |
           cd practice_api_test_server
-          nohup python app.py > api.log 2>&1 &
+          python app.py &
 
       - name: Wait for API
         run: |
           for i in {1..30}; do
-            curl -s $API_URL/health && exit 0
+            curl -s http://localhost:8080/health && exit 0
             sleep 2
           done
-          echo "API failed"
-          cat practice_api_test_server/api.log
           exit 1
+
+      - name: Create .env for tests
+        run: |
+          cat <<EOF > .env
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
+          HTTP_CLIENT.TIMEOUT=10
+          SWAGGER_COVERAGE_SERVICES=[ { "key":"online_shop_test_api", "name":"Online Shop Test API", "repository":"https://github.com/Anychos/practice_api_test_server.git", "swagger_url":"http://localhost:8080/openapi.json" } ]
+          ADMIN_DATA.EMAIL=test_admin@mail.ru
+          ADMIN_DATA.PASSWORD=test_admin_password
+          EOF
 
       - name: Run API tests
         run: |
@@ -111,7 +127,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.12"
 
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y curl
@@ -126,16 +142,25 @@ jobs:
         run: git clone https://github.com/Anychos/practice_api_test_server.git
 
       - name: Install & run API
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          ADMIN_EMAIL: test_admin@mail.ru
+          ADMIN_PASSWORD: test_admin_password
+          ADMIN_NAME: Admin
+          ADMIN_PHONE: +71234567890
         run: |
           cd practice_api_test_server
           pip install -r requirements.txt
+          until pg_isready -h localhost -p 5432 -U test_user; do
+            sleep 2
+          done
           alembic upgrade head
-          nohup python app.py > api.log 2>&1 &
+          python app.py &
 
       - name: Wait API
         run: |
           for i in {1..30}; do
-            curl -s $API_URL/health && exit 0
+            curl -s http://localhost:8080/health && exit 0
             sleep 2
           done
           exit 1
@@ -151,12 +176,12 @@ jobs:
         run: |
           cd practice_ui_test_server
           pip install -r requirements.txt
-          nohup python app.py > ui.log 2>&1 &
+          python app.py &
 
       - name: Wait UI
         run: |
           for i in {1..30}; do
-            curl -s $UI_URL && exit 0
+            curl -s http://127.0.0.1:5000 && exit 0
             sleep 2
           done
           exit 1
@@ -164,11 +189,12 @@ jobs:
       - name: Create .env for tests
         run: |
           cat <<EOF > .env
-          BASE_URL=$UI_URL
+          BASE_URL=http://127.0.0.1:5000
           HEADLESS=true
           BROWSER=["chromium"]
+          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
   
-          HTTP_CLIENT.BASE_URL=$API_URL
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
           HTTP_CLIENT.TIMEOUT=10
   
           TEST_USER.EMAIL=test_user@example.com
