@@ -20,11 +20,6 @@ jobs:
           POSTGRES_PASSWORD: test_password
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U test_user -d test_db"
-          --health-interval=5s
-          --health-timeout=5s
-          --health-retries=10
 
     steps:
       - uses: actions/checkout@v4
@@ -32,6 +27,31 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          # API
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
+          HTTP_CLIENT.TIMEOUT=10
+          SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"https://github.com/Anychos/practice_api_test_server.git","swagger_url":"http://localhost:8080/openapi.json"}]
+          ADMIN_DATA.EMAIL=test_admin@mail.ru
+          ADMIN_DATA.PASSWORD=test_admin_password
+
+          # UI
+          BASE_URL=http://127.0.0.1:5000
+          HEADLESS=true
+          BROWSER=["chromium"]
+          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
+          TEST_USER.EMAIL=test_user_1@example.com
+          TEST_USER.NAME='Test User'
+          TEST_USER.PHONE=71234567890
+          TEST_USER.PASSWORD=test_password_123
+          TEST_USER.CONFIRM_PASSWORD=test_password_123
+          SESSION_BROWSER_STATE_FILE=session-browser-state.json
+          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
+          ALLURE_RESULTS_DIR=./allure-results
+          EOF
 
       - name: Install Python dependencies
         run: pip install -r requirements.txt
@@ -72,31 +92,6 @@ jobs:
           done
           exit 1
 
-      - name: Create .env
-        run: |
-          cat <<EOF > .env
-          # API
-          HTTP_CLIENT.BASE_URL=http://localhost:8080
-          HTTP_CLIENT.TIMEOUT=10
-          SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"https://github.com/Anychos/practice_api_test_server.git","swagger_url":"http://localhost:8080/openapi.json"}]
-          ADMIN_DATA.EMAIL=test_admin@mail.ru
-          ADMIN_DATA.PASSWORD=test_admin_password
-
-          # UI
-          BASE_URL=http://127.0.0.1:5000
-          HEADLESS=true
-          BROWSER=["chromium"]
-          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
-          TEST_USER.EMAIL=test_user_1@example.com
-          TEST_USER.NAME='Test User'
-          TEST_USER.PHONE=71234567890
-          TEST_USER.PASSWORD=test_password_123
-          TEST_USER.CONFIRM_PASSWORD=test_password_123
-          SESSION_BROWSER_STATE_FILE=session-browser-state.json
-          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
-          ALLURE_RESULTS_DIR=./allure-results
-          EOF
-
       - name: Run API tests
         run: |
           pytest tests/api \
@@ -123,31 +118,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y curl
-
-      - name: Install Python & Playwright dependencies
-        run: |
-          pip install -r requirements.txt
-          playwright install --with-deps
-
-      - name: Clone UI server
-        run: git clone https://github.com/Anychos/practice_ui_test_server.git
-
-      - name: Install & Run UI server
-        run: |
-          cd practice_ui_test_server
-          pip install -r requirements.txt
-          python app.py &
-
-      - name: Wait for UI server
-        run: |
-          for i in {1..30}; do
-            curl -s http://127.0.0.1:5000 && exit 0
-            sleep 2
-          done
-          exit 1
-
       - name: Create .env
         run: |
           cat <<EOF > .env
@@ -172,6 +142,31 @@ jobs:
           FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
           ALLURE_RESULTS_DIR=./allure-results
           EOF
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y curl
+
+      - name: Install Python & Playwright dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps
+
+      - name: Clone UI server
+        run: git clone https://github.com/Anychos/practice_ui_test_server.git
+
+      - name: Install & Run UI server
+        run: |
+          cd practice_ui_test_server
+          pip install -r requirements.txt
+          python app.py &
+
+      - name: Wait for UI server
+        run: |
+          for i in {1..30}; do
+            curl -s http://127.0.0.1:5000 && exit 0
+            sleep 2
+          done
+          exit 1
 
       - name: Run UI tests
         run: |
