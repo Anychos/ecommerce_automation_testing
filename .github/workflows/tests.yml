@@ -143,6 +143,45 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Clone API server
+        run: git clone https://github.com/Anychos/practice_api_test_server.git
+
+      - name: Install API dependencies
+        run: |
+          cd practice_api_test_server
+          pip install -r requirements.txt
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          ADMIN_EMAIL: test_admin@mail.ru
+          ADMIN_PASSWORD: test_admin_password
+          ADMIN_NAME: Admin
+          ADMIN_PHONE: +71234567890
+        run: |
+          cd practice_api_test_server
+          until pg_isready -h localhost -p 5432 -U test_user; do sleep 2; done
+          alembic upgrade head
+
+      - name: Start API server
+        env:
+          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+          SECRET_KEY: test-secret
+        run: |
+          cd practice_api_test_server
+          python app.py &
+
+      - name: Wait for API
+        run: |
+          for i in {1..30}; do
+            curl -s http://localhost:8080/health && exit 0
+            sleep 2
+          done
+          exit 1
+
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y curl
 
