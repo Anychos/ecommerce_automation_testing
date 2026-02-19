@@ -2,14 +2,20 @@ name: Ecommerce Shop Test Automation
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+
+env:
+  DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+  API_URL: http://localhost:8080
+  UI_URL: http://localhost:5000
 
 jobs:
-  run-tests:
+
+# API TESTS
+
+  api-tests:
     runs-on: ubuntu-latest
 
     services:
@@ -23,129 +29,183 @@ jobs:
           - 5432:5432
         options: >-
           --health-cmd="pg_isready -U test_user -d test_db"
-          --health-interval=10s
+          --health-interval=5s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     steps:
-      - name: Получение репозитория
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - name: Установка Python
-        uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.13
+          python-version: "3.13"
 
-      - name: Клонирование репозитория с сервером
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Clone API server
         run: git clone https://github.com/Anychos/practice_api_test_server.git
 
-      - name: Установка зависимостей сервера
+      - name: Install API dependencies
         run: |
           cd practice_api_test_server
           pip install -r requirements.txt
 
-      - name: Применение миграций
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          ADMIN_EMAIL: test_admin@mail.ru
-          ADMIN_PASSWORD: test_admin_password
-          ADMIN_NAME: Admin
-          ADMIN_PHONE: +71234567890
+      - name: Run migrations
         run: |
           cd practice_api_test_server
           alembic upgrade head
 
-      - name: Запуск сервера
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          HTTP_CLIENT.BASE_URL: http://localhost:8080
-          HTTP_CLIENT.TIMEOUT: 15
+      - name: Start API server
         run: |
           cd practice_api_test_server
-          python app.py &
+          nohup python app.py > api.log 2>&1 &
 
-      - name: Ожидание старта сервера
+      - name: Wait for API
         run: |
-          for i in {1..20}; do
-            curl -s http://localhost:8080/health && exit 0
-            sleep 1
+          for i in {1..30}; do
+            curl -s $API_URL/health && exit 0
+            sleep 2
+          done
+          echo "API failed"
+          cat practice_api_test_server/api.log
+          exit 1
+
+      - name: Run API tests
+        run: |
+          pytest tests/api \
+                 --alluredir=allure-results-api \
+                 -n auto \
+                 --reruns 2
+
+      - name: Upload API Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-api
+          path: allure-results-api
+
+# UI TESTS
+
+  ui-tests:
+    runs-on: ubuntu-latest
+    needs: api-tests   # если хочешь последовательность
+                       # убери needs если хочешь параллель
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U test_user -d test_db"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y curl
+
+      - name: Install test dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps
+
+      # --- API ---
+      - name: Clone API
+        run: git clone https://github.com/Anychos/practice_api_test_server.git
+
+      - name: Install & run API
+        run: |
+          cd practice_api_test_server
+          pip install -r requirements.txt
+          alembic upgrade head
+          nohup python app.py > api.log 2>&1 &
+
+      - name: Wait API
+        run: |
+          for i in {1..30}; do
+            curl -s $API_URL/health && exit 0
+            sleep 2
           done
           exit 1
 
-      - name: Клонирование репозитория с frontend
+      # --- UI ---
+      - name: Clone UI
         run: git clone https://github.com/Anychos/practice_ui_test_server.git
 
-      - name: Установка зависимостей сервера
+      - name: Install & run UI
+        env:
+          API_BASE_URL: http://localhost:8080
+          SECRET_KEY: test-secret
         run: |
           cd practice_ui_test_server
           pip install -r requirements.txt
+          nohup python app.py > ui.log 2>&1 &
 
-      - name: Запуск сервера c frontend
-        env:
-          API_BASE_URL: http://localhost:8080
-          SECRET_KEY: your-secret-key-here-change-me
+      - name: Wait UI
         run: |
-          cd practice_ui_test_server
-          python app.py &
+          for i in {1..30}; do
+            curl -s $UI_URL && exit 0
+            sleep 2
+          done
+          exit 1
 
-      - name: Установка зависимостей для тестов
-        run: pip install -r requirements.txt
-
-      - name: Создание .env файла для тестов
+      - name: Run UI tests
         run: |
-          cat <<EOF > .env
-          BASE_URL=http://127.0.0.1:5000
-          HEADLESS=true
-          BROWSER=["chromium"]
-          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
-          
-          SESSION_BROWSER_STATE_FILE=session-browser-state.json
-          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
-          
-          TEST_USER.EMAIL=test_user_1@example.com
-          TEST_USER.NAME=test name
-          TEST_USER.PHONE=71234567890
-          TEST_USER.PASSWORD=test_password_123
-          TEST_USER.CONFIRM_PASSWORD=test_password_123
-          
-          HTTP_CLIENT.BASE_URL=http://localhost:8080
-          HTTP_CLIENT.TIMEOUT=10
-          
-          SWAGGER_COVERAGE_SERVICES=[
-              {
-                  "key":"online_shop_test_api",
-                  "name":"Online Shop Test API",
-                  "repository":"https://github.com/Anychos/practice_api_test_server.git",
-                  "swagger_url":"http://localhost:8080/openapi.json"
-              }
-          ]
-          
-          ADMIN_DATA.EMAIL=test_admin@mail.ru
-          ADMIN_DATA.PASSWORD=test_admin_password
-          EOF
+          pytest tests/ui \
+                 --alluredir=allure-results-ui \
+                 -n auto \
+                 --reruns 2
 
-      - name: Запуск тестов
-        run: pytest -m regression --alluredir=allure-results --numprocesses=4 --reruns 2 --reruns-delay 3
-
-      - name: Получение истории Allure отчетов
-        uses: actions/checkout@v6
-        if: always()
-        continue-on-error: true
+      - name: Upload UI Allure results
+        uses: actions/upload-artifact@v4
         with:
-          ref: gh-pages
-          path: gh-pages
+          name: allure-ui
+          path: allure-results-ui
 
-      - name: Генерация Allure отчета с историей
-        uses: simple-elf/allure-report-action@v1.13
-        if: always()
-        continue-on-error: true
+# ALLURE REPORT
+
+  allure-report:
+    runs-on: ubuntu-latest
+    needs: [api-tests, ui-tests]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download API results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-api
+          path: allure-results
+
+      - name: Download UI results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-ui
+          path: allure-results
+
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@v1.7
         with:
           allure_results: allure-results
           allure_history: allure-history
 
-      - name: Публикация Allure отчета
+      - name: Publish Allure report
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
           publish_branch: gh-pages
+
+
