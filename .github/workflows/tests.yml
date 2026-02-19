@@ -11,12 +11,9 @@ jobs:
   # 1️⃣ Создание общего .env
   create-env:
     runs-on: ubuntu-latest
-    outputs:
-      env-artifact: ${{ steps.upload-env.outputs.artifact-name }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Create common .env
+      - name: Create .env
         run: |
           cat <<EOF > .env
           # API
@@ -41,11 +38,10 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
-      - name: Upload .env artifact
-        id: upload-env
+      - name: Upload .env as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: env-file
+          name: common-env
           path: .env
 
   # 2️⃣ API тесты
@@ -70,11 +66,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Получаем общий .env
       - name: Download common .env
         uses: actions/download-artifact@v4
         with:
-          name: env-file
+          name: common-env
           path: .
 
       - uses: actions/setup-python@v5
@@ -142,11 +137,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Получаем общий .env
       - name: Download common .env
         uses: actions/download-artifact@v4
         with:
-          name: env-file
+          name: common-env
           path: .
 
       - uses: actions/setup-python@v5
