@@ -84,7 +84,7 @@ jobs:
 
           # UI
           BASE_URL=http://127.0.0.1:5000
-          HEADLESS=false
+          HEADLESS=true
           BROWSER=["chromium"]
           BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
           TEST_USER.EMAIL=test_user_1@example.com
@@ -160,7 +160,7 @@ jobs:
 
           # UI
           BASE_URL=http://127.0.0.1:5000
-          HEADLESS=false
+          HEADLESS=true
           BROWSER=["chromium"]
           BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
           TEST_USER.EMAIL=test_user_1@example.com
