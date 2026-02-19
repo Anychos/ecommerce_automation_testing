@@ -19,7 +19,7 @@ class BrowserViewport(BaseModel):
     device_scale_factor: float = 1.0
 
 
-class TestUser(BaseModel):
+class UITestUser(BaseModel):
     email: str
     name: str
     phone: str
@@ -48,24 +48,29 @@ class SwaggerService(BaseModel):
     swagger_url: HttpUrl
 
 
-class Settings(BaseSettings):
+class APISettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         env_nested_delimiter="."
     )
+    http_client: HTTPClientSettings
+    swagger_coverage_services: List[SwaggerService]
+    admin_data: AdminLoginSchema
 
+
+class UISettings(APISettings):
     base_url: HttpUrl
     headless: bool
     browser: List[Browser]
     browser_viewport: BrowserViewport
     session_browser_state_file: FilePath
     function_browser_state_file: FilePath
-    test_user: TestUser
-    http_client: HTTPClientSettings
+    test_user: UITestUser
+
+
+class Settings(UISettings):
     allure_results_dir: DirectoryPath = DirectoryPath("allure-results")
-    admin_data: AdminLoginSchema
-    swagger_coverage_services: List[SwaggerService]
 
     def get_base_url(self) -> str:
         return str(self.base_url)
