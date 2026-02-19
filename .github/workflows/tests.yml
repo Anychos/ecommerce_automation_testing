@@ -8,46 +8,9 @@ on:
 
 jobs:
 
-  # 1️⃣ Создание общего .env
-  create-env:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Create .env
-        run: |
-          cat <<EOF > .env
-          # API
-          HTTP_CLIENT.BASE_URL=http://localhost:8080
-          HTTP_CLIENT.TIMEOUT=10
-          SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"https://github.com/Anychos/practice_api_test_server.git","swagger_url":"http://localhost:8080/openapi.json"}]
-          ADMIN_DATA.EMAIL=test_admin@mail.ru
-          ADMIN_DATA.PASSWORD=test_admin_password
-
-          # UI
-          BASE_URL=http://127.0.0.1:5000
-          HEADLESS=false
-          BROWSER=["chromium"]
-          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
-          TEST_USER.EMAIL=test_user_1@example.com
-          TEST_USER.NAME=Test User
-          TEST_USER.PHONE=71234567890
-          TEST_USER.PASSWORD=test_password_123
-          TEST_USER.CONFIRM_PASSWORD=test_password_123
-          SESSION_BROWSER_STATE_FILE=session-browser-state.json
-          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
-          ALLURE_RESULTS_DIR=./allure-results
-          EOF
-
-      - name: Upload .env as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: common-env
-          path: .env
-
   # 2️⃣ API тесты
   api-tests:
     runs-on: ubuntu-latest
-    needs: create-env
     services:
       postgres:
         image: postgres:16
@@ -109,11 +72,30 @@ jobs:
           done
           exit 1
 
-      - name: Download common .env
-        uses: actions/download-artifact@v4
-        with:
-          name: common-env
-          path: .env
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          # API
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
+          HTTP_CLIENT.TIMEOUT=10
+          SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"https://github.com/Anychos/practice_api_test_server.git","swagger_url":"http://localhost:8080/openapi.json"}]
+          ADMIN_DATA.EMAIL=test_admin@mail.ru
+          ADMIN_DATA.PASSWORD=test_admin_password
+
+          # UI
+          BASE_URL=http://127.0.0.1:5000
+          HEADLESS=false
+          BROWSER=["chromium"]
+          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
+          TEST_USER.EMAIL=test_user_1@example.com
+          TEST_USER.NAME=Test User
+          TEST_USER.PHONE=71234567890
+          TEST_USER.PASSWORD=test_password_123
+          TEST_USER.CONFIRM_PASSWORD=test_password_123
+          SESSION_BROWSER_STATE_FILE=session-browser-state.json
+          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
+          ALLURE_RESULTS_DIR=./allure-results
+          EOF
 
       - name: Run API tests
         run: |
@@ -132,7 +114,7 @@ jobs:
   # 3️⃣ UI тесты
   ui-tests:
     runs-on: ubuntu-latest
-    needs: [create-env, api-tests]
+    needs: api-tests
 
     steps:
       - uses: actions/checkout@v4
@@ -166,11 +148,30 @@ jobs:
           done
           exit 1
 
-      - name: Download common .env
-        uses: actions/download-artifact@v4
-        with:
-          name: common-env
-          path: .env
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          # API
+          HTTP_CLIENT.BASE_URL=http://localhost:8080
+          HTTP_CLIENT.TIMEOUT=10
+          SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"https://github.com/Anychos/practice_api_test_server.git","swagger_url":"http://localhost:8080/openapi.json"}]
+          ADMIN_DATA.EMAIL=test_admin@mail.ru
+          ADMIN_DATA.PASSWORD=test_admin_password
+
+          # UI
+          BASE_URL=http://127.0.0.1:5000
+          HEADLESS=false
+          BROWSER=["chromium"]
+          BROWSER_VIEWPORT={"width":1280,"height":720,"device_scale_factor":1}
+          TEST_USER.EMAIL=test_user_1@example.com
+          TEST_USER.NAME=Test User
+          TEST_USER.PHONE=71234567890
+          TEST_USER.PASSWORD=test_password_123
+          TEST_USER.CONFIRM_PASSWORD=test_password_123
+          SESSION_BROWSER_STATE_FILE=session-browser-state.json
+          FUNCTION_BROWSER_STATE_FILE=function-browser-state.json
+          ALLURE_RESULTS_DIR=./allure-results
+          EOF
 
       - name: Run UI tests
         run: |
