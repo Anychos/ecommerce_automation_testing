@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJpc19hZG1pbiI6dHJ1ZX0.XGKImbcanSPySsfNgDcC4lNadqJ3E2uKw2ZSnDfJ8to' \
+ -H 'content-length: 350' \
+ -H 'content-type: application/json' \
+ -d '{"name":"другой","description":"Равнодушный пропадать кпсс карман изба промолчать левый. Бригада рабочий конструкция желание. Боец торговля куча.","price":500,"is_available":true,"image_url":"https://picsum.photos/356/613.jpeg","stock_quantity":1}'

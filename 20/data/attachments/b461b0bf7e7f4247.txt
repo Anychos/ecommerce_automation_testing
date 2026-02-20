@@ -1,7 +1,0 @@
-curl -X 'GET' 'http://localhost:8080/orders/2' \
- -H 'host: localhost:8080' \
- -H 'accept: */*' \
- -H 'accept-encoding: gzip, deflate' \
- -H 'connection: keep-alive' \
- -H 'user-agent: python-httpx/0.28.1' \
- -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMywiaXNfYWRtaW4iOmZhbHNlfQ.Eqr4JsQyNBmiMTyVoIIJq09Rc8OXS1ygo8uE9eEFynE'

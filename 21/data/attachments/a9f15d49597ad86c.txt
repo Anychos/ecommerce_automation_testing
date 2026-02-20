@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwiaXNfYWRtaW4iOnRydWV9.TBpG6fIToyA2Q3Ec---2J_pxXJCZ1WAJfMcYCfJi3K0' \
+ -H 'content-length: 368' \
+ -H 'content-type: application/json' \
+ -d '{"name":"горький","description":"Чувство приятель услать. Вздрогнуть что призыв заведение левый запустить. Мучительно появление освободить поздравлять.","price":"price","is_available":true,"image_url":"https://dummyimage.com/297x536.jpeg","stock_quantity":8}'

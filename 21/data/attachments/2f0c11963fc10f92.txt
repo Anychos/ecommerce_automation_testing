@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NiwiaXNfYWRtaW4iOnRydWV9.Weop261d08BsFbUuOokVKLTFm-f-1PTqoeap47Fn4dY' \
+ -H 'content-length: 470' \
+ -H 'content-type: application/json' \
+ -d '{"name":"инструкция","description":"Рот постоянный грустный пламя близко интернет. При роса проход военный поговорить валюта. Протягивать тусклый счастье секунда. Военный расстегнуть танцевать витрина экзамен.","price":500,"is_available":true,"image_url":"https://picsum.photos/806/952.jpeg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NSwiaXNfYWRtaW4iOnRydWV9.JnMGZ_Cg0eJFHZq62RnavQjpNENcrpOHCM7eNKNwGOk' \
+ -H 'content-length: 384' \
+ -H 'content-type: application/json' \
+ -d '{"name":"слишком","description":"Возмутиться степь встать издали вчера.\nПотом теория домашний мрачно потянуться витрина. Демократия поздравлять построить опасность.","price":420,"is_available":false,"image_url":"https://example.com/image.gif","stock_quantity":6}'

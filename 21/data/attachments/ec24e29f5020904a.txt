@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMSwiaXNfYWRtaW4iOnRydWV9.Mss8Ewwvr3IMjBoYYq85LNY18IP9JpgSvaT8LmJ6tb4' \
+ -H 'content-length: 424' \
+ -H 'content-type: application/json' \
+ -d '{"name":"блин","description":"Сынок магазин господь угроза табак четко выбирать. Указанный передо инструкция художественный правильный человечек палата. Рабочий решетка зато уточнить.","price":500,"is_available":true,"image_url":"https://placekitten.com/105/245.jpeg","stock_quantity":1}'

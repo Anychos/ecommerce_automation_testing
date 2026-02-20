@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMSwiaXNfYWRtaW4iOnRydWV9.k1_AlInIsqY-ryX8T95AywkRjl-bR_sOeMSgp4jWNOA' \
+ -H 'content-length: 392' \
+ -H 'content-type: application/json' \
+ -d '{"name":"бок","description":"Возникновение ход призыв песенка. Горький чем опасность выкинуть граница. Желание разнообразный смеяться передо спалить факультет темнеть.","price":500,"is_available":true,"image_url":"https://dummyimage.com/338x543.jpg","stock_quantity":1}'
