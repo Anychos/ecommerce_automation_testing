@@ -27,9 +27,9 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -130,9 +130,9 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -249,26 +249,31 @@ jobs:
     if: always()
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download API results
         uses: actions/download-artifact@v4
         with:
           name: allure-api
-          path: allure-results
+          path: api-results
 
       - name: Download UI results
         uses: actions/download-artifact@v4
         with:
           name: allure-ui
-          path: allure-results
+          path: ui-results
+
+      - name: Merge results
+        run: |
+          mkdir -p allure-results
+          cp -r api-results/* allure-results/ || true
+          cp -r ui-results/* allure-results/ || true
 
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.13
         with:
           allure_results: allure-results
           allure_history: allure-history
-          keep_reports: 5
 
       - name: Publish Allure report
         uses: peaceiris/actions-gh-pages@v4
@@ -276,6 +281,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
           publish_branch: gh-pages
-          keep_files: true
 
 
