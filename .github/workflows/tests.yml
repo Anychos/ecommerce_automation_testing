@@ -291,6 +291,8 @@ jobs:
       - name: Send Telegram notification
         run: |
           STATUS="${{ needs.allure-report.result }}"
+          
+          ALLURE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_number }}/index.html"
 
           if [ "$STATUS" = "success" ]; then
             ICON="✅"
@@ -302,8 +304,9 @@ jobs:
           $ICON CI: $STATUS
           Repository: ${{ github.repository }}
           Branch: ${{ github.ref_name }}
+          
+          Allure Report: $ALLURE_URL
           Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          Allure Report: https://anychos.github.io/${{ github.repository }}/${{ github.run_number }}/index.html
           EOF
           )
           
