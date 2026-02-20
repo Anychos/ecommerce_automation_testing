@@ -232,9 +232,9 @@ jobs:
         run: |
           pytest tests/ui \
                  --alluredir=allure-results-ui \
-                 -n 2 \
-                 --reruns 2 \
-                 --reruns-delay 3
+                 -n 3 \
+                 --reruns 3 \
+                 --reruns-delay 4
 
       - name: Upload UI Allure results
         uses: actions/upload-artifact@v4
