@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MCwiaXNfYWRtaW4iOnRydWV9.dqQ6pj7p4RanaPs2Hd8G6RMq_ea_nex1tpQUbquGxYU' \
+ -H 'content-length: 453' \
+ -H 'content-type: application/json' \
+ -d '{"name":"куча","description":"Дыхание поздравлять господь построить человечек умолять. Угодный командование витрина легко тысяча плавно потом. Инфекция советовать грустный роса господь эффект мягкий.","price":0,"is_available":false,"image_url":"https://placekitten.com/633/745.webp","stock_quantity":4}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMSwiaXNfYWRtaW4iOnRydWV9.k1_AlInIsqY-ryX8T95AywkRjl-bR_sOeMSgp4jWNOA' \
+ -H 'content-length: 392' \
+ -H 'content-type: application/json' \
+ -d '{"name":"бабочка","description":"Падать пасть армейский. Кожа функция рот четыре. Задержать легко товар труп банда. Чем затянуться бак табак интеллектуальный сохранять.","price":500,"is_available":true,"image_url":"https://dummyimage.com/194x204.webp","stock_quantity":1}'

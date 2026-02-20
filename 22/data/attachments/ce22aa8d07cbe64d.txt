@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpc19hZG1pbiI6dHJ1ZX0.z8f062XJWzPu2tvLG1PNxx_s5HfdiEDl1gYhlEXiik8' \
+ -H 'content-length: 504' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пол","description":"Горький через выкинуть изба команда свежий.\nБеспомощный рис отражение рабочий мера проход. Порт висеть изредка. Командир выраженный постоянный славный прелесть. Основание тусклый низкий один граница.","price":500,"is_available":true,"image_url":"https://dummyimage.com/185x106.jpg","stock_quantity":1}'

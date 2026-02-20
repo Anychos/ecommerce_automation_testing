@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNCwiaXNfYWRtaW4iOnRydWV9.rS-i2G_LOqiDeuunNpiQQImNet_AAXhvaDgoBMpd2RU' \
+ -H 'content-length: 404' \
+ -H 'content-type: application/json' \
+ -d '{"name":"процесс","description":"Зато темнеть хлеб ответить. Зарплата механический спорт следовательно. Уточнить добиться медицина советовать наткнуться казнь сынок зеленый.","price":500,"is_available":true,"image_url":"https://dummyimage.com/49x902.webp","stock_quantity":1}'

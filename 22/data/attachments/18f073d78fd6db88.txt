@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJpc19hZG1pbiI6dHJ1ZX0.0wVCiejIdlbFLbb24tcFRmdaal5iLDp7lf3rbIq-se4' \
+ -H 'content-length: 398' \
+ -H 'content-type: application/json' \
+ -d '{"name":"вариант","description":"Рис эффект мрачно район около.\nНажать непривычный сверкать какой терапия посвятить присесть. Солнце место бровь сходить дурацкий бригада.","price":500,"is_available":true,"image_url":"https://placekitten.com/863/873.jpg","stock_quantity":1}'

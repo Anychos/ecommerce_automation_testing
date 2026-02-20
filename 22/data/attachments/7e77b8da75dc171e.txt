@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiaXNfYWRtaW4iOnRydWV9.ehCJBbyMyYPBMES69S85WOycqnTSNULl5BmXx5x9Ou0' \
+ -H 'content-length: 478' \
+ -H 'content-type: application/json' \
+ -d '{"name":"художественный","description":"Изображать бригада важный торговля левый. Близко сынок тута затянуться.\nДомашний ручей металл голубчик человечек товар задрать. Даль витрина избегать мальчишка триста через.","price":500,"is_available":true,"image_url":"https://picsum.photos/760/991.webp","stock_quantity":1}'

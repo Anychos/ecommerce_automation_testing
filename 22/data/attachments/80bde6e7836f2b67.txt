@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwiaXNfYWRtaW4iOnRydWV9.TBpG6fIToyA2Q3Ec---2J_pxXJCZ1WAJfMcYCfJi3K0' \
+ -H 'content-length: 487' \
+ -H 'content-type: application/json' \
+ -d '{"name":"приятель","description":"Поставить жидкий художественный неудобно отдел дьявол тесно. Что стакан спичка рабочий житель. Монета тяжелый привлекать протягивать. Естественный совет доставать иной торговля вообще.","price":500,"is_available":true,"image_url":"https://picsum.photos/358/342.jpeg","stock_quantity":1}'
