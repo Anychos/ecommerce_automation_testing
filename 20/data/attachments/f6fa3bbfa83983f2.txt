@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiaXNfYWRtaW4iOnRydWV9.cN4kD2N16mn2VPL06OeYbEcBsTyAnkuk9y1QH35xRUw' \
+ -H 'content-length: 253' \
+ -H 'content-type: application/json' \
+ -d '{"name":"очередной","description":"Невыносимый заявление порядок непривычный неправда пасть.","price":500,"is_available":true,"image_url":"https://picsum.photos/137/914.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJpc19hZG1pbiI6dHJ1ZX0.XGKImbcanSPySsfNgDcC4lNadqJ3E2uKw2ZSnDfJ8to' \
+ -H 'content-length: 476' \
+ -H 'content-type: application/json' \
+ -d '{"name":"тревога","description":"Пространство сутки житель отдел легко мотоцикл.\nПалата функция очко господь. Выбирать достоинство выраженный результат мрачно. Рай мучительно реклама соответствие чувство термин.","price":500,"is_available":true,"image_url":"https://dummyimage.com/840x771.jpeg","stock_quantity":1}'

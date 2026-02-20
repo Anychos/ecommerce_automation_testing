@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0OSwiaXNfYWRtaW4iOnRydWV9.aVbrYHphGlVkEx4VjtM4JZ8Q17c4G2BpdQShRNecqVw' \
+ -H 'content-length: 496' \
+ -H 'content-type: application/json' \
+ -d '{"name":"господь","description":"Возможно юный появление нервно устройство слишком кожа. Невыносимый запустить пространство школьный житель июнь устройство.\nГрудь иной карман мучительно. Приятель пламя степь аж точно палец.","price":500,"is_available":true,"image_url":"https://dummyimage.com/941x447.jpg","stock_quantity":1}'

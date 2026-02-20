@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNSwiaXNfYWRtaW4iOnRydWV9.sc0SoMCIRqT4mVmkfVTyBON3vs5aC6XoiEPAN6WqidM' \
+ -H 'content-length: 370' \
+ -H 'content-type: application/json' \
+ -d '{"name":"падать","description":"Следовательно изменение болото спалить бетонный. Заплакать передо вздрогнуть пища вывести за райком. Услать функция помимо.","price":500,"is_available":true,"image_url":"https://placekitten.com/245/151.jpg","stock_quantity":1}'

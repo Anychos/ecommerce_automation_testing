@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MiwiaXNfYWRtaW4iOnRydWV9.29MW-Lc0onGkqAUNvCO8NzG_4GrOQ3xKJK17G_mTbO0' \
+ -H 'content-length: 371' \
+ -H 'content-type: application/json' \
+ -d '{"name":"смеяться","description":"Увеличиваться каюта выкинуть невозможно металл. Танцевать тревога столетие волк посидеть ход. Совещание изредка очутиться.","price":500,"is_available":true,"image_url":"https://dummyimage.com/83x210.png","stock_quantity":1}'

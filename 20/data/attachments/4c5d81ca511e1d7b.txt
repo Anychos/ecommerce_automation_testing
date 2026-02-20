@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiaXNfYWRtaW4iOnRydWV9.n7ED-3nyqxZBR-I3NrmsQx9xdMozWVV-D_92etHH8b8' \
+ -H 'content-length: 441' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пространство","description":"Изображать танцевать академик медицина умолять новый житель деньги. Иной пространство отъезд разнообразный легко. Провал пробовать опасность дошлый левый.","price":500,"is_available":true,"image_url":"https://placekitten.com/112/687.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywiaXNfYWRtaW4iOnRydWV9.fR_CwAkNO_60mXL_6WjFwccH1hZiBDY-5Je2zQGXJEw' \
+ -H 'content-length: 364' \
+ -H 'content-type: application/json' \
+ -d '{"name":"блин","description":"Необычный уничтожение мягкий металл вытаскивать еврейский. Полностью правление бригада лиловый салон возмутиться домашний.","price":500,"is_available":true,"image_url":"https://picsum.photos/373/35.png","stock_quantity":1}'

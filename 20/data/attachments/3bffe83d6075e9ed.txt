@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMCwiaXNfYWRtaW4iOnRydWV9._gvCkp60ysrPuDh3gFc_9g5hsQMiJMRrLvs8o4KffW0' \
+ -H 'content-length: 337' \
+ -H 'content-type: application/json' \
+ -d '{"name":"дрогнуть","description":"Избегать единый левый болото песня число медицина. Слишком коммунизм расстройство штаб порядок выбирать.","price":500,"is_available":true,"image_url":"https://picsum.photos/523/308.jpg","stock_quantity":1}'
