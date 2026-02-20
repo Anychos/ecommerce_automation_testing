@@ -264,11 +264,11 @@ jobs:
           path: allure-results
 
       - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.7
+        uses: simple-elf/allure-report-action@v1.13
         with:
           allure_results: allure-results
           allure_history: allure-history
-          keep_reports: 10
+          keep_reports: 5
 
       - name: Publish Allure report
         uses: peaceiris/actions-gh-pages@v4
