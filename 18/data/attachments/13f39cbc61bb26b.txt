@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywiaXNfYWRtaW4iOnRydWV9.8o8DTlyZfywB0M8D2fOBLaIuat8qusD1ukuEz6YTv1I' \
+ -H 'content-length: 351' \
+ -H 'content-type: application/json' \
+ -d '{"name":"обида","description":"Приятель поговорить крыса страсть кольцо носок крыса. Посидеть еврейский скользить изображать пасть изба господь.","price":500,"is_available":false,"image_url":"https://dummyimage.com/362x517.jpeg","stock_quantity":1}'

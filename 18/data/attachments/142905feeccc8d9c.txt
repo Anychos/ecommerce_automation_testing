@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MSwiaXNfYWRtaW4iOnRydWV9.NGUt7a8zTzaYWjxHXecniu9CAOZDp1Or6XkP-k9xmKU' \
+ -H 'content-length: 325' \
+ -H 'content-type: application/json' \
+ -d '{"name":"передо","description":"Посидеть казнь господь инвалид порядок. Соответствие место через серьезный поколение монета эффект.","price":500,"is_available":true,"image_url":"https://dummyimage.com/756x743.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NSwiaXNfYWRtaW4iOnRydWV9.jwnJiZXSaqY7pdWr-ypFOvW4Uq7l5HDAaPz_BULN7dc' \
+ -H 'content-length: 314' \
+ -H 'content-type: application/json' \
+ -d '{"name":"картинка","description":"Порядок плод пламя невыносимый. Что задержать передо магазин даль. При команда тревога рай.","price":"price","is_available":false,"image_url":"https://picsum.photos/599/44.jpg","stock_quantity":8}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiaXNfYWRtaW4iOnRydWV9.QeSB5Ior4tfHGYtyK20Z-DBUjoDVXVQYdGB7mm2gpCk' \
+ -H 'content-length: 504' \
+ -H 'content-type: application/json' \
+ -d '{"name":"постоянный","description":"Витрина упорно армейский выражаться вытаскивать. Ответить бак приятель второй витрина интернет исследование.\nРота миг пробовать расстройство. Забирать светило выражаться точно каюта прежний.","price":500,"is_available":true,"image_url":"https://dummyimage.com/70x106.webp","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MywiaXNfYWRtaW4iOnRydWV9.tpoUXseCdlgYBA2X5wNYGu3hgk64C_ydAyOztynmj8c' \
+ -H 'content-length: 262' \
+ -H 'content-type: application/json' \
+ -d '{"name":123456,"description":"Один карман ночь ребятишки ночь. Зеленый подробность горький приятель.","price":536,"is_available":true,"image_url":"https://placekitten.com/888/21.png","stock_quantity":7}'
