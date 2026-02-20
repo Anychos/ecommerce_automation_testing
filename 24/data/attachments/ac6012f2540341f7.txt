@@ -1,0 +1,10 @@
+curl -X 'PUT' 'http://localhost:8080/products/18' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MCwiaXNfYWRtaW4iOnRydWV9.dqQ6pj7p4RanaPs2Hd8G6RMq_ea_nex1tpQUbquGxYU' \
+ -H 'content-length: 420' \
+ -H 'content-type: application/json' \
+ -d '{"name":"дыхание","description":"Полюбить задержать порог песня.\nНаступать каюта полностью бетонный вздрогнуть материя даль. Неожиданный ботинок носок бетонный упор вскинуть зачем.","price":1887,"is_available":true,"image_url":"https://placekitten.com/937/563.webp","stock_quantity":5}'

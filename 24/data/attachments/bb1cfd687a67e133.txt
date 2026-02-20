@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMCwiaXNfYWRtaW4iOnRydWV9.vbth2_rWjkCZiAksS0hHeUjrjRi_If8RsO-sqzAdpvI' \
+ -H 'content-length: 416' \
+ -H 'content-type: application/json' \
+ -d '{"name":"экзамен","description":"Ремень за механический бегать магазин решение багровый. Район возбуждение изба. Расстегнуть инструкция прежний развернуться прощение вытаскивать.","price":500,"is_available":true,"image_url":"https://placekitten.com/442/292.jpeg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNCwiaXNfYWRtaW4iOnRydWV9.FQMEQ9P7UVsCScfK3-_c3Xd9Ee3HaE6ZYBOLO2gjUo4' \
+ -H 'content-length: 414' \
+ -H 'content-type: application/json' \
+ -d '{"name":"крыса","description":"Голубчик число счастье степь угодный наткнуться. Заплакать эпоха госпожа бочок коллектив посидеть. Назначить реклама житель расстройство торопливый.","price":500,"is_available":true,"image_url":"https://picsum.photos/48/977.webp","stock_quantity":1}'

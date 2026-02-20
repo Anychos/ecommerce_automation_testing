@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNCwiaXNfYWRtaW4iOnRydWV9.rS-i2G_LOqiDeuunNpiQQImNet_AAXhvaDgoBMpd2RU' \
+ -H 'content-length: 421' \
+ -H 'content-type: application/json' \
+ -d '{"name":"полюбить","description":"Налево кидать интернет вскинуть куча точно неожиданный.\nСравнение смертельный четко провинция. Ярко дыхание порт кидать инструкция коробка выкинуть.","price":500,"is_available":true,"image_url":"https://dummyimage.com/551x547.jpg","stock_quantity":1}'

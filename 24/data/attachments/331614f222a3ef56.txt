@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNywiaXNfYWRtaW4iOnRydWV9.fR_CwAkNO_60mXL_6WjFwccH1hZiBDY-5Je2zQGXJEw' \
+ -H 'content-length: 304' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пробовать","description":"Уронить вообще экзамен решетка дремать космос головной головной. Встать а пламя кпсс.","price":500,"is_available":true,"image_url":"https://dummyimage.com/676x494.jpeg","stock_quantity":1}'

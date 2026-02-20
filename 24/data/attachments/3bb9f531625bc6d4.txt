@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNiwiaXNfYWRtaW4iOnRydWV9.waIO9-7YJvEN1LA6mhweUKonOOpiVi_5sTOZIPsPq2o' \
+ -H 'content-length: 454' \
+ -H 'content-type: application/json' \
+ -d '{"name":"спорт","description":"Коммунизм пламя пробовать прощение палка иной художественный запеть. Изредка опасность неожиданно вздрогнуть. Успокоиться инфекция район термин достоинство отдел вообще.","price":500,"is_available":true,"image_url":"https://picsum.photos/220/544.jpg","stock_quantity":1}'
