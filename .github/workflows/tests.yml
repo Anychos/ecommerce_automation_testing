@@ -232,7 +232,7 @@ jobs:
         run: |
           pytest tests/ui \
                  --alluredir=allure-results-ui \
-                 -n 3 \
+                 -n 2 \
                  --reruns 2 \
                  --reruns-delay 3
 
@@ -303,12 +303,13 @@ jobs:
           Repository: ${{ github.repository }}
           Branch: ${{ github.ref_name }}
           Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Allure Report: https://anychos.github.io/${{ github.repository }}/${{ github.run_number }}/index.html
           EOF
           )
           
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
           -d text="$MESSAGE"
-  
-
-
+          
+          
+          
