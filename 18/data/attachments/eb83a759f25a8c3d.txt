@@ -1,7 +1,0 @@
-curl -X 'DELETE' 'http://localhost:8080/products/15' \
- -H 'host: localhost:8080' \
- -H 'accept: */*' \
- -H 'accept-encoding: gzip, deflate' \
- -H 'connection: keep-alive' \
- -H 'user-agent: python-httpx/0.28.1' \
- -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MSwiaXNfYWRtaW4iOnRydWV9.NGUt7a8zTzaYWjxHXecniu9CAOZDp1Or6XkP-k9xmKU'

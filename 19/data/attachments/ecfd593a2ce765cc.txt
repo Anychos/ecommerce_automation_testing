@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwiaXNfYWRtaW4iOnRydWV9.tzJFDf0Nt2S2_oELdcxMZv8A_Ae4EZG3wYUyi_2uNDc' \
+ -H 'content-length: 379' \
+ -H 'content-type: application/json' \
+ -d '{"name":"войти","description":"Угроза отдел коммунизм деловой. Эффект скрытый ставить район решетка мрачно. Другой встать славный домашний отъезд сынок бетонный.","price":500,"is_available":true,"image_url":"https://picsum.photos/604/918.webp","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'PUT' 'http://localhost:8080/products/18' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NSwiaXNfYWRtaW4iOnRydWV9.JnMGZ_Cg0eJFHZq62RnavQjpNENcrpOHCM7eNKNwGOk' \
+ -H 'content-length: 449' \
+ -H 'content-type: application/json' \
+ -d '{"name":"вздрагивать","description":"Инструкция счастье означать пропасть сходить социалистический.\nСпособ кожа инфекция головка свежий изменение задержать.\nВисеть цель плод холодно адвокат спасть.","price":669,"is_available":true,"image_url":"https://picsum.photos/864/51.jpg","stock_quantity":5}'

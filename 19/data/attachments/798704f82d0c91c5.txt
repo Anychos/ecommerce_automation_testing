@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MSwiaXNfYWRtaW4iOnRydWV9.bp681yRCA7l3JBRaLZ8zca1PhB9ztOXRLBM7t-RHlPY' \
+ -H 'content-length: 392' \
+ -H 'content-type: application/json' \
+ -d '{"name":"дошлый","description":"Монета приличный неправда отметить. Коллектив единый ленинград советовать труп радость недостаток. Отъезд разнообразный радость спасть.","price":0,"is_available":true,"image_url":"https://dummyimage.com/1014x664.png","stock_quantity":7}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOCwiaXNfYWRtaW4iOnRydWV9.RzrkEuvufpz6tEs39s3rBZE0FizLbpw0ZrblOTRFIiw' \
+ -H 'content-length: 402' \
+ -H 'content-type: application/json' \
+ -d '{"name":"зарплата","description":"Рабочий услать горький рот мягкий направо секунда. Секунда вообще покинуть цепочка манера направо народ тусклый. Прежний вчера неожиданно.","price":500,"is_available":true,"image_url":"https://placekitten.com/114/709.jpeg","stock_quantity":1}'

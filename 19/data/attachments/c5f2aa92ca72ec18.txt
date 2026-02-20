@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiaXNfYWRtaW4iOnRydWV9.Fo2Eu7YhmHEbq4x63rZ8y2Buw3usPM7yr4yjT633KJ8' \
+ -H 'content-length: 374' \
+ -H 'content-type: application/json' \
+ -d '{"name":"болото","description":"Дремать функция успокоиться кузнец. Плавно мимо хотеть штаб казнь падать зеленый. Доставать грустный около наслаждение салон.","price":500,"is_available":false,"image_url":"https://placekitten.com/427/45.jpeg","stock_quantity":1}'
