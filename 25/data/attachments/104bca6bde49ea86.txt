@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNCwiaXNfYWRtaW4iOnRydWV9.nR84psVgv6ZPxdv8GrgA69l2yEc3XKtiADp_DjFTtrk' \
+ -H 'content-length: 459' \
+ -H 'content-type: application/json' \
+ -d '{"name":"адвокат","description":"Наслаждение скрытый жестокий тюрьма выраженный беспомощный о. Приходить бегать мимо за слишком покинуть. Исполнять ныне лететь рассуждение товар помолчать направо вперед.","price":500,"is_available":true,"image_url":"https://dummyimage.com/335x251.jpg","stock_quantity":1}'

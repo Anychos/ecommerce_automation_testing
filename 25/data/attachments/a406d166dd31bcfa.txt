@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MiwiaXNfYWRtaW4iOnRydWV9.JvNZQb8u_H6XqtmjPFIzrU-ioYk8QUf0t-auzQyerKo' \
+ -H 'content-length: 476' \
+ -H 'content-type: application/json' \
+ -d '{"name":"монета","description":"Головной беспомощный госпожа кузнец тяжелый. Горький тусклый смертельный сынок означать спасть.\nМиг нож полоска четко неожиданный отражение. Цвет грустный привлекать вытаскивать головка.","price":1517,"is_available":true,"image_url":"example.com/image.jpg","stock_quantity":3}'

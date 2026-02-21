@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMiwiaXNfYWRtaW4iOnRydWV9.TD_Fx1S0e6_wF2-b5lcHhQ5GfxFawH6hiAwbMXJ3-bs' \
+ -H 'content-length: 445' \
+ -H 'content-type: application/json' \
+ -d '{"name":"белье","description":"Господь пропаганда покидать да головка около. Пробовать потрясти премьера пища райком дурацкий. Механический разнообразный кпсс выразить вариант рассуждение металл.","price":500,"is_available":true,"image_url":"https://picsum.photos/443/665.jpeg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNCwiaXNfYWRtaW4iOnRydWV9.WDZrGzfY6oYVmLNp4dzPteVQqq9z-VmWdrC6opFWMvg' \
+ -H 'content-length: 412' \
+ -H 'content-type: application/json' \
+ -d '{"name":"светило","description":"Стакан заработать плавно встать механический медицина. Устройство при вряд через понятный посвятить умирать. Цепочка металл поколение мгновение.","price":500,"is_available":true,"image_url":"https://dummyimage.com/1000x941.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwiaXNfYWRtaW4iOnRydWV9.eEI_l6px7MDf4vgTxW1iFilzSu65uPJOd5xjuAq31K8' \
+ -H 'content-length: 358' \
+ -H 'content-type: application/json' \
+ -d '{"name":"падаль","description":"Важный ремень армейский покидать. Мгновение радость выражаться рот. Поставить возникновение рассуждение исполнять.","price":1696,"is_available":false,"image_url":"https://placekitten.com/474/311.png","stock_quantity":10}'

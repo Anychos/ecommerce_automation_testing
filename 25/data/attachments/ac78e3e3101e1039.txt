@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOCwiaXNfYWRtaW4iOnRydWV9.RzrkEuvufpz6tEs39s3rBZE0FizLbpw0ZrblOTRFIiw' \
+ -H 'content-length: 431' \
+ -H 'content-type: application/json' \
+ -d '{"name":"прежде","description":"Район сынок растеряться достоинство.\nНалево задержать фонарик отражение спалить увеличиваться. Скрытый хотеть горький бегать запретить коммунизм развитый.","price":500,"is_available":true,"image_url":"https://dummyimage.com/527x293.webp","stock_quantity":1}'

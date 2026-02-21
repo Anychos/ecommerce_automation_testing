@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMywiaXNfYWRtaW4iOnRydWV9.6tI7UmNPYRLzkp937ohnaQhBEGwd-A6PqnMAOUrBRbs' \
+ -H 'content-length: 441' \
+ -H 'content-type: application/json' \
+ -d '{"name":"появление","description":"Академик неправда покинуть умирать привлекать миг. Штаб банда заплакать зеленый.\nУгодный расстройство издали. Наступать четыре банк близко кольцо какой банда.","price":500,"is_available":true,"image_url":"https://placekitten.com/860/696.jpg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwiaXNfYWRtaW4iOnRydWV9.TBpG6fIToyA2Q3Ec---2J_pxXJCZ1WAJfMcYCfJi3K0' \
+ -H 'content-length: 424' \
+ -H 'content-type: application/json' \
+ -d '{"name":"сохранять","description":"Упорно поколение достоинство ответить дыхание вздрогнуть развернуться командование. Исследование заведение князь одиннадцать ложиться применяться.","price":500,"is_available":true,"image_url":"https://placekitten.com/93/838.webp","stock_quantity":1}'

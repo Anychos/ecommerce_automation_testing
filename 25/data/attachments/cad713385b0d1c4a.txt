@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MCwiaXNfYWRtaW4iOnRydWV9.dqQ6pj7p4RanaPs2Hd8G6RMq_ea_nex1tpQUbquGxYU' \
+ -H 'content-length: 434' \
+ -H 'content-type: application/json' \
+ -d '{"name":"крутой","description":"Светило плод манера табак посвятить даль. Блин заложить бок боец кольцо сынок сустав.\nГоспожа миг дорогой дремать витрина. Командир печатать вряд прежде триста.","price":0,"is_available":false,"image_url":"https://dummyimage.com/481x760.jpg","stock_quantity":7}'

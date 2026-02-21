@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNywiaXNfYWRtaW4iOnRydWV9.h8qJOV9dtTVFyWzfdgbcr4thYAqUNgtvNUtYk6UXblA' \
+ -H 'content-length: 445' \
+ -H 'content-type: application/json' \
+ -d '{"name":"предоставить","description":"Бабочка нож равнодушный теория подземный монета. Тута вздрогнуть дремать покинуть близко скрытый степь угроза. Около порт пища пол единый невыносимый металл.","price":500,"is_available":true,"image_url":"https://placekitten.com/228/868.webp","stock_quantity":1}'

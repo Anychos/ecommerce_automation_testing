@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiaXNfYWRtaW4iOnRydWV9.n7ED-3nyqxZBR-I3NrmsQx9xdMozWVV-D_92etHH8b8' \
+ -H 'content-length: 350' \
+ -H 'content-type: application/json' \
+ -d '{"name":"сходить","description":"Выражаться интернет смелый трясти неожиданно. Мелочь ярко витрина трубка. Заведение танцевать полностью магазин.","price":500,"is_available":true,"image_url":"https://picsum.photos/875/588.png","stock_quantity":1}'

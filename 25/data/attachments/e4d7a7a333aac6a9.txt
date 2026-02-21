@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiaXNfYWRtaW4iOnRydWV9.cN4kD2N16mn2VPL06OeYbEcBsTyAnkuk9y1QH35xRUw' \
+ -H 'content-length: 359' \
+ -H 'content-type: application/json' \
+ -d '{"name":"жидкий","description":"Порядок сустав нервно полностью заведение зима жестокий. Заработать пропадать рабочий солнце плод аллея салон снимать.","price":500,"is_available":true,"image_url":"https://dummyimage.com/558x13.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NywiaXNfYWRtaW4iOnRydWV9.59D_oTaWcWOCHd72McFIJYRjj9Hi7W5All5rlkIrYtA' \
+ -H 'content-length: 413' \
+ -H 'content-type: application/json' \
+ -d '{"name":"","description":"Банк процесс подземный сынок промолчать совещание зато. Выразить хотеть каюта виднеться руководитель. Сходить упорно интеллектуальный угол ручей передо.","price":1019,"is_available":false,"image_url":"https://picsum.photos/260/815.png","stock_quantity":6}'
