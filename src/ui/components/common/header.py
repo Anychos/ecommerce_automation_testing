@@ -57,7 +57,7 @@ class Header(BaseComponent):
 
         self.shop_logo.click()
 
-    @allure.step("Клик по ссылке в хедере")
+    @allure.step("Клик по ссылке {link_name} в хедере")
     def click_nav_link(self, link_name: str) -> None:
         """
         Кликает по ссылке в хедере

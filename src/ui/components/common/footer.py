@@ -42,7 +42,7 @@ class Footer(BaseComponent):
         expect(self.menu_title("legal")).to_be_visible()
         expect(self.menu_link("legal")).to_be_visible()
 
-    @allure.step("Клик по ссылке в футере")
+    @allure.step("Клик по ссылке в секции {section_name} в футере")
     def click_link(self, section_name: str) -> None:
         """
         Кликает на ссылку в определенной секции футера

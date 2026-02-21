@@ -251,6 +251,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+        continue-on-error: true
+
       - name: Download API results
         uses: actions/download-artifact@v4
         with:
@@ -269,11 +276,19 @@ jobs:
           cp -r api-results/* allure-results/ || true
           cp -r ui-results/* allure-results/ || true
 
+      - name: Copy previous history
+        run: |
+          if [ -d "gh-pages/latest/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/latest/history/* allure-results/history/
+          fi
+
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.13
         with:
           allure_results: allure-results
           allure_history: allure-history
+          keep_reports: 5
 
       - name: Publish Allure report
         uses: peaceiris/actions-gh-pages@v4
@@ -281,6 +296,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-history
           publish_branch: gh-pages
+          keep_files: false
 
   notify:
     runs-on: ubuntu-latest
