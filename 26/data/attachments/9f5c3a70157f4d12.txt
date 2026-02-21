@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMywiaXNfYWRtaW4iOnRydWV9.rMWsKE3aVsQ_QhGODdoSR0NWPKZTjit6YReJKi_f5AQ' \
+ -H 'content-length: 443' \
+ -H 'content-type: application/json' \
+ -d '{"name":"добиться","description":"О манера отражение выкинуть сопровождаться коробка. Карандаш умирать порт выразить гулять. Стакан потянуться тесно очутиться возбуждение коллектив житель банк.","price":500,"is_available":true,"image_url":"https://placekitten.com/620/774.webp","stock_quantity":1}'

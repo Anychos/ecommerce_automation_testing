@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJpc19hZG1pbiI6dHJ1ZX0.0wVCiejIdlbFLbb24tcFRmdaal5iLDp7lf3rbIq-se4' \
+ -H 'content-length: 473' \
+ -H 'content-type: application/json' \
+ -d '{"name":"трубка","description":"Единый выразить настать пространство. Разводить белье оборот очутиться. Процесс белье остановить банк пропадать падать постоянный. Разводить спалить вариант заявление поговорить.","price":500,"is_available":true,"image_url":"https://picsum.photos/805/991.jpeg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNSwiaXNfYWRtaW4iOnRydWV9.sc0SoMCIRqT4mVmkfVTyBON3vs5aC6XoiEPAN6WqidM' \
+ -H 'content-length: 451' \
+ -H 'content-type: application/json' \
+ -d '{"name":"каюта","description":"Постоянный применяться роса зеленый непривычный монета правление слишком. Жить ботинок провинция секунда девка важный присесть.\nКазнь неожиданно посидеть протягивать.","price":500,"is_available":true,"image_url":"https://dummyimage.com/148x842.webp","stock_quantity":1}'

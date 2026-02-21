@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MSwiaXNfYWRtaW4iOnRydWV9.NGUt7a8zTzaYWjxHXecniu9CAOZDp1Or6XkP-k9xmKU' \
+ -H 'content-length: 513' \
+ -H 'content-type: application/json' \
+ -d '{"name":"протягивать","description":"Очко болото тяжелый.\nРассуждение рай лететь помолчать. Сохранять основание встать народ. Освобождение эффект рис ученый командование. Что неудобно песня триста похороны волк руководитель витрина.","price":500,"is_available":true,"image_url":"https://picsum.photos/280/633.jpeg","stock_quantity":1}'

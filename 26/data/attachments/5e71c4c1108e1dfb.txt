@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaXNfYWRtaW4iOnRydWV9.DTxVCFuJ6egh_XqmufCOHPJc9KPZzt82XOBk2DPFtxM' \
+ -H 'content-length: 356' \
+ -H 'content-type: application/json' \
+ -d '{"name":"назначить","description":"Невозможно мера поколение забирать подземный кольцо рай роса. Невозможно выражаться триста видимо столетие вряд.","price":500,"is_available":true,"image_url":"https://dummyimage.com/571x374.jpeg","stock_quantity":1}'

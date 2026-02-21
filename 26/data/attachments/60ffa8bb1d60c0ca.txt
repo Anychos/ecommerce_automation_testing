@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOSwiaXNfYWRtaW4iOnRydWV9.gOj9zavrazLMPTf3Zw5j4YQm-DC3EXiFWy7s9e8YtyA' \
+ -H 'content-length: 366' \
+ -H 'content-type: application/json' \
+ -d '{"name":"выразить","description":"Затянуться расстройство ныне тревога палата функция поздравлять. Костер идея вздрагивать покинуть вскинуть запретить.","price":500,"is_available":true,"image_url":"https://placekitten.com/137/337.jpeg","stock_quantity":1}'

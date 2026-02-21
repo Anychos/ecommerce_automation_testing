@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiaXNfYWRtaW4iOnRydWV9.rh1Tfq1qJY6kV52oNbfHaRjrYG5fdCmL5NalO29umCo' \
+ -H 'content-length: 504' \
+ -H 'content-type: application/json' \
+ -d '{"name":"зато","description":"Присесть указанный неправда провал порт изучить основание. Сходить сходить через заплакать некоторый ставить солнце.\nКонференция полюбить направо прощение. При висеть нажать райком блин заработать.","price":500,"is_available":true,"image_url":"https://dummyimage.com/181x216.png","stock_quantity":1}'

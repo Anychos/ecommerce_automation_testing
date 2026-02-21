@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNCwiaXNfYWRtaW4iOnRydWV9.FQMEQ9P7UVsCScfK3-_c3Xd9Ee3HaE6ZYBOLO2gjUo4' \
+ -H 'content-length: 462' \
+ -H 'content-type: application/json' \
+ -d '{"name":"висеть","description":"Поговорить понятный тесно лететь оборот призыв запретить. Сынок дошлый неожиданный результат.\nЧисло радость построить ведь. Пространство металл хлеб жестокий отдел ставить.","price":500,"is_available":true,"image_url":"https://placekitten.com/230/593.png","stock_quantity":1}'

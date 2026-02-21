@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNCwiaXNfYWRtaW4iOnRydWV9.nR84psVgv6ZPxdv8GrgA69l2yEc3XKtiADp_DjFTtrk' \
+ -H 'content-length: 501' \
+ -H 'content-type: application/json' \
+ -d '{"name":"результат","description":"Пространство зарплата житель тревога валюта поймать функция. Посвятить правый смеяться лиловый серьезный передо. Миллиард недостаток бригада нож очко. Термин мальчишка полюбить темнеть аллея.","price":500,"is_available":true,"image_url":"https://dummyimage.com/90x967.jpg","stock_quantity":1}'

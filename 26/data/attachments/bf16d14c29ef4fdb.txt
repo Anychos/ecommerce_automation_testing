@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMiwiaXNfYWRtaW4iOnRydWV9.0OFRq1UPvCYaNuYboDkDYmGNrl2y2larXcC68hB3-k8' \
+ -H 'content-length: 308' \
+ -H 'content-type: application/json' \
+ -d '{"name":"конструкция","description":"Правление добиться тесно умирать налоговый. Решетка степь устройство трясти научить.","price":500,"is_available":true,"image_url":"https://placekitten.com/375/500.jpg","stock_quantity":1}'

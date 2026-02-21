@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMSwiaXNfYWRtaW4iOnRydWV9.k1_AlInIsqY-ryX8T95AywkRjl-bR_sOeMSgp4jWNOA' \
+ -H 'content-length: 450' \
+ -H 'content-type: application/json' \
+ -d '{"name":"порт","description":"Падать чем дремать успокоиться девка. Правление посидеть парень.\nТревога приятель природа сходить. Тусклый зачем тысяча вскакивать демократия самостоятельно разводить.","price":799,"is_available":false,"image_url":"https://dummyimage.com/907x834.jpg","stock_quantity":7}'
