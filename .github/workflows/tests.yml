@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Create .env
+      - name: Создание .env файла
         run: |
           cat <<EOF > .env
           # API
@@ -58,18 +58,18 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
-      - name: Install project dependencies
+      - name: Установка зависимостей проекта
         run: pip install -r requirements.txt
 
-      - name: Clone API server
+      - name: Клонирование API сервера
         run: git clone https://github.com/Anychos/practice_api_test_server.git
 
-      - name: Install API dependencies
+      - name: Установка зависимостей API сервера
         run: |
           cd practice_api_test_server
           pip install -r requirements.txt
 
-      - name: Run migrations
+      - name: Применение миграций
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
           ADMIN_EMAIL: test_admin@mail.ru
@@ -80,7 +80,7 @@ jobs:
           cd practice_api_test_server
           alembic upgrade head
 
-      - name: Start API server
+      - name: Запуск API сервера
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
           SECRET_KEY: test-secret
@@ -88,7 +88,7 @@ jobs:
           cd practice_api_test_server
           python app.py &
 
-      - name: Wait for API
+      - name: Ожидание запуска API сервера
         run: |
           for i in {1..30}; do
             curl -s http://localhost:8080/health && exit 0
@@ -96,7 +96,7 @@ jobs:
           done
           exit 1
 
-      - name: Run API tests
+      - name: Запуск тестов API
         run: |
           pytest tests/api \
                  --alluredir=allure-results-api \
@@ -136,7 +136,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Create .env
+      - name: Создание .env файла
         run: |
           cat <<EOF > .env
           # API
@@ -161,18 +161,18 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
-      - name: Install project dependencies
+      - name: Установка зависимостей проекта
         run: pip install -r requirements.txt
 
-      - name: Clone API server
+      - name: Клонирование API сервера
         run: git clone https://github.com/Anychos/practice_api_test_server.git
 
-      - name: Install API dependencies
+      - name: Установка зависимостей API сервера
         run: |
           cd practice_api_test_server
           pip install -r requirements.txt
 
-      - name: Run migrations
+      - name: Применение миграций
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
           ADMIN_EMAIL: test_admin@mail.ru
@@ -183,7 +183,7 @@ jobs:
           cd practice_api_test_server
           alembic upgrade head
 
-      - name: Start API server
+      - name: Запуск API сервера
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
           SECRET_KEY: secret-key
@@ -191,7 +191,7 @@ jobs:
           cd practice_api_test_server
           python app.py &
 
-      - name: Wait for API
+      - name: Ожидание запуска API сервера
         run: |
           for i in {1..30}; do
             curl -s http://localhost:8080/health && exit 0
@@ -199,20 +199,20 @@ jobs:
           done
           exit 1
 
-      - name: Install Python & Playwright dependencies
+      - name: Установка Python и Playwright зависимостей
         run: |
           pip install -r requirements.txt
           playwright install --with-deps
 
-      - name: Clone UI server
+      - name: Клонирование UI сервера
         run: git clone https://github.com/Anychos/practice_ui_test_server.git
 
-      - name: Install UI dependencies
+      - name: Установка зависимостей UI сервера
         run: |
           cd practice_ui_test_server
           pip install -r requirements.txt
 
-      - name: Start UI server
+      - name: Запуск UI сервера
         env:
           API_BASE_URL: http://localhost:8080
           SECRET_KEY: secret-key
@@ -220,7 +220,7 @@ jobs:
           cd practice_ui_test_server
           python app.py &
 
-      - name: Wait for UI server
+      - name: Ожидание запуска UI сервера
         run: |
           for i in {1..30}; do
             curl -s http://127.0.0.1:5000 && exit 0
@@ -228,7 +228,7 @@ jobs:
           done
           exit 1
 
-      - name: Run UI tests
+      - name: Запуск UI тестов
         run: |
           pytest tests/ui \
                  --alluredir=allure-results-ui \
@@ -258,39 +258,39 @@ jobs:
           path: gh-pages
         continue-on-error: true
 
-      - name: Download API results
+      - name: Скачивание результатов API тестов
         uses: actions/download-artifact@v4
         with:
           name: allure-api
           path: api-results
 
-      - name: Download UI results
+      - name: Скачивание результатов UI тестов
         uses: actions/download-artifact@v4
         with:
           name: allure-ui
           path: ui-results
 
-      - name: Merge results
+      - name: Объединение результатов в одной директории
         run: |
           mkdir -p allure-results
           cp -r api-results/* allure-results/ || true
           cp -r ui-results/* allure-results/ || true
 
-      - name: Copy previous history
+      - name: Копирование истории предыдущих запусков
         run: |
           if [ -d "gh-pages/latest/history" ]; then
             mkdir -p allure-results/history
             cp -r gh-pages/latest/history/* allure-results/history/
           fi
 
-      - name: Generate Allure report
+      - name: Генерация Allure отчета
         uses: simple-elf/allure-report-action@v1.13
         with:
           allure_results: allure-results
           allure_history: allure-history
           keep_reports: 5
 
-      - name: Publish Allure report
+      - name: Публикация Allure отчета
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -304,7 +304,7 @@ jobs:
     if: always()
 
     steps:
-      - name: Send Telegram notification
+      - name: Уведомление о статусе CI
         run: |
           STATUS="${{ needs.allure-report.result }}"
           
@@ -318,6 +318,7 @@ jobs:
 
           MESSAGE=$(cat <<EOF
           $ICON CI: $STATUS
+          
           Repository: ${{ github.repository }}
           Branch: ${{ github.ref_name }}
           
