@@ -5,9 +5,10 @@ __pycache__
 *~
 .env
 
-# allure
+# reporting
 allure-results
 allure-report
+tracing
 
 # ui
 function-browser-state.json

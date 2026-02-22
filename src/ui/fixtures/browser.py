@@ -1,5 +1,7 @@
+import allure
 import pytest
 from playwright.sync_api import Page, Playwright
+from _pytest.fixtures import SubRequest
 
 from config import settings
 from src.ui.models.user_data import UserData
@@ -9,10 +11,11 @@ from src.ui.tools.routes import Route
 
 
 @pytest.fixture
-def chromium_page(playwright: Playwright) -> Page:
+def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     """
     Запускает Chromium браузер и открывает страницу приложения
 
+    :param request: Объект запроса Pytest
     :param playwright: Экземпляр Playwright, предоставляемый pytest-playwright
     :return: Объект Page для взаимодействия со страницей
     """
@@ -21,10 +24,14 @@ def chromium_page(playwright: Playwright) -> Page:
     context = browser.new_context(base_url=settings.get_base_url(),
                                   viewport=settings.browser_viewport.model_dump()
                                   )
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
+    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
     context.close()
     browser.close()
+
+    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
 
 
 @pytest.fixture(scope="session")
@@ -93,10 +100,11 @@ def function_get_browser_state(playwright: Playwright, user_data_function: UserD
 
 
 @pytest.fixture
-def session_chromium_page_with_state(session_get_browser_state, playwright: Playwright) -> Page:
+def session_chromium_page_with_state(request: SubRequest, session_get_browser_state, playwright: Playwright) -> Page:
     """
     Запускает Chromium браузер и открывает страницу приложения с сохраненным состоянием
 
+    :param request: Объект запроса Pytest
     :param session_get_browser_state: Функция, создающая и сохраняющая состояние браузера
     :param playwright: Экземпляр Playwright, предоставляемый pytest-playwright
     :return: Объект Page для взаимодействия со страницей
@@ -108,17 +116,22 @@ def session_chromium_page_with_state(session_get_browser_state, playwright: Play
         storage_state=settings.session_browser_state_file,
         viewport=settings.browser_viewport.model_dump()
     )
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
+    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
     context.close()
     browser.close()
 
+    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
+
 
 @pytest.fixture
-def function_chromium_page_with_state(function_get_browser_state, playwright: Playwright) -> Page:
+def function_chromium_page_with_state(request: SubRequest, function_get_browser_state, playwright: Playwright) -> Page:
     """
     Запускает Chromium браузер и открывает страницу приложения с сохраненным состоянием
 
+    :param request: Объект запроса Pytest
     :param function_get_browser_state: Функция, создающая и сохраняющая состояние браузера
     :param playwright: Экземпляр Playwright, предоставляемый pytest-playwright
     :return: Объект Page для взаимодействия со страницей
@@ -130,7 +143,11 @@ def function_chromium_page_with_state(function_get_browser_state, playwright: Pl
         storage_state=settings.function_browser_state_file,
         viewport=settings.browser_viewport.model_dump()
     )
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
+    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
     context.close()
     browser.close()
+
+    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
