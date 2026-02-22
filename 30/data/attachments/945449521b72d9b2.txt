@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMSwiaXNfYWRtaW4iOnRydWV9.Mss8Ewwvr3IMjBoYYq85LNY18IP9JpgSvaT8LmJ6tb4' \
+ -H 'content-length: 426' \
+ -H 'content-type: application/json' \
+ -d '{"name":"прощение","description":"Услать неожиданный космос вперед вытаскивать слишком. Через горький поставить художественный трубка граница. Трясти присесть угодный уронить выдержать.","price":500,"is_available":true,"image_url":"https://picsum.photos/658/550.png","stock_quantity":1}'

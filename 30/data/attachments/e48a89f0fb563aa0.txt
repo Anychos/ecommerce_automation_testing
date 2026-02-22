@@ -1,0 +1,10 @@
+curl -X 'PUT' 'http://localhost:8080/products/18' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NiwiaXNfYWRtaW4iOnRydWV9.KFWs1q2ufUNKLHXpBYBQx7nTYWwW8yFYl0_ro3BuZgY' \
+ -H 'content-length: 379' \
+ -H 'content-type: application/json' \
+ -d '{"name":"направо","description":"Товар пасть строительство упор четыре конференция бетонный оборот. Банк адвокат оборот сбросить выгнать природа страсть число.","price":579,"is_available":false,"image_url":"https://picsum.photos/837/335.webp","stock_quantity":10}'

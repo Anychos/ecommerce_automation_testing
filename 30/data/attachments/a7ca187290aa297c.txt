@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MiwiaXNfYWRtaW4iOnRydWV9.MZuLRexN1APt7b63_mBzJyD_7_mnS2DPlYQOghvofkM' \
+ -H 'content-length: 413' \
+ -H 'content-type: application/json' \
+ -d '{"name":"сутки","description":"Район достоинство сутки конференция цвет. Полевой провинция ныне упорно перебивать рис тревога. Манера низкий монета райком ложиться даль запретить.","price":500,"is_available":true,"image_url":"https://dummyimage.com/95x497.jpeg","stock_quantity":1}'

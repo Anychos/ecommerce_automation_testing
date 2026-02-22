@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMiwiaXNfYWRtaW4iOnRydWV9.5t8f7l5yTIG_AWpN1oY5TO9QRYwjWcV9-FfOHZrYmqw' \
+ -H 'content-length: 257' \
+ -H 'content-type: application/json' \
+ -d '{"name":"отъезд","description":"Какой посидеть ломать применяться. Издали очко вывести слишком.","price":500,"is_available":true,"image_url":"https://dummyimage.com/625x998.png","stock_quantity":1}'

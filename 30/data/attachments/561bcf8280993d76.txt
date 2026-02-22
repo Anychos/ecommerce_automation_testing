@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNiwiaXNfYWRtaW4iOnRydWV9.Y4w8GduKrF7x8EXSig-Her6IUldULZYPbtJmB3CDrVE' \
+ -H 'content-length: 494' \
+ -H 'content-type: application/json' \
+ -d '{"name":"изучить","description":"Написать деловой темнеть бригада хотеть торопливый манера фонарик. Пропадать болото ход забирать. Теория господь поезд миллиард цепочка сохранять лететь. Пропасть дружно анализ рассуждение.","price":500,"is_available":true,"image_url":"https://dummyimage.com/130x395.jpg","stock_quantity":1}'

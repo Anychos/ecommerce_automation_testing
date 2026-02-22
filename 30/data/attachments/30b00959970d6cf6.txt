@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMCwiaXNfYWRtaW4iOnRydWV9.vbth2_rWjkCZiAksS0hHeUjrjRi_If8RsO-sqzAdpvI' \
+ -H 'content-length: 477' \
+ -H 'content-type: application/json' \
+ -d '{"name":"разнообразный","description":"Недостаток разводить падать господь торопливый запустить. Устройство ручей крыса понятный художественный боец посидеть. Недостаток около хозяйка умолять спорт металл издали.","price":500,"is_available":true,"image_url":"https://dummyimage.com/67x354.jpg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMiwiaXNfYWRtaW4iOnRydWV9.aMTjJSiEFybdsmFS6QC9DUnYrKHMwjOPOaoFSPp4dl4' \
+ -H 'content-length: 425' \
+ -H 'content-type: application/json' \
+ -d '{"name":"горький","description":"Избегать падаль коммунизм решетка иной уничтожение покинуть. Еврейский степь сынок единый юный желание точно. Спасть природа салон спешить поздравлять.","price":500,"is_available":true,"image_url":"https://placekitten.com/281/148.jpeg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwiaXNfYWRtaW4iOnRydWV9.eEI_l6px7MDf4vgTxW1iFilzSu65uPJOd5xjuAq31K8' \
+ -H 'content-length: 499' \
+ -H 'content-type: application/json' \
+ -d '{"name":"кидать","description":"Господь зарплата протягивать неожиданный спичка. Ход строительство поймать триста редактор термин солнце пространство. Художественный инвалид сверкающий настать применяться через запретить.","price":1700,"is_available":false,"image_url":"https://placekitten.com/18/996.jpeg","stock_quantity":3}'

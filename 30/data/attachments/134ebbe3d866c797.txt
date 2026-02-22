@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NCwiaXNfYWRtaW4iOnRydWV9.BtNDfpT4NhUxDc3vooSBC3_A6L23rvgpzcZfjAqPCFM' \
+ -H 'content-length: 445' \
+ -H 'content-type: application/json' \
+ -d '{"name":"кузнец","description":"Покидать пол пастух затянуться исполнять пересечь полоска. Счастье пятеро мальчишка выбирать ход задрать блин. Оставить правильный сохранять собеседник прошептать.","price":500,"is_available":true,"image_url":"https://placekitten.com/454/18.png","stock_quantity":1}'

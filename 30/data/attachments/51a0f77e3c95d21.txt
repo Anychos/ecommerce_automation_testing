@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNSwiaXNfYWRtaW4iOnRydWV9.7erWpxCFwKRV5ZTXFA8yoE9Wzrgs8dWNYx5TYVhpSqM' \
+ -H 'content-length: 504' \
+ -H 'content-type: application/json' \
+ -d '{"name":"интеллектуальный","description":"Коллектив результат мелькнуть коллектив предоставить. Картинка недостаток одиннадцать плод жить слишком песенка. Магазин секунда редактор правильный торговля неудобно издали изредка.","price":500,"is_available":false,"image_url":"https://dummyimage.com/384x174.webp","stock_quantity":1}'

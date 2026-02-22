@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0OCwiaXNfYWRtaW4iOnRydWV9.SoU_3M20N3V3dc4riWjGxyfvItnnh210_4ZpO5xhoLY' \
+ -H 'content-length: 387' \
+ -H 'content-type: application/json' \
+ -d '{"name":"","description":"Потом единый протягивать о дремать число кузнец рис. Помолчать беспомощный парень издали. Слишком неожиданный вытаскивать научить уронить.","price":308,"is_available":false,"image_url":"https://placekitten.com/798/848.png","stock_quantity":8}'
