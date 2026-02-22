@@ -16,7 +16,8 @@ def user_data_function() -> UserData:
         name=fake_ru.first_name(),
         phone=fake_ru.phone_number(),
         password=password,
-        confirm_password=password
+        confirm_password=password,
+        address=fake_ru.address()
     )
     return data
 

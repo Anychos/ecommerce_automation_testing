@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List
 from typing import Self
 
-from pydantic import BaseModel, HttpUrl, DirectoryPath
+from pydantic import BaseModel, HttpUrl, DirectoryPath, Field
 from pydantic import FilePath
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
