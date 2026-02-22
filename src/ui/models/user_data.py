@@ -7,5 +7,4 @@ class UserData(BaseModel):
     phone: str
     password: str
     confirm_password: str
-    address: str | None = Field(default=None)
 

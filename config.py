@@ -25,7 +25,6 @@ class TestUserData(BaseModel):
     phone: str
     password: str
     confirm_password: str
-    address: str
 
 
 class HTTPClientSettings(BaseModel):

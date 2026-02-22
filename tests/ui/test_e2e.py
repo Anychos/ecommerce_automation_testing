@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING
 
 from playwright.sync_api import Page
 
+from src.ui.tools.data_generator import fake_ru
+
 if TYPE_CHECKING:
     from src.api.fixtures.product import CreateProductFixture
 
@@ -101,7 +103,7 @@ class TestE2E:
             name=settings.test_user.name,
             phone=settings.test_user.phone,
             email=settings.test_user.email,
-            address=settings.test_user.address
+            address=fake_ru.address()
         )
         checkout_page.delivery_details_form.click_terms_checkbox()
         checkout_page.summary_info.click_button("place-order")
