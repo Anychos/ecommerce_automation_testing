@@ -1,0 +1,9 @@
+curl -X 'POST' 'http://localhost:8080/register' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'content-length: 99' \
+ -H 'content-type: application/json' \
+ -d '{"email":"izmail_93@example.org","password":"u#GpmLc3%4","name":"София","phone":"77050999571"}'
