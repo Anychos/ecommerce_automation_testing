@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMSwiaXNfYWRtaW4iOnRydWV9.vPyQjWjZt29_OU41ld8lvHS9qumQjXkkLrGv5nzHwIM' \
+ -H 'content-length: 278' \
+ -H 'content-type: application/json' \
+ -d '{"name":"функция","description":"Виднеться природа деньги изредка поговорить. Темнеть слишком спорт бочок.","price":500,"is_available":true,"image_url":"https://picsum.photos/422/1024.png","stock_quantity":1}'

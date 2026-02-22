@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNywiaXNfYWRtaW4iOnRydWV9.h8qJOV9dtTVFyWzfdgbcr4thYAqUNgtvNUtYk6UXblA' \
+ -H 'content-length: 459' \
+ -H 'content-type: application/json' \
+ -d '{"name":"отдел","description":"Ленинград хозяйка лететь угроза. Запустить металл указанный передо исследование адвокат.\nПространство картинка функция невыносимый. Печатать одиннадцать еврейский коробка.","price":500,"is_available":true,"image_url":"https://picsum.photos/517/367.jpg","stock_quantity":1}'

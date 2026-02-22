@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0OCwiaXNfYWRtaW4iOnRydWV9.SoU_3M20N3V3dc4riWjGxyfvItnnh210_4ZpO5xhoLY' \
+ -H 'content-length: 415' \
+ -H 'content-type: application/json' \
+ -d '{"name":"природа","description":"Спорт аж дурацкий песенка. Оставить табак задрать ставить.\nЧетыре сверкать рис видимо неожиданно выгнать. Миллиард о радость правильный налоговый.","price":500,"is_available":true,"image_url":"https://placekitten.com/761/629.webp","stock_quantity":1}'

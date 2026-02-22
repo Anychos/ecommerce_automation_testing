@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiaXNfYWRtaW4iOnRydWV9.5hzqw7GTs5gQiV0n6XDhYV02dLvjWfs6KMyWL18VPio' \
+ -H 'content-length: 394' \
+ -H 'content-type: application/json' \
+ -d '{"name":"о","description":"Даль триста деловой миф мучительно неправда направо. Порядок сынок заплакать печатать тута кожа. Правильный решетка сутки ярко заработать нож.","price":500,"is_available":true,"image_url":"https://dummyimage.com/240x977.jpeg","stock_quantity":1}'

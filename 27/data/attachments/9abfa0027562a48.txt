@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NCwiaXNfYWRtaW4iOnRydWV9.hg_ezNuJy8QgDz6shihJ2xeGPC1Ygb5jNaHnggeBXM8' \
+ -H 'content-length: 459' \
+ -H 'content-type: application/json' \
+ -d '{"name":"висеть","description":"Правильный тревога висеть цепочка слишком банк. Зима выгнать конструкция манера сустав неожиданно интернет.\nТруп мотоцикл низкий. Наслаждение премьера академик механический.","price":301,"is_available":true,"image_url":"https://example.com/image.gif","stock_quantity":5}'

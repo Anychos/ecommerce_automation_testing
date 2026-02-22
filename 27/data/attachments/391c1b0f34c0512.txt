@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiaXNfYWRtaW4iOnRydWV9.QeSB5Ior4tfHGYtyK20Z-DBUjoDVXVQYdGB7mm2gpCk' \
+ -H 'content-length: 440' \
+ -H 'content-type: application/json' \
+ -d '{"name":"бровь","description":"Отметить господь ответить дальний сутки. Коричневый художественный исследование житель аллея песня жить космос. Сверкающий освобождение пища поздравлять госпожа.","price":500,"is_available":true,"image_url":"https://picsum.photos/426/886.webp","stock_quantity":1}'

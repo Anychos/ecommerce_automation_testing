@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1MywiaXNfYWRtaW4iOnRydWV9.O2DtwMU6NaDqKT0vpSaKB7OBimdURYX8UAe0s2SjzUI' \
+ -H 'content-length: 346' \
+ -H 'content-type: application/json' \
+ -d '{"name":"возбуждение","description":"Рабочий рота основание. Наступать запеть юный медицина. Плясать приятель слишком пастух свежий пробовать.","price":0,"is_available":false,"image_url":"https://placekitten.com/395/521.webp","stock_quantity":5}'

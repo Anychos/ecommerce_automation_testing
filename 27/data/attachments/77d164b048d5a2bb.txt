@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiaXNfYWRtaW4iOnRydWV9.n7ED-3nyqxZBR-I3NrmsQx9xdMozWVV-D_92etHH8b8' \
+ -H 'content-length: 406' \
+ -H 'content-type: application/json' \
+ -d '{"name":"банк","description":"Цель сомнительный ныне командование. Необычный бабочка тысяча поезд ботинок. Призыв чем самостоятельно успокоиться коробка приходить о ребятишки.","price":500,"is_available":true,"image_url":"https://picsum.photos/772/52.webp","stock_quantity":1}'
