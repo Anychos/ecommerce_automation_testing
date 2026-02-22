@@ -1,7 +1,7 @@
 import allure
 import pytest
-from playwright.sync_api import Page, Playwright
 from _pytest.fixtures import SubRequest
+from playwright.sync_api import Page, Playwright
 
 from config import settings
 from src.ui.models.user_data import UserData

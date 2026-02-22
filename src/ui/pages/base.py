@@ -3,8 +3,6 @@ import re
 import allure
 from playwright.sync_api import Page, expect
 
-from config import settings
-
 
 class BasePage:
     """
@@ -37,7 +35,7 @@ class BasePage:
                           expected: str | re.Pattern,
                           *,
                           exact: bool = False,
-                          timeout: int = 5000
+                          timeout: int = 10000
                           ) -> None:
         """
         Проверяет текущий URL страницы

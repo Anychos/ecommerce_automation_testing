@@ -19,12 +19,13 @@ class BrowserViewport(BaseModel):
     device_scale_factor: float = 1.0
 
 
-class UITestUser(BaseModel):
+class TestUserData(BaseModel):
     email: str
     name: str
     phone: str
     password: str
     confirm_password: str
+    address: str
 
 
 class HTTPClientSettings(BaseModel):
@@ -66,7 +67,7 @@ class UISettings(APISettings):
     browser_viewport: BrowserViewport
     session_browser_state_file: FilePath
     function_browser_state_file: FilePath
-    test_user: UITestUser
+    test_user: TestUserData
 
 
 class Settings(UISettings):

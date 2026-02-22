@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from src.api.fixtures.product import CreateProductFixture
 
 import pytest
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Browser
 
 from src.ui.pages.cart import CartPage
 from src.ui.pages.checkout import CheckoutPage
@@ -107,5 +107,4 @@ def order_list_page_with_order(checkout_page: CheckoutPage,
     order_list_page.check_url_matches(re.compile(r"/orders/\d+"))
 
     return order_list_page
-
 

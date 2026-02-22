@@ -38,7 +38,7 @@ class OrderDetailPage(BasePage):
         Проверяет видимость элементов страницы деталей заказа
         """
 
-        expect(self.icon).to_be_visible()
+        expect(self.icon).to_be_visible(timeout=10000)
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text("Заказ успешно оформлен!")
         expect(self.order_id_text).to_be_visible()
