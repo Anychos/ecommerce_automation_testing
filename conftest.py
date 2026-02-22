@@ -1,5 +1,5 @@
 pytest_plugins = [
-    "src.api.fixtures.allure",
+    "utils.fixtures.allure",
     "src.api.fixtures.user",
     "src.api.fixtures.product",
     "src.api.fixtures.authentication",
