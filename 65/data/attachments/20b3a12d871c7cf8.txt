@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpc19hZG1pbiI6dHJ1ZX0.dVgdejWaRMlbNjjVdHOaov6P-wAAjU34vxxEcT-TjCU' \
+ -H 'content-length: 381' \
+ -H 'content-type: application/json' \
+ -d '{"name":"угол","description":"Спалить соответствие пасть казнь левый упор выраженный.\nНаписать вперед висеть выбирать четыре. Более житель мрачно зачем грустный.","price":500,"is_available":true,"image_url":"https://dummyimage.com/894x710.jpeg","stock_quantity":1}'

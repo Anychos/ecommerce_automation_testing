@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNywiaXNfYWRtaW4iOnRydWV9.21C7HaTc2w19Oj3WrhxhnECp20r3pvmVwNjk9zs4FLY' \
+ -H 'content-length: 440' \
+ -H 'content-type: application/json' \
+ -d '{"name":"госпожа","description":"Расстройство ягода солнце стакан. Миф банда хозяйка указанный. Девка боец результат инфекция костер проход.\nКомандир жить число секунда запустить вскакивать аж.","price":500,"is_available":true,"image_url":"https://dummyimage.com/348x706.webp","stock_quantity":1}'

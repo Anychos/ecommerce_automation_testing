@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiaXNfYWRtaW4iOnRydWV9.QeSB5Ior4tfHGYtyK20Z-DBUjoDVXVQYdGB7mm2gpCk' \
+ -H 'content-length: 300' \
+ -H 'content-type: application/json' \
+ -d '{"name":"лететь","description":"Космос табак художественный спичка вскинуть расстройство. Приятель изменение сверкать.","price":500,"is_available":true,"image_url":"https://picsum.photos/25/561.png","stock_quantity":1}'

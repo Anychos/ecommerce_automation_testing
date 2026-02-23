@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaXNfYWRtaW4iOnRydWV9.4dzOBV2nTjwho-lGFDiT6tsfOHX-rVBOlTP3H311yP8' \
+ -H 'content-length: 381' \
+ -H 'content-type: application/json' \
+ -d '{"name":"стакан","description":"Терапия рай результат означать. Основание интеллектуальный адвокат костер актриса оборот. Неправда виднеться вздрогнуть господь.","price":500,"is_available":true,"image_url":"https://dummyimage.com/893x597.jpeg","stock_quantity":1}'

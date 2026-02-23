@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaXNfYWRtaW4iOnRydWV9.ODtZ_7YGGOTmZ5ZZRmBJONJKgr1FuszGeIh1WG9rPIE' \
+ -H 'content-length: 498' \
+ -H 'content-type: application/json' \
+ -d '{"name":"магазин","description":"Дыхание приятель способ точно боец порт выражение. Кидать поговорить беспомощный скрытый естественный банк.\nСлишком адвокат изба ленинград болото второй. Багровый ремень горький расстегнуть.","price":500,"is_available":true,"image_url":"https://dummyimage.com/726x210.webp","stock_quantity":1}'

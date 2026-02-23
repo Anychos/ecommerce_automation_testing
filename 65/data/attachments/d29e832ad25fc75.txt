@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaXNfYWRtaW4iOnRydWV9.8s8Un5jQz3flgWK4APagztfc-U0xZ9leWfhO2zS7Inc' \
+ -H 'content-length: 370' \
+ -H 'content-type: application/json' \
+ -d '{"name":"находить","description":"Неожиданно ботинок равнодушный изменение выгнать результат низкий спасть. Отъезд мелькнуть необычный заведение зеленый.","price":500,"is_available":true,"image_url":"https://placekitten.com/992/658.webp","stock_quantity":1}'
