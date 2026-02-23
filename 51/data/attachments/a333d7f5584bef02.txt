@@ -1,0 +1,10 @@
+curl -X 'PUT' 'http://localhost:8080/products/18' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1OCwiaXNfYWRtaW4iOnRydWV9.IJVRVvuV8J_sPNPawBxJwCbKNFf0rIj9gD9dMq1C1io' \
+ -H 'content-length: 481' \
+ -H 'content-type: application/json' \
+ -d '{"name":"равнодушный","description":"Протягивать материя счастье торговля падаль цвет прошептать.\nСпасть факультет рассуждение школьный порт пол роса. Желание оборот бровь команда разнообразный факультет ученый а.","price":1881,"is_available":true,"image_url":"https://dummyimage.com/815x634.png","stock_quantity":10}'

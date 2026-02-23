@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1OCwiaXNfYWRtaW4iOnRydWV9.IJVRVvuV8J_sPNPawBxJwCbKNFf0rIj9gD9dMq1C1io' \
+ -H 'content-length: 375' \
+ -H 'content-type: application/json' \
+ -d '{"name":"наслаждение","description":"Бок степь заложить секунда заявление совещание. Горький ручей бетонный решетка рот тревога. Что бабочка девка хлеб хотеть.","price":500,"is_available":true,"image_url":"https://dummyimage.com/390x430.jpg","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaXNfYWRtaW4iOnRydWV9.8s8Un5jQz3flgWK4APagztfc-U0xZ9leWfhO2zS7Inc' \
+ -H 'content-length: 509' \
+ -H 'content-type: application/json' \
+ -d '{"name":"грудь","description":"Поставить выразить факультет крутой боец валюта. Бабочка спалить палата вздрагивать карман счастье редактор.\nСравнение через промолчать. Ярко добиться коричневый возможно печатать роса вскакивать о.","price":500,"is_available":true,"image_url":"https://placekitten.com/654/305.png","stock_quantity":1}'

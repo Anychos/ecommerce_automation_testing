@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0OCwiaXNfYWRtaW4iOnRydWV9.SoU_3M20N3V3dc4riWjGxyfvItnnh210_4ZpO5xhoLY' \
+ -H 'content-length: 429' \
+ -H 'content-type: application/json' \
+ -d '{"name":"","description":"Присесть куча житель ныне упор расстегнуть девка предоставить. Июнь перебивать дыхание растеряться миф рис запустить ход. Изба набор что еврейский функция передо.","price":1742,"is_available":false,"image_url":"https://picsum.photos/436/50.webp","stock_quantity":8}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNCwiaXNfYWRtaW4iOnRydWV9.LviVo_lsoKa4eWGIR7afKqfcpEOLRx3wtWjSLQ5NF30' \
+ -H 'content-length: 488' \
+ -H 'content-type: application/json' \
+ -d '{"name":"князь","description":"Перебивать аллея социалистический кузнец похороны. Запустить затянуться парень шлем направо кузнец медицина один.\nВздрагивать дальний возбуждение забирать прелесть смертельный выбирать.","price":500,"is_available":true,"image_url":"https://placekitten.com/212/81.webp","stock_quantity":1}'

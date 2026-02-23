@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJpc19hZG1pbiI6dHJ1ZX0.VbkTuJGljXDO3aCGK105vkpo1E7HKRGtYquHwJ_CE88' \
+ -H 'content-length: 362' \
+ -H 'content-type: application/json' \
+ -d '{"name":"запретить","description":"Хотеть чем покинуть жестокий уничтожение привлекать означать. Вскинуть дорогой невыносимый избегать радость правый.","price":500,"is_available":true,"image_url":"https://picsum.photos/247/958.jpeg","stock_quantity":1}'

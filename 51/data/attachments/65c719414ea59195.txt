@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNSwiaXNfYWRtaW4iOnRydWV9.7erWpxCFwKRV5ZTXFA8yoE9Wzrgs8dWNYx5TYVhpSqM' \
+ -H 'content-length: 390' \
+ -H 'content-type: application/json' \
+ -d '{"name":"заявление","description":"Единый мальчишка господь устройство выраженный термин пропасть кольцо. Интеллектуальный славный сохранять блин умирать указанный.","price":500,"is_available":false,"image_url":"https://dummyimage.com/181x381.png","stock_quantity":1}'

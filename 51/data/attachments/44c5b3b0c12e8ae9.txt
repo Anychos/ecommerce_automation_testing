@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMywiaXNfYWRtaW4iOnRydWV9.6tI7UmNPYRLzkp937ohnaQhBEGwd-A6PqnMAOUrBRbs' \
+ -H 'content-length: 334' \
+ -H 'content-type: application/json' \
+ -d '{"name":"угроза","description":"Полностью равнодушный редактор скользить трясти дальний. Заявление уточнить дорогой вывести инструкция.","price":500,"is_available":true,"image_url":"https://picsum.photos/815/717.jpeg","stock_quantity":1}'

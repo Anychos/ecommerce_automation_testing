@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiaXNfYWRtaW4iOnRydWV9.1a-mGCkzTqAc2iSjAmQjWQzMMEOxqfjiMdFKswMr8X0' \
+ -H 'content-length: 479' \
+ -H 'content-type: application/json' \
+ -d '{"name":"экзамен","description":"Дружно порт спалить монета роса развитый очередной. Рабочий развернуться лиловый парень.\nКарман каюта пересечь. Способ ботинок холодно умирать близко. Жидкий слишком приходить ныне.","price":500,"is_available":true,"image_url":"https://dummyimage.com/214x212.webp","stock_quantity":1}'

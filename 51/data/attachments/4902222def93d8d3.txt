@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJpc19hZG1pbiI6dHJ1ZX0.QnABT7b98Fr0qDtl89eSibAISbRxNd8LSxkXvU38bBM' \
+ -H 'content-length: 386' \
+ -H 'content-type: application/json' \
+ -d '{"name":"что","description":"Ботинок пересечь затянуться выдержать светило. Нажать редактор выгнать уточнить понятный. Изба развитый костер проход другой серьезный.","price":500,"is_available":true,"image_url":"https://picsum.photos/345/525.webp","stock_quantity":1}'
