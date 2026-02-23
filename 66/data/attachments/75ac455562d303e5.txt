@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJpc19hZG1pbiI6dHJ1ZX0.QnABT7b98Fr0qDtl89eSibAISbRxNd8LSxkXvU38bBM' \
+ -H 'content-length: 463' \
+ -H 'content-type: application/json' \
+ -d '{"name":"выкинуть","description":"Постоянный жить конструкция тревога девка.\nПроход карман аж коричневый вперед кузнец вскинуть. Трубка эпоха слишком кидать. Лиловый выражаться выбирать радость советовать.","price":500,"is_available":true,"image_url":"https://picsum.photos/550/730.webp","stock_quantity":1}'

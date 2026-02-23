@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNywiaXNfYWRtaW4iOnRydWV9.21C7HaTc2w19Oj3WrhxhnECp20r3pvmVwNjk9zs4FLY' \
+ -H 'content-length: 450' \
+ -H 'content-type: application/json' \
+ -d '{"name":"висеть","description":"Сынок витрина потрясти рабочий руководитель зима. Табак постоянный невыносимый карандаш развернуться заработать. Слишком господь точно коммунизм совещание изба князь.","price":500,"is_available":true,"image_url":"https://dummyimage.com/34x948.png","stock_quantity":1}'

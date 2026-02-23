@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiaXNfYWRtaW4iOnRydWV9.1a-mGCkzTqAc2iSjAmQjWQzMMEOxqfjiMdFKswMr8X0' \
+ -H 'content-length: 475' \
+ -H 'content-type: application/json' \
+ -d '{"name":"прежде","description":"Манера триста естественный отъезд около.\nМиг плод труп скрытый рабочий порода. Славный проход интернет бак успокоиться ремень. Неожиданный прошептать основание стакан конференция.","price":500,"is_available":true,"image_url":"https://placekitten.com/100/734.jpg","stock_quantity":1}'

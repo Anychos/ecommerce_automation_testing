@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaXNfYWRtaW4iOnRydWV9.8s8Un5jQz3flgWK4APagztfc-U0xZ9leWfhO2zS7Inc' \
+ -H 'content-length: 484' \
+ -H 'content-type: application/json' \
+ -d '{"name":"смертельный","description":"Строительство реклама второй. Крыса потрясти уточнить желание естественный. Новый тяжелый стакан металл факультет социалистический упор роскошный.\nТута ярко ставить счастье через.","price":500,"is_available":true,"image_url":"https://dummyimage.com/629x90.jpg","stock_quantity":1}'
