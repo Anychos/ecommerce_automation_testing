@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMSwiaXNfYWRtaW4iOnRydWV9._OfmZDhYiZrKk4GALSMiHZYfOrlfG0dSOEciq8RK7o4' \
+ -H 'content-length: 491' \
+ -H 'content-type: application/json' \
+ -d '{"name":"более","description":"Виднеться дыхание смертельный мелочь нож наслаждение.\nВоенный лететь понятный юный миф прежде мера. Миф избегать багровый рота падаль дошлый. Естественный возникновение тяжелый рай плясать.","price":500,"is_available":true,"image_url":"https://placekitten.com/897/117.png","stock_quantity":1}'

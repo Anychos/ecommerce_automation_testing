@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiaXNfYWRtaW4iOnRydWV9.Fo2Eu7YhmHEbq4x63rZ8y2Buw3usPM7yr4yjT633KJ8' \
+ -H 'content-length: 458' \
+ -H 'content-type: application/json' \
+ -d '{"name":"порог","description":"Заложить выражение неправда. Пространство легко бетонный полностью.\nБок боец сынок бегать пространство поговорить. Один пламя пересечь манера эпоха полностью соответствие.","price":500,"is_available":true,"image_url":"https://dummyimage.com/334x215.jpg","stock_quantity":1}'

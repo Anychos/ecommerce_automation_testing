@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NiwiaXNfYWRtaW4iOnRydWV9.KFWs1q2ufUNKLHXpBYBQx7nTYWwW8yFYl0_ro3BuZgY' \
+ -H 'content-length: 513' \
+ -H 'content-type: application/json' \
+ -d '{"name":"непривычный","description":"Магазин означать руководитель порода заведение дурацкий результат. Социалистический интернет уронить секунда совет прежний адвокат. Порог деловой находить естественный космос карандаш прощение.","price":0,"is_available":false,"image_url":"https://dummyimage.com/114x611.webp","stock_quantity":8}'

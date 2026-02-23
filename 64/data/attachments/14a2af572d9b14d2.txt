@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwiaXNfYWRtaW4iOnRydWV9.eEI_l6px7MDf4vgTxW1iFilzSu65uPJOd5xjuAq31K8' \
+ -H 'content-length: 307' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пламя","description":"Невыносимый процесс парень хотеть выкинуть пасть очутиться. Жидкий мелькнуть бабочка район.","price":500,"is_available":true,"image_url":"https://picsum.photos/954/969.png","stock_quantity":1}'

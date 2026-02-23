@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOCwiaXNfYWRtaW4iOnRydWV9.RzrkEuvufpz6tEs39s3rBZE0FizLbpw0ZrblOTRFIiw' \
+ -H 'content-length: 372' \
+ -H 'content-type: application/json' \
+ -d '{"name":"реклама","description":"Зеленый мимо умолять интернет банда. Июнь мелькнуть призыв выражение собеседник. Трясти исследование команда ремень передо.","price":500,"is_available":true,"image_url":"https://dummyimage.com/258x598.webp","stock_quantity":1}'

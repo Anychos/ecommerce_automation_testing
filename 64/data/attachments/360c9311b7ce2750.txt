@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNywiaXNfYWRtaW4iOnRydWV9.21C7HaTc2w19Oj3WrhxhnECp20r3pvmVwNjk9zs4FLY' \
+ -H 'content-length: 415' \
+ -H 'content-type: application/json' \
+ -d '{"name":"мучительно","description":"Правый конференция спасть ремень налоговый тысяча плод. Демократия намерение сохранять поезд. Приходить вчера банк умолять команда левый термин.","price":500,"is_available":true,"image_url":"https://picsum.photos/63/606.jpeg","stock_quantity":1}'

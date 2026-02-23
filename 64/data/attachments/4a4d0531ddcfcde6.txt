@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJpc19hZG1pbiI6dHJ1ZX0.dVgdejWaRMlbNjjVdHOaov6P-wAAjU34vxxEcT-TjCU' \
+ -H 'content-length: 370' \
+ -H 'content-type: application/json' \
+ -d '{"name":"интеллектуальный","description":"Посидеть результат военный снимать миф рот ответить. Ученый тысяча мусор развитый академик один неправда терапия.","price":500,"is_available":true,"image_url":"https://picsum.photos/625/483.webp","stock_quantity":1}'
