@@ -58,54 +58,19 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
-      - name: Установка зависимостей проекта
-        run: pip install -r requirements.txt
-
-      - name: Клонирование API сервера
-        run: git clone https://github.com/Anychos/practice_api_test_server.git
-
-      - name: Установка зависимостей API сервера
-        run: |
-          cd practice_api_test_server
-          pip install -r requirements.txt
-
-      - name: Применение миграций
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          ADMIN_EMAIL: test_admin@mail.ru
-          ADMIN_PASSWORD: test_admin_password
-          ADMIN_NAME: Admin
-          ADMIN_PHONE: +71234567890
-        run: |
-          cd practice_api_test_server
-          alembic upgrade head
-
-      - name: Запуск API сервера
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          SECRET_KEY: test-secret
-        run: |
-          cd practice_api_test_server
-          python app.py &
-
-      - name: Ожидание запуска API сервера
-        run: |
-          for i in {1..30}; do
-            curl -s http://localhost:8080/health && exit 0
-            sleep 2
-          done
-          exit 1
+      - uses: ./.github/actions/setup-backend
 
       - name: Запуск тестов API
         run: |
           pytest tests/api \
                  --alluredir=allure-results-api \
-                 -n 4 \
-                 --reruns 2 \
+                 -n 3 \
+                 --reruns 3 \
                  --reruns-delay 2
 
       - name: Upload API Allure results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: allure-api
           path: allure-results-api
@@ -161,47 +126,10 @@ jobs:
           ALLURE_RESULTS_DIR=./allure-results
           EOF
 
-      - name: Установка зависимостей проекта
-        run: pip install -r requirements.txt
-
-      - name: Клонирование API сервера
-        run: git clone https://github.com/Anychos/practice_api_test_server.git
-
-      - name: Установка зависимостей API сервера
-        run: |
-          cd practice_api_test_server
-          pip install -r requirements.txt
-
-      - name: Применение миграций
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          ADMIN_EMAIL: test_admin@mail.ru
-          ADMIN_PASSWORD: test_admin_password
-          ADMIN_NAME: Admin
-          ADMIN_PHONE: +71234567890
-        run: |
-          cd practice_api_test_server
-          alembic upgrade head
-
-      - name: Запуск API сервера
-        env:
-          DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-          SECRET_KEY: secret-key
-        run: |
-          cd practice_api_test_server
-          python app.py &
-
-      - name: Ожидание запуска API сервера
-        run: |
-          for i in {1..30}; do
-            curl -s http://localhost:8080/health && exit 0
-            sleep 2
-          done
-          exit 1
+      - uses: ./.github/actions/setup-backend
 
       - name: Установка Python и Playwright зависимостей
         run: |
-          pip install -r requirements.txt
           playwright install --with-deps
 
       - name: Клонирование UI сервера
@@ -232,12 +160,13 @@ jobs:
         run: |
           pytest tests/ui \
                  --alluredir=allure-results-ui \
-                 -n 3 \
+                 -n 2 \
                  --reruns 3 \
-                 --reruns-delay 4
+                 --reruns-delay 2
 
       - name: Upload UI Allure results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: allure-ui
           path: allure-results-ui

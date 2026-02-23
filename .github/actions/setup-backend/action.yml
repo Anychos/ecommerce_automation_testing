@@ -1,0 +1,47 @@
+name: Setup Backend
+
+runs:
+  using: "composite"
+  steps:
+    - name: Установка зависимостей проекта
+      run: pip install -r requirements.txt
+      bash: true
+
+    - name: Клонирование API сервера
+      run: git clone https://github.com/Anychos/practice_api_test_server.git
+
+    - name: Установка зависимостей API сервера
+      run: |
+        cd practice_api_test_server
+        pip install -r requirements.txt
+      bash: true
+
+    - name: Применение миграций
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+        ADMIN_EMAIL: test_admin@mail.ru
+        ADMIN_PASSWORD: test_admin_password
+        ADMIN_NAME: Admin
+        ADMIN_PHONE: +71234567890
+      run: |
+        cd practice_api_test_server
+        alembic upgrade head
+      bash: true
+
+    - name: Запуск API сервера
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+        SECRET_KEY: test-secret
+      run: |
+        cd practice_api_test_server
+        python app.py &
+      bash: true
+
+    - name: Ожидание запуска API сервера
+      run: |
+        for i in {1..30}; do
+          curl -s http://localhost:8080/health && exit 0
+          sleep 2
+        done
+        exit 1
+      bash: true
