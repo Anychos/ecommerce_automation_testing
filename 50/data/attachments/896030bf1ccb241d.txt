@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaXNfYWRtaW4iOnRydWV9.U_7wCSx7yVi17G2KlEN1EK-A_ApM6v4U0vU2jdn3_XY' \
+ -H 'content-length: 503' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пятеро","description":"Вряд витрина коллектив беспомощный помимо. Вытаскивать выражение при металл висеть.\nСравнение выраженный июнь. Демократия скрытый бригада тюрьма.\nКрыса миф ломать гулять плод чем отражение эпоха.","price":500,"is_available":true,"image_url":"https://picsum.photos/259/260.jpeg","stock_quantity":1}'

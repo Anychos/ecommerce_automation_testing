@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMSwiaXNfYWRtaW4iOnRydWV9._OfmZDhYiZrKk4GALSMiHZYfOrlfG0dSOEciq8RK7o4' \
+ -H 'content-length: 438' \
+ -H 'content-type: application/json' \
+ -d '{"name":"пространство","description":"Военный иной пространство.\nТриста космос райком кожа. Солнце необычный район около некоторый грудь.\nПорт проход коробка ложиться голубчик висеть умолять.","price":500,"is_available":true,"image_url":"https://placekitten.com/319/131.png","stock_quantity":1}'

@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiaXNfYWRtaW4iOnRydWV9.cN4kD2N16mn2VPL06OeYbEcBsTyAnkuk9y1QH35xRUw' \
+ -H 'content-length: 484' \
+ -H 'content-type: application/json' \
+ -d '{"name":"рот","description":"Виднеться остановить предоставить сопровождаться прошептать желание рабочий. Радость крутой уточнить ремень низкий остановить. Художественный приятель кожа понятный слать функция кидать.","price":500,"is_available":true,"image_url":"https://picsum.photos/904/765.webp","stock_quantity":1}'

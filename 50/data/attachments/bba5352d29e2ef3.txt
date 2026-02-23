@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMCwiaXNfYWRtaW4iOnRydWV9.Xqyjqs13rsKf8OyBjDzn417GF8MeV3_4kffbg5ATrGw' \
+ -H 'content-length: 489' \
+ -H 'content-type: application/json' \
+ -d '{"name":"издали","description":"Ремень танцевать инструкция космос висеть штаб степь. Мера а смелый крутой торопливый иной дьявол. Доставать заплакать запеть расстройство.\nТочно нажать ход печатать издали что приходить.","price":500,"is_available":true,"image_url":"https://placekitten.com/1008/74.jpeg","stock_quantity":1}'

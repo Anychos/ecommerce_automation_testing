@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOSwiaXNfYWRtaW4iOnRydWV9.JVSWpfYvKXkwjEVqliqh5MNRyyMTTn-OexXi0Z6Tq1k' \
+ -H 'content-length: 412' \
+ -H 'content-type: application/json' \
+ -d '{"name":"степь","description":"Покидать число желание дошлый. Салон рай функция один.\nУничтожение смертельный соответствие танцевать бочок а. Налоговый нажать разводить порядок.","price":500,"is_available":true,"image_url":"https://placekitten.com/148/261.webp","stock_quantity":1}'

@@ -1,7 +1,0 @@
-curl -X 'GET' 'http://localhost:8080/products' \
- -H 'host: localhost:8080' \
- -H 'accept: */*' \
- -H 'accept-encoding: gzip, deflate' \
- -H 'connection: keep-alive' \
- -H 'user-agent: python-httpx/0.28.1' \
- -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0OSwiaXNfYWRtaW4iOmZhbHNlfQ.wDai8S3sK2rfFSHiiUQWx2unfo_u0jlVX8LU74FAhd8'

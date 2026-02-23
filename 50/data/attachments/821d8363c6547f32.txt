@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NSwiaXNfYWRtaW4iOnRydWV9.JnMGZ_Cg0eJFHZq62RnavQjpNENcrpOHCM7eNKNwGOk' \
+ -H 'content-length: 466' \
+ -H 'content-type: application/json' \
+ -d '{"name":"мимо","description":"Совещание тревога песенка еврейский. Бак граница недостаток за лететь изменение.\nСохранять казнь нож правильный передо палка. Намерение палка написать товар. Космос боец намерение.","price":985,"is_available":false,"image_url":"https://example.com/image.gif","stock_quantity":8}'

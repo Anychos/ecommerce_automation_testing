@@ -1,0 +1,10 @@
+curl -X 'POST' 'http://localhost:8080/products' \
+ -H 'host: localhost:8080' \
+ -H 'accept: */*' \
+ -H 'accept-encoding: gzip, deflate' \
+ -H 'connection: keep-alive' \
+ -H 'user-agent: python-httpx/0.28.1' \
+ -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJpc19hZG1pbiI6dHJ1ZX0.XGKImbcanSPySsfNgDcC4lNadqJ3E2uKw2ZSnDfJ8to' \
+ -H 'content-length: 450' \
+ -H 'content-type: application/json' \
+ -d '{"name":"кузнец","description":"Покидать лететь вчера предоставить нажать недостаток поезд.\nАллея запретить разуметься плясать парень зеленый пересечь. Сходить задрать кидать покидать вчера полевой.","price":500,"is_available":true,"image_url":"https://picsum.photos/438/930.png","stock_quantity":1}'
