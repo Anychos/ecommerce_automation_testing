@@ -9,6 +9,7 @@ runs:
 
     - name: Клонирование API сервера
       run: git clone https://github.com/Anychos/practice_api_test_server.git
+      shell: bash
 
     - name: Установка зависимостей API сервера
       run: |
