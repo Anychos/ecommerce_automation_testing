@@ -86,8 +86,6 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
         """
         Создает продукт с указанными параметрами
 
-        :param is_available: Флаг доступности
-        :param stock_quantity: Количество продукта
         :return: Объект ProductFixture с информацией о продукте
         """
 
@@ -127,6 +125,7 @@ def update_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
             product_id: int,
             description: str = "product description",
             image_url: str = "https://example.com/image.jpg",
+            category: str = "category",
             is_available: bool = True,
             name: str = "product name",
             price: float = 1000,
@@ -135,15 +134,13 @@ def update_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
         """
         Обновляет продукт с указанными параметрами
 
-        :param product_id: Идентификатор продукта
-        :param is_available: Флаг доступности
-        :param stock_quantity: Количество продукта
         :return: Объект ProductFixture с информацией об обновленном продукте
         """
 
         request = FullUpdateProductRequestSchema(
             description=description,
             image_url=image_url,
+            category=category,
             name=name,
             price=price,
             is_available=is_available,

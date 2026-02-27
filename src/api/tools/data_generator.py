@@ -39,5 +39,8 @@ class DataGenerator:
     def quantity(self) -> int:
         return self.faker.random_int(min=1, max=10)
 
+    def category(self) -> str:
+        return self.faker.word()
+
 
 fake_ru = DataGenerator(Faker("ru_RU"))

@@ -24,6 +24,7 @@ def assert_product(
     assert_value(actual.name, expected.name, "name")
     assert_value(actual.description, expected.description, "description")
     assert_value(actual.price, expected.price, "price")
+    assert_value(actual.category, expected.category, "category")
     assert_value(actual.is_available, expected.is_available, "is_available")
     assert_value(actual.image_url, expected.image_url, "image_url")
     assert_value(actual.stock_quantity, expected.stock_quantity, "stock_quantity")
