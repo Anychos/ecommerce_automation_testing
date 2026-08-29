@@ -14,7 +14,7 @@ import pytest
 from src.api.clients.cart.client import CartAPIClient
 from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema, DeleteCartItemResponseSchema, \
     UpdateCartItemRequestSchema, UpdateCartItemResponseSchema, DeleteCartResponseSchema, GetCartResponseSchema
-from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
+from src.api.clients.error_schemas import HTTPValidationErrorResponseSchema
 from utils.allure.epic import Epic
 from utils.allure.feature import Feature
 from utils.allure.severity import Severity
@@ -60,7 +60,7 @@ class TestCartPositive:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = GetCartResponseSchema.model_validate_json(response.text)
-        assert_get_cart_response(actual=response_data)
+        assert_get_cart_response(actual=response_data, cart=create_cart, product_index=0)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
     @allure.story(Story.USER_REMOVE_PRODUCT_FROM_CART)
@@ -70,7 +70,7 @@ class TestCartPositive:
                                    private_cart_client: CartAPIClient,
                                    create_cart: CartFixture
                                    ) -> None:
-        response = private_cart_client.remove_item_cart_api(item_id=create_cart.item_id)
+        response = private_cart_client.remove_item_cart_api(item_id=create_cart.product_id)
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = DeleteCartItemResponseSchema.model_validate_json(response.text)
@@ -86,7 +86,7 @@ class TestCartPositive:
                          ) -> None:
         request = UpdateCartItemRequestSchema()
 
-        response = private_cart_client.update_cart_item_api(item_id=create_cart.item_id, request=request)
+        response = private_cart_client.update_cart_item_api(product_id=create_cart.product_id, request=request)
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = UpdateCartItemResponseSchema.model_validate_json(response.text)
@@ -100,7 +100,7 @@ class TestCartPositive:
                          private_cart_client: CartAPIClient,
                          create_cart: CartFixture
                          ) -> None:
-        response = private_cart_client.delete_cart_api()
+        response = private_cart_client.clear_cart_api()
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = DeleteCartResponseSchema.model_validate_json(response.text)
@@ -151,7 +151,7 @@ class TestCartNegative:
                                                      private_cart_client: CartAPIClient,
                                                      create_available_product: CreateProductFixture
                                                      ) -> None:
-        request = AddItemCartRequestSchema(product_id=create_available_product.product_id, quantity=2)
+        request = AddItemCartRequestSchema(product_id=create_available_product.product_id, quantity=6)
 
         response = private_cart_client.add_item_cart_api(request=request)
         assert_status_code(response.status_code, HTTPStatus.BAD_REQUEST)

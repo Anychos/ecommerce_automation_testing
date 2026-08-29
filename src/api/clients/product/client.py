@@ -12,10 +12,7 @@ from src.api.tools.routes import Routes
 
 
 class ProductAPIClient(BaseAPIClient):
-    """
-    Клиент для работы с API продукта
-    """
-
+    """Клиент для работы с API продукта"""
     @tracker.track_coverage_httpx(Routes.PRODUCTS)
     @allure.step("Отправка запроса на создание продукта")
     def create_product_api(self,
@@ -28,7 +25,6 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для создания продукта
         :return: Ответ сервера с данными созданного продукта
         """
-
         return self.post(url=Routes.PRODUCTS, json=request.model_dump())
 
     def create_product(self,
@@ -36,7 +32,7 @@ class ProductAPIClient(BaseAPIClient):
                        request: CreateProductRequestSchema
                        ) -> CreateProductResponseSchema:
         response = self.create_product_api(request=request)
-        return CreateProductResponseSchema.model_validate_json(response.text)
+        return CreateProductResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на получение продукта")
@@ -50,7 +46,6 @@ class ProductAPIClient(BaseAPIClient):
         :param product_id: Идентификатор продукта
         :return: Ответ сервера с данными продукта
         """
-
         return self.get(url=f"{Routes.PRODUCTS}/{product_id}")
 
     @tracker.track_coverage_httpx(Routes.PRODUCTS)
@@ -61,7 +56,6 @@ class ProductAPIClient(BaseAPIClient):
 
         :return: Ответ сервера со списком продуктов
         """
-
         return self.get(url=Routes.PRODUCTS)
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
@@ -78,7 +72,6 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для обновления продукта
         :return: Ответ сервера с данными обновленного продукта
         """
-
         return self.put(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump())
 
     def full_update_product(
@@ -104,7 +97,6 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для обновления продукта
         :return: Ответ сервера с данными обновленного продукта
         """
-
         return self.patch(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump(exclude_none=True))
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
@@ -119,15 +111,11 @@ class ProductAPIClient(BaseAPIClient):
         :param product_id: Идентификатор продукта
         :return: Ответ сервера с сообщением об успешном удалении
         """
-
         return self.delete(url=f"{Routes.PRODUCTS}/{product_id}")
 
 
 def get_public_product_client() -> ProductAPIClient:
-    """
-    Создает HTTP клиент для доступа к публичному API продукта
-    """
-
+    """Создает HTTP клиент для доступа к публичному API продукта"""
     return ProductAPIClient(client=public_client_builder())
 
 def get_private_product_client(
@@ -139,5 +127,4 @@ def get_private_product_client(
 
     :param user: Данные пользователя для авторизации
     """
-
     return ProductAPIClient(client=private_user_client_builder(user=user))

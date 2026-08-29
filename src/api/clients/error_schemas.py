@@ -1,6 +1,6 @@
-from typing import List, Any
+from typing import Any, List
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ErrorSchema(BaseModel):

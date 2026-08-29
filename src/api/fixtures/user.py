@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any, Generator
 
 import pytest
 from pydantic import BaseModel
@@ -10,10 +10,7 @@ from src.api.clients.user.schemas import CreateUserRequestSchema, CreateUserResp
 
 
 class UserFixture(BaseModel):
-    """
-    Хранит данные о созданном пользователе
-    """
-
+    """Хранит данные о созданном пользователе"""
     request: CreateUserRequestSchema
     response: CreateUserResponseSchema
 
@@ -39,20 +36,23 @@ class UserFixture(BaseModel):
 
 
 @pytest.fixture
-def private_admin_client() -> UserAPIClient:
-    """
-    Возвращает готовый HTTP клиент для доступа администратора к приватному API пользователя
-    """
+def private_admin_client() -> Generator[UserAPIClient, None, None]:
+    """Возвращает готовый HTTP клиент для доступа администратора к приватному API пользователя"""
+    client = get_private_admin_client()
 
-    return get_private_admin_client()
+    try:
+        yield client
+    finally:
+        client.close()
 
 @pytest.fixture
-def create_user_factory(private_admin_client: UserAPIClient) -> Callable[..., UserFixture]:
+def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callable[..., UserFixture], None, None]:
     """
     Возвращает фабрику для создания пользователя
 
     :param private_admin_client: Приватный HTTP клиент для доступа администратора к API пользователя
     """
+    created_users: list[UserFixture] = []
 
     def _create_user(
             *,
@@ -64,12 +64,17 @@ def create_user_factory(private_admin_client: UserAPIClient) -> Callable[..., Us
         :param is_admin: Флаг администратора
         :return: Объект UserFixture с информацией о пользователе
         """
-
         request = CreateUserRequestSchema(is_admin=is_admin)
-        response = private_admin_client.create_user(request=request)
-        return UserFixture(request=request, response=response)
 
-    return _create_user
+        response = private_admin_client.create_user(request=request)
+        user = UserFixture(request=request, response=response)
+        created_users.append(user)
+        return user
+
+    yield _create_user
+
+    for user in created_users:
+        private_admin_client.delete_user_api(user_id=user.user_id)
 
 @pytest.fixture
 def user(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
@@ -79,18 +84,21 @@ def user(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
     :param create_user_factory: Фабрика для создания пользователя
     :return: Объект UserFixture с информацией о пользователе
     """
-
     return create_user_factory()
 
 @pytest.fixture
-def private_user_client(user: UserFixture) -> UserAPIClient:
+def private_user_client(user: UserFixture) -> Generator[UserAPIClient, None, None]:
     """
     Возвращает готовый HTTP клиент для доступа пользователя к приватному API пользователя
 
     :param user: Созданный пользователь
     """
+    client = get_private_user_client(user=user.user_schema)
 
-    return get_private_user_client(user=user.user_schema)
+    try:
+        yield client
+    finally:
+        client.close()
 
 @pytest.fixture
 def admin(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
@@ -100,7 +108,6 @@ def admin(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
     :param create_user_factory: Фабрика для создания пользователя
     :return: Объект UserFixture с информацией об администраторе
     """
-
     return create_user_factory(is_admin=True)
 
 

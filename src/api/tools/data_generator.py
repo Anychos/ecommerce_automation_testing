@@ -14,14 +14,15 @@ class DataGenerator:
         return self.faker.first_name()
 
     def phone(self) -> str:
-        phone_start_digits = ["8", "7", "+7"]
-        return random.choice(phone_start_digits) + self.faker.msisdn()[1:11]
+        prefix = self.faker.random_element(("8", "7", "+7"))
+        number = self.faker.numerify("9#########")
+        return f"{prefix}{number}"
 
     def password(self) -> str:
         return self.faker.password()
 
-    def object_name(self) -> str:
-        return self.faker.word()
+    def product_name(self) -> str:
+        return f"Автотест Пицца {self.faker.uuid4()[:8]}"
 
     def description(self) -> str:
         return self.faker.text()
@@ -37,10 +38,10 @@ class DataGenerator:
         return self.faker.image_url() + random.choice(image_url_format)
 
     def quantity(self) -> int:
-        return self.faker.random_int(min=1, max=10)
+        return self.faker.random_int(min=1, max=99)
 
     def category(self) -> str:
-        return self.faker.word()
+        return f"Автотест Категория {self.faker.uuid4()[:8]}"
 
 
 fake_ru = DataGenerator(Faker("ru_RU"))

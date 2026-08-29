@@ -13,7 +13,7 @@ import allure
 import pytest
 from pydantic import TypeAdapter
 
-from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema
+from src.api.clients.error_schemas import HTTPValidationErrorResponseSchema
 from src.api.clients.order.client import OrderAPIClient
 from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderResponseSchema, GetOrderResponseSchema, \
     GetOrdersResponseSchema
@@ -46,7 +46,7 @@ class TestOrderPositive:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = CreateOrderResponseSchema.model_validate_json(response.text)
-        assert_create_order_response(actual=response_data, expected=request)
+        assert_create_order_response(actual=response_data, expected=request, cart=create_cart, product_index=0)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
     @allure.story(Story.USER_GET_ORDER_BY_ID)
@@ -96,7 +96,7 @@ class TestOrderNegative:
                                                              create_cart: CartFixture,
                                                              update_product_factory: Callable[..., CreateProductFixture]
                                                              ) -> None:
-        update_product_factory(product_id=create_cart.item_id, is_available=False, stock_quantity=0)
+        update_product_factory(product_id=create_cart.product_id, is_available=False, stock_quantity=0)
 
         request = CreateOrderRequestSchema(cart_id=create_cart.cart_id)
 

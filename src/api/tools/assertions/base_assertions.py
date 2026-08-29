@@ -15,14 +15,12 @@ def assert_status_code(
     :param actual: Полученный статус код
     :param expected: Ожидаемый статус код
     """
-
     assert actual == expected, (
         f"Некорректный код ответа. Получен: {actual}, ожидался: {expected}"
     )
 
-
 @allure.step("Проверка соответствия значения в поле {field_name}. Ожидалось {expected}, получено {actual}")
-def assert_value(
+def assert_field_value(
         actual: Any,
         expected: Any,
         field_name: str
@@ -34,11 +32,9 @@ def assert_value(
     :param expected: Ожидаемое значение
     :param field_name: Наименование поля
     """
-
     assert actual == expected, (
         f"Некорректное значение в поле {field_name}. Получено: {actual}, ожидалось: {expected}"
     )
-
 
 @allure.step("Проверка наличия поля {field_name} в ответе")
 def assert_field_exists(
@@ -51,11 +47,9 @@ def assert_field_exists(
     :param field_name: Название проверяемого поля
     :param actual: Фактическое значение
     """
-
     assert actual is not None, (
         f"Поле {field_name} отсутствует в ответе"
     )
-
 
 @allure.step("Проверка длины объекта {name}. Ожидалась {expected}, получена {actual}")
 def assert_length(
@@ -70,17 +64,14 @@ def assert_length(
     :param actual: Фактическая длина
     :param expected: Ожидаемая длина
     """
-
     assert len(actual) == len(expected), (
         f"Некорректная длина объекта: {name}\n"
         f"Ожидаемая длина: {len(expected)}\n"
         f"Фактическая длина: {len(actual)}"
     )
 
-
 @allure.step("Валидация JSON схемы ответа")
 def assert_json_schema(
-        *,
         actual: Any,
         schema: dict
 ) -> None:
@@ -90,7 +81,6 @@ def assert_json_schema(
     :param actual: Ответ в формате JSON
     :param schema: Ожидаемая JSON схема
     """
-
     validate(
         instance=actual,
         schema=schema,

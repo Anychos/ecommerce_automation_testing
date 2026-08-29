@@ -1,10 +1,11 @@
 import allure
+from pydantic import EmailStr
 
 from src.api.clients.authentication.schemas import LoginResponseSchema, RegistrationResponseSchema, \
     RegistrationRequestSchema
-from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
+from src.api.clients.error_schemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
 from src.api.clients.user.schemas import CreateUserResponseSchema
-from src.api.tools.assertions.base_assertions import assert_field_exists, assert_value
+from src.api.tools.assertions.base_assertions import assert_field_exists, assert_field_value
 from src.api.tools.assertions.error import assert_http_validation_error_response
 from src.api.tools.assertions.user import assert_user
 
@@ -21,12 +22,10 @@ def assert_login_response(
     :param actual: Фактический ответ на запрос логина пользователя
     :param expected: Ожидаемый ответ на запрос логина пользователя
     """
-
     assert_field_exists(actual.access_token, "access_token")
-    assert_value(actual.token_type, "bearer", "token_type")
+    assert_field_value(actual.token_type, "bearer", "token_type")
     assert_field_exists(actual.user.id, "user_id")
     assert_user(actual.user, expected)
-
 
 @allure.step("Проверка ответа на запрос регистрации пользователя")
 def assert_register_response(
@@ -40,15 +39,13 @@ def assert_register_response(
     :param actual: Фактический ответ на запрос регистрации пользователя
     :param expected: Ожидаемый ответ на запрос регистрации пользователя
     """
-
     assert_field_exists(actual.access_token, "access_token")
-    assert_value(actual.token_type, "bearer", "token_type")
+    assert_field_value(actual.token_type, "bearer", "token_type")
     assert_field_exists(actual.user.id, "user_id")
-    assert_value(actual.user.name, expected.name, "name")
-    assert_value(actual.user.email, expected.email, "email")
-    assert_value(actual.user.phone, expected.phone, "phone")
-    assert_value(actual.user.is_admin, False, "is_admin")
-
+    assert_field_value(actual.user.name, expected.name, "name")
+    assert_field_value(actual.user.email, expected.email, "email")
+    assert_field_value(actual.user.phone, expected.phone, "phone")
+    assert_field_value(actual.user.is_admin, False, "is_admin")
 
 @allure.step("Проверка ответа на запрос логина пользователя с некорректными данными")
 def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) -> None:
@@ -57,12 +54,10 @@ def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) 
 
     :param actual: Фактический ответ на запрос логина пользователя с некорректными данными
     """
-
     expected = HTTPValidationErrorResponseSchema(
-        detail="Невалидный логин или пароль"
+        detail="Неверный email или пароль"
     )
     assert_http_validation_error_response(actual=actual, expected=expected)
-
 
 @allure.step("Проверка ответа на запрос регистрации пользователя с уже зарегистрированным email")
 def assert_already_registered_email_response(actual: HTTPValidationErrorResponseSchema) -> None:
@@ -71,18 +66,16 @@ def assert_already_registered_email_response(actual: HTTPValidationErrorResponse
 
     :param actual: Фактический ответ на запрос регистрации пользователя с уже зарегистрированным email
     """
-
     expected = HTTPValidationErrorResponseSchema(
         detail="Email уже зарегистрирован"
     )
     assert_http_validation_error_response(actual=actual, expected=expected)
 
-
 @allure.step("Проверка ответа на запрос логина пользователя с некорректным форматом email")
 def assert_invalid_email_format_response(
         *,
         actual: InputValidationErrorResponseSchema,
-        email: str
+        email: EmailStr
 ) -> None:
     """
     Проверяет ответ на запрос логина пользователя с некорректным форматом email
@@ -90,7 +83,6 @@ def assert_invalid_email_format_response(
     :param actual: Фактический ответ на запрос логина пользователя с некорректным форматом email
     :param email: Некорректный email
     """
-
     error_messages = [
         "The part after the @-sign is not valid. It should have a period.",
         "An email address cannot end with a period.",

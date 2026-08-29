@@ -9,10 +9,10 @@ if TYPE_CHECKING:
 import allure
 import pytest
 
-from src.api.clients.error_shemas import InputValidationErrorResponseSchema, HTTPValidationErrorResponseSchema
+from src.api.clients.error_schemas import InputValidationErrorResponseSchema, HTTPValidationErrorResponseSchema
 from src.api.clients.user.client import UserAPIClient
 from src.api.clients.user.schemas import CreateUserRequestSchema, CreateUserResponseSchema, GetUserResponseSchema, \
-    UpdateUserResponseSchema, UpdateUserRequestSchema
+    UpdateUserResponseSchema, UpdateUserRequestSchema, DeleteUserResponseSchema
 from utils.allure.epic import Epic
 from utils.allure.feature import Feature
 from utils.allure.severity import Severity
@@ -21,7 +21,8 @@ from src.api.tools.assertions.authentication import assert_invalid_email_format_
 from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
 from src.api.tools.assertions.user import assert_create_user_response, assert_get_user_response, \
     assert_update_user_response, \
-    assert_wrong_password_response, assert_wrong_phone_response, assert_email_exists_response
+    assert_wrong_password_response, assert_wrong_phone_response, assert_email_exists_response, \
+    assert_delete_user_response
 
 
 @pytest.mark.api
@@ -102,6 +103,10 @@ class TestUserPositive:
         response = private_user_client.delete_user_api(user_id=user.user_id)
         assert_status_code(response.status_code, HTTPStatus.OK)
 
+        response_data = DeleteUserResponseSchema.model_validate_json(response.text)
+        assert_delete_user_response(actual=response_data)
+        assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
+
 
 @pytest.mark.api
 @pytest.mark.regression
@@ -122,7 +127,7 @@ class TestUserNegative:
                                      private_admin_client: UserAPIClient,
                                      email: str
                                      ) -> None:
-        request = CreateUserRequestSchema(email=email)
+        request = CreateUserRequestSchema().model_copy(update={"email": email})
 
         response = private_admin_client.create_user_api(request=request)
         assert_status_code(response.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)

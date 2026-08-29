@@ -1,16 +1,16 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 
 from src.api.tools.data_generator import fake_ru
 
 
 class UserSchema(BaseModel):
-    email: str
+    email: EmailStr
     name: str
     phone: str
 
 
 class CreateUserRequestSchema(UserSchema):
-    email: str = Field(default_factory=fake_ru.email)
+    email: EmailStr = Field(default_factory=fake_ru.email)
     name: str = Field(default_factory=fake_ru.first_name)
     phone: str = Field(default_factory=fake_ru.phone)
     password: str = Field(default_factory=fake_ru.password)
@@ -31,7 +31,7 @@ class GetUserMeResponseSchema(CreateUserResponseSchema):
 
 
 class UpdateUserRequestSchema(UserSchema):
-    email: str = Field(default_factory=fake_ru.email)
+    email: EmailStr = Field(default_factory=fake_ru.email)
     name: str = Field(default_factory=fake_ru.first_name)
     phone: str = Field(default_factory=fake_ru.phone)
 

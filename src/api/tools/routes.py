@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class Routes(str, Enum):
-    REGISTRATION = "/register"
-    LOGIN = "/login"
+    REGISTRATION = "/auth/register"
+    LOGIN = "/auth/login"
     USERS = "/users"
     PRODUCTS = "/products"
     CARTS = "/cart"

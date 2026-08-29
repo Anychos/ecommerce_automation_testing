@@ -15,8 +15,17 @@ class ProductSchema(BaseModel):
     stock_quantity: int
 
 
+class ProductInOrderSchema(BaseModel):
+    product_id: int
+    product_name: str
+    product_image_url: str
+    unit_price: float
+    quantity: int
+    line_total: float
+
+
 class CreateProductRequestSchema(ProductSchema):
-    name: str = Field(default_factory=fake_ru.object_name)
+    name: str = Field(default_factory=fake_ru.product_name)
     description: str = Field(default_factory=fake_ru.description)
     price: float = Field(default_factory=fake_ru.price)
     category: str = Field(default_factory=fake_ru.category)

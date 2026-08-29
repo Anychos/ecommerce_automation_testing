@@ -20,12 +20,11 @@ class DataGenerator:
     def full_name(self) -> str:
         return self.faker.name()
 
-    def phone_number(self) -> str:
-        number_prefix_list = ["+7", "8", "7"]
-        number_prefix = self.faker.random_element(number_prefix_list)
-        number_body = self.faker.random_int(min=0000000000, max=9999999999)
-        return f"{number_prefix}{number_body}"
-
+    def phone(self) -> str:
+        prefix = self.faker.random_element(("8", "7", "+7"))
+        number = self.faker.numerify("9#########")
+        return f"{prefix}{number}"
+        
     def password(self) -> str:
         return self.faker.password()
 

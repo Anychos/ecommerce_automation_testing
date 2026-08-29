@@ -1,9 +1,9 @@
 import allure
 
-from src.api.clients.error_shemas import InputValidationErrorResponseSchema, HTTPValidationErrorResponseSchema
+from src.api.clients.error_schemas import InputValidationErrorResponseSchema, HTTPValidationErrorResponseSchema
 from src.api.clients.user.schemas import CreateUserResponseSchema, CreateUserRequestSchema, GetUserResponseSchema, \
     UserSchema, UpdateUserResponseSchema, UpdateUserRequestSchema, DeleteUserResponseSchema
-from src.api.tools.assertions.base_assertions import assert_field_exists, assert_value
+from src.api.tools.assertions.base_assertions import assert_field_exists, assert_field_value
 from src.api.tools.assertions.error import assert_http_validation_error_response
 
 
@@ -18,11 +18,9 @@ def assert_user(
     :param actual: Фактические данные пользователя
     :param expected: Ожидаемые данные пользователя
     """
-
-    assert_value(actual.email, expected.email, "email")
-    assert_value(actual.name, expected.name, "name")
-    assert_value(actual.phone, expected.phone, "phone")
-
+    assert_field_value(actual.email, expected.email, "email")
+    assert_field_value(actual.name, expected.name, "name")
+    assert_field_value(actual.phone, expected.phone, "phone")
 
 @allure.step("Проверка ответа на запрос создания пользователя")
 def assert_create_user_response(
@@ -36,11 +34,9 @@ def assert_create_user_response(
     :param actual: Фактический ответ на запрос создания пользователя
     :param expected: Ожидаемый ответ на запрос создания пользователя
     """
-
     assert_field_exists(actual.id, "id")
-    assert_value(actual.is_admin, expected.is_admin, "is_admin")
+    assert_field_value(actual.is_admin, expected.is_admin, "is_admin")
     assert_user(actual, expected)
-
 
 @allure.step("Проверка ответа на запрос получения пользователя")
 def assert_get_user_response(
@@ -54,11 +50,9 @@ def assert_get_user_response(
     :param actual: Фактический ответ на запрос получения пользователя
     :param expected: Ожидаемый ответ на запрос получения пользователя
     """
-
-    assert_value(actual.id, expected.id, "id")
-    assert_value(actual.is_admin, expected.is_admin, "is_admin")
+    assert_field_value(actual.id, expected.id, "id")
+    assert_field_value(actual.is_admin, expected.is_admin, "is_admin")
     assert_user(actual, expected)
-
 
 @allure.step("Проверка ответа на запрос обновления пользователя")
 def assert_update_user_response(
@@ -72,18 +66,15 @@ def assert_update_user_response(
     :param actual: Фактический ответ на запрос обновления пользователя
     :param expected: Ожидаемый ответ на запрос обновления пользователя
     """
-
     assert_field_exists(actual.id, "id")
-    assert_value(actual.email, expected.email, "email")
-    assert_value(actual.name, expected.name, "name")
-    assert_value(actual.phone, expected.phone, "phone")
-    assert_value(actual.is_admin, False, "is_admin")
-
+    assert_field_value(actual.email, expected.email, "email")
+    assert_field_value(actual.name, expected.name, "name")
+    assert_field_value(actual.phone, expected.phone, "phone")
+    assert_field_value(actual.is_admin, False, "is_admin")
 
 @allure.step("Проверка ответа на запрос удаления пользователя")
 def assert_delete_user_response(actual: DeleteUserResponseSchema) -> None:
-    assert_value(actual.message, "Пользователь удален", "message")
-
+    assert_field_value(actual.message, "Пользователь удален", "message")
 
 @allure.step("Проверка ответа на запрос с некорректным паролем")
 def assert_wrong_password_response(
@@ -97,7 +88,6 @@ def assert_wrong_password_response(
     :param actual: Фактический ответ на запрос с некорректным паролем
     :param password: Некорректный пароль
     """
-
     error_messages = [
         "Value error, Пароль должен содержать не менее 6 символов",
         "Value error, Пароль должен содержать не более 128 символов",
@@ -118,7 +108,6 @@ def assert_wrong_password_response(
     assert error.context, "Контекст ошибки пуст"
     assert "error" in error.context
 
-
 @allure.step("Проверка ответа на запрос с некорректным номером телефона")
 def assert_wrong_phone_response(
         *,
@@ -131,7 +120,6 @@ def assert_wrong_phone_response(
     :param actual: Фактический ответ на запрос с некорректным номером телефона
     :param phone: Некорректный номер телефона
     """
-
     error_messages = [
         "Value error, Номер телефона должен содержать не более 12 цифр",
         "Value error, Номер телефона должен содержать не менее 10 цифр",
@@ -153,7 +141,6 @@ def assert_wrong_phone_response(
     assert error.context, "Контекст ошибки пуст"
     assert "error" in error.context
 
-
 @allure.step("Проверка ответа на запрос с уже зарегистрированным email")
 def assert_email_exists_response(actual: HTTPValidationErrorResponseSchema) -> None:
     """
@@ -161,7 +148,6 @@ def assert_email_exists_response(actual: HTTPValidationErrorResponseSchema) -> N
 
     :param actual: Фактический ответ на запрос с уже зарегистрированным email
     """
-
     expected = HTTPValidationErrorResponseSchema(
         detail="Email уже зарегистрирован"
     )

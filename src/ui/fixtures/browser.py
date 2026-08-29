@@ -1,13 +1,48 @@
 import allure
 import pytest
+from hashlib import sha256
+from pathlib import Path
 from _pytest.fixtures import SubRequest
-from playwright.sync_api import Page, Playwright
+from playwright.sync_api import BrowserContext, Page, Playwright
 
 from config import settings
 from src.ui.models.user_data import UserData
 from src.ui.pages.home import HomePage
 from src.ui.pages.registration import RegistrationPage
 from src.ui.tools.routes import Route
+
+
+def _trace_path(request: SubRequest) -> Path:
+    digest = sha256(request.node.nodeid.encode("utf-8")).hexdigest()[:12]
+    return Path("tracing", f"{request.node.name}-{digest}.zip")
+
+
+def _stop_trace_and_attach_on_failure(
+        context: BrowserContext,
+        request: SubRequest
+        ) -> None:
+    trace_path = _trace_path(request)
+    trace_path.parent.mkdir(parents=True, exist_ok=True)
+    context.tracing.stop(path=trace_path)
+
+    reports = (
+        getattr(request.node, "rep_setup", None),
+        getattr(request.node, "rep_call", None),
+        getattr(request.node, "rep_teardown", None),
+    )
+    if any(report is not None and report.failed for report in reports):
+        allure.attach.file(
+            trace_path,
+            name=f"trace - {request.node.name}",
+            extension="zip",
+        )
+        return
+
+    trace_path.unlink(missing_ok=True)
+    try:
+        trace_path.parent.rmdir()
+    except OSError:
+        pass
 
 
 @pytest.fixture
@@ -27,11 +62,11 @@ def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
-    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
-    context.close()
-    browser.close()
-
-    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
+    try:
+        _stop_trace_and_attach_on_failure(context, request)
+    finally:
+        context.close()
+        browser.close()
 
 
 @pytest.fixture(scope="session")
@@ -119,11 +154,11 @@ def session_chromium_page_with_state(request: SubRequest, session_get_browser_st
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
-    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
-    context.close()
-    browser.close()
-
-    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
+    try:
+        _stop_trace_and_attach_on_failure(context, request)
+    finally:
+        context.close()
+        browser.close()
 
 
 @pytest.fixture
@@ -146,8 +181,8 @@ def function_chromium_page_with_state(request: SubRequest, function_get_browser_
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
-    context.tracing.stop(path=f"./tracing/{request.node.name}.zip")
-    context.close()
-    browser.close()
-
-    allure.attach.file(f"./tracing/{request.node.name}.zip", name="test trace", extension="zip")
+    try:
+        _stop_trace_and_attach_on_failure(context, request)
+    finally:
+        context.close()
+        browser.close()

@@ -15,12 +15,16 @@ def private_user_client_builder(
 
     :param user: Данные пользователя для авторизации
     """
-
     client = get_authentication_client()
-    request = LoginRequestSchema(email=user.email, password=user.password)
 
-    response = client.login(request=request)
-    token = response.access_token
+    try:
+        request = LoginRequestSchema(email=user.email, password=user.password)
+
+        response = client.login(request=request)
+        token = response.access_token
+    finally:
+        client.close()
+
     return Client(
         base_url=settings.http_client.url,
         timeout=settings.http_client.timeout,
@@ -30,15 +34,17 @@ def private_user_client_builder(
 
 
 def private_admin_client_builder() -> Client:
-    """
-    Создает HTTP клиент администратора для доступа к приватному API
-    """
-
+    """Создает HTTP клиент администратора для доступа к приватному API"""
     client = get_authentication_client()
-    request = LoginRequestSchema(email=settings.admin_data.email, password=settings.admin_data.password)
 
-    response = client.login(request=request)
-    token = response.access_token
+    try:
+        request = LoginRequestSchema(email=settings.admin_data.email, password=settings.admin_data.password)
+
+        response = client.login(request=request)
+        token = response.access_token
+    finally:
+        client.close()
+
     return Client(
         base_url=settings.http_client.url,
         timeout=settings.http_client.timeout,

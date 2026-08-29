@@ -10,10 +10,7 @@ from src.api.tools.routes import Routes
 
 
 class AuthenticationAPIClient(BaseAPIClient):
-    """
-    Клиент для работы с API аутентификации
-    """
-
+    """Клиент для работы с API аутентификации"""
     @tracker.track_coverage_httpx(Routes.LOGIN)
     @allure.step("Отправка запроса на логин пользователя")
     def login_api(self,
@@ -26,7 +23,6 @@ class AuthenticationAPIClient(BaseAPIClient):
         :param request: Данные пользователя для логина
         :return: Ответ сервера с данными пользователя и токеном
         """
-
         return self.post(url=Routes.LOGIN, json=request.model_dump())
 
     def login(self,
@@ -34,7 +30,7 @@ class AuthenticationAPIClient(BaseAPIClient):
               request: LoginRequestSchema
               ) -> LoginResponseSchema:
         response = self.login_api(request=request)
-        return LoginResponseSchema.model_validate_json(response.text)
+        return LoginResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(Routes.REGISTRATION)
     @allure.step("Отправка запроса на регистрацию пользователя")
@@ -48,7 +44,6 @@ class AuthenticationAPIClient(BaseAPIClient):
         :param request: Данные пользователя для регистрации
         :return: Ответ сервера с данными пользователя и токеном
         """
-
         return self.post(url=Routes.REGISTRATION, json=request.model_dump())
 
     def registration(self,
@@ -56,12 +51,9 @@ class AuthenticationAPIClient(BaseAPIClient):
               request: RegistrationRequestSchema
               ) -> RegistrationResponseSchema:
         response = self.registration_api(request=request)
-        return RegistrationResponseSchema.model_validate_json(response.text)
+        return RegistrationResponseSchema.model_validate_json(response.content)
 
 
 def get_authentication_client() -> AuthenticationAPIClient:
-    """
-    Создает публичный HTTP клиент для доступа к API аутентификации
-    """
-
+    """Создает публичный HTTP клиент для доступа к API аутентификации"""
     return AuthenticationAPIClient(client=public_client_builder())

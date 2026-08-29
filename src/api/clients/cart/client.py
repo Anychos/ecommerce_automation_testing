@@ -12,10 +12,7 @@ from src.api.tools.routes import Routes
 
 
 class CartAPIClient(BaseAPIClient):
-    """
-    Клиент для работы с API корзины
-    """
-
+    """Клиент для работы с API корзины"""
     @tracker.track_coverage_httpx(f"{Routes.CARTS}/items")
     @allure.step("Отправка запроса на создание корзины")
     def add_item_cart_api(self,
@@ -28,7 +25,6 @@ class CartAPIClient(BaseAPIClient):
         :param request: Данные для добавления продукта
         :return: Ответ сервера с данными добавленного продукта
         """
-
         return self.post(url=f"{Routes.CARTS}/items", json=request.model_dump())
 
     def add_item_cart(self,
@@ -36,7 +32,7 @@ class CartAPIClient(BaseAPIClient):
                       request: AddItemCartRequestSchema
                       ) -> AddItemCartResponseSchema:
         response = self.add_item_cart_api(request=request)
-        return AddItemCartResponseSchema.model_validate_json(response.text)
+        return AddItemCartResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(Routes.CARTS)
     @allure.step("Отправка запроса на получение корзины")
@@ -46,25 +42,23 @@ class CartAPIClient(BaseAPIClient):
 
         :return: Ответ сервера с данными корзины
         """
-
         return self.get(url=Routes.CARTS)
 
     @tracker.track_coverage_httpx(f"{Routes.CARTS}/items/" + "{product_id}")
     @allure.step("Отправка запроса на обновление корзины")
     def update_cart_item_api(self,
                              *,
-                             item_id: int,
+                             product_id: int,
                              request: UpdateCartItemRequestSchema
                              ) -> Response:
         """
         Отправляет запрос на обновление продукта в корзине
 
-        :param item_id: ID продукта в корзине
+        :param product_id: ID продукта в корзине
         :param request: Данные для обновления продукта
         :return: Ответ сервера с обновленным продуктом
         """
-
-        return self.put(url=f"{Routes.CARTS}/items/{item_id}", json=request.model_dump())
+        return self.put(url=f"{Routes.CARTS}/items/{product_id}", json=request.model_dump())
 
     @tracker.track_coverage_httpx(f"{Routes.CARTS}/items/" + "{product_id}")
     @allure.step("Отправка запроса на удаление продукта из корзины")
@@ -78,26 +72,21 @@ class CartAPIClient(BaseAPIClient):
         :param item_id: ID продукта в корзине
         :return: Ответ сервера с сообщением об удалении продукта из корзины
         """
-
         return self.delete(url=f"{Routes.CARTS}/items/{item_id}")
 
     @tracker.track_coverage_httpx(Routes.CARTS)
     @allure.step("Отправка запроса на очистку корзины")
-    def delete_cart_api(self) -> Response:
+    def clear_cart_api(self) -> Response:
         """
         Отправляет запрос на очистку корзины
 
         :return: Ответ сервера с сообщением об очистке корзины
         """
-
         return self.delete(url=Routes.CARTS)
 
 
 def get_public_cart_client() -> CartAPIClient:
-    """
-    Создает HTTP клиент для доступа к публичному API корзины
-    """
-
+    """Создает HTTP клиент для доступа к публичному API корзины"""
     return CartAPIClient(client=public_client_builder())
 
 def get_private_cart_client(
@@ -109,5 +98,4 @@ def get_private_cart_client(
 
     :param user: Данные пользователя для авторизации
     """
-
     return CartAPIClient(client=private_user_client_builder(user=user))

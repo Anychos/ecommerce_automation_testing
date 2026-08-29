@@ -1,22 +1,72 @@
-# common
-.venv
-.idea
-__pycache__
-*~
+# Python bytecode and build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+
+# Virtual environments
+.venv/
+.backend-venv/
+.ui-venv/
+venv/
+env/
+ENV/
+
+# Environment files and credentials
 .env
+.env.*
+!.env.example
+*.key
+*.pem
 
-# reporting
-allure-results
-allure-report
-tracing
+# Test, coverage and tool caches
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.cover
 
-# ui
+# Test reports and runtime artifacts
+allure-results*/
+allure-report*/
+coverage-results/
+coverage-history.json
+coverage-report.json
+tracing/
+test-results/
+playwright-report/
+blob-report/
 function-browser-state.json
 session-browser-state.json
 
-# api
-coverage-history.json
-coverage-report.json
-coverage-results
-index.html
+# Logs and temporary files
+*.log
+*.log.*
+logs/
+*.tmp
+*.temp
 
+# IDE and local agent configuration
+.idea/
+.vscode/
+.agents/
+*.swp
+*.swo
+*~
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini

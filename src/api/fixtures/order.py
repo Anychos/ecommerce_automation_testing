@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Generator
 
 import pytest
 from pydantic import BaseModel
@@ -14,10 +14,7 @@ from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderR
 
 
 class OrderFixture(BaseModel):
-    """
-    Хранит данные о созданном заказе
-    """
-
+    """Хранит данные о созданном заказе"""
     request: CreateOrderRequestSchema
     response: CreateOrderResponseSchema
 
@@ -27,23 +24,28 @@ class OrderFixture(BaseModel):
 
 
 @pytest.fixture
-def public_order_client() -> OrderAPIClient:
-    """
-    Возвращает готовый HTTP клиент для доступа к публичному API заказа
-    """
+def public_order_client() -> Generator[OrderAPIClient, None, None]:
+    """Возвращает готовый HTTP клиент для доступа к публичному API заказа"""
+    client = get_public_order_client()
 
-    return get_public_order_client()
+    try:
+        yield client
+    finally:
+        client.close()
 
 @pytest.fixture
-def private_order_client(user: UserFixture) -> OrderAPIClient:
+def private_order_client(user: UserFixture) -> Generator[OrderAPIClient, None, None]:
     """
     Возвращает готовый HTTP клиент для доступа к приватному API заказов
 
     :param user: Созданный пользователь
     """
+    client = get_private_order_client(user=user.user_schema)
 
-    return get_private_order_client(user=user.user_schema)
-
+    try:
+        yield client
+    finally:
+        client.close()
 
 @pytest.fixture
 def create_order(
@@ -57,7 +59,6 @@ def create_order(
     :param create_cart: Созданная корзина
     :return: Информация о созданном заказе
     """
-
     request = CreateOrderRequestSchema(cart_id=create_cart.cart_id)
     response = private_order_client.create_order(request=request)
     return OrderFixture(request=request, response=response)

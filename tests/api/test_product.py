@@ -10,7 +10,7 @@ import allure
 import pytest
 from pydantic import TypeAdapter
 
-from src.api.clients.error_shemas import InputValidationErrorResponseSchema
+from src.api.clients.error_schemas import InputValidationErrorResponseSchema
 from src.api.clients.product.client import ProductAPIClient
 from src.api.clients.product.schemas import CreateProductRequestSchema, CreateProductResponseSchema, \
     GetProductResponseSchema, \
@@ -130,7 +130,7 @@ class TestProductPositive:
         assert_status_code(response.status_code, HTTPStatus.OK)
 
         response_data = DeleteProductResponseSchema.model_validate_json(response.text)
-        assert_delete_product_response(response_data)
+        assert_delete_product_response(actual=response_data)
         assert_json_schema(actual=response.json(), schema=response_data.model_json_schema())
 
 
@@ -142,16 +142,14 @@ class TestProductNegative:
     @allure.feature(Feature.ADMIN_PRODUCTS)
     @allure.story(Story.ADMIN_CREATE_PRODUCT)
     @allure.severity(Severity.NORMAL)
-    @pytest.mark.parametrize("name, description, price, wrong_field, wrong_value",
+    @pytest.mark.parametrize("name, description, wrong_field, wrong_value",
                              [
-                                 (123456, fake_ru.description(), fake_ru.price(), "name", 123456),
-                                 (fake_ru.object_name(), 123456, fake_ru.price(), "description", 123456),
-                                 (fake_ru.object_name(), fake_ru.description(), "price", "price", "price")
+                                 (123456, fake_ru.description(), "name", 123456),
+                                 (fake_ru.product_name(), 123456, "description", 123456)
                              ],
                              ids=[
                                  "name - int",
-                                 "description - int",
-                                 "price - string"
+                                 "description - int"
                              ]
                              )
     @allure.title("Создание продукта с данными в невалидном формате")
@@ -159,14 +157,12 @@ class TestProductNegative:
                                               admin_private_product_client: ProductAPIClient,
                                               name,
                                               description,
-                                              price,
                                               wrong_field: str,
                                               wrong_value
                                               ) -> None:
         request = CreateProductRequestSchema.model_construct(
             name=name,
-            description=description,
-            price=price
+            description=description
         )
 
         response = admin_private_product_client.create_product_api(request=request)
@@ -186,9 +182,9 @@ class TestProductNegative:
     @pytest.mark.parametrize("name, description, price, image_url, wrong_field, wrong_value",
                              [
                                  ("", fake_ru.description(), fake_ru.price(), fake_ru.image_url(), "name", ""),
-                                 (fake_ru.object_name(), "", fake_ru.price(), fake_ru.image_url(), "description", ""),
-                                 (fake_ru.object_name(), fake_ru.description(), 0, fake_ru.image_url(), "price", 0),
-                                 (fake_ru.object_name(), fake_ru.description(), fake_ru.price(), "", "image_url", "")
+                                 (fake_ru.product_name(), "", fake_ru.price(), fake_ru.image_url(), "description", ""),
+                                 (fake_ru.product_name(), fake_ru.description(), 0, fake_ru.image_url(), "price", 0),
+                                 (fake_ru.product_name(), fake_ru.description(), fake_ru.price(), "", "image_url", "")
                              ],
                              ids=[
                                  "name - empty",

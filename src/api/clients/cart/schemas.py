@@ -29,12 +29,12 @@ class GetCartResponseSchema(BaseModel):
     id: int
     user_id: int
     total_quantity: int
-    total_price: int
+    total_price: float
     items: List[CartItemSchema]
 
 
 class UpdateCartItemRequestSchema(BaseModel):
-    quantity: int = Field(default=1)
+    quantity: int = Field(default=2)
 
 
 class UpdateCartItemResponseSchema(AddItemCartResponseSchema):
@@ -45,6 +45,6 @@ class DeleteCartItemResponseSchema(BaseModel):
     message: str
 
 
-class DeleteCartResponseSchema(DeleteCartItemResponseSchema):
-    pass
+class DeleteCartResponseSchema(BaseModel):
+    message: str
 

@@ -1,4 +1,5 @@
 name: Setup Backend
+description: Install and start the configured API test target
 
 runs:
   using: "composite"
@@ -8,13 +9,15 @@ runs:
       shell: bash
 
     - name: Клонирование API сервера
-      run: git clone https://github.com/Anychos/practice_api_test_server.git
+      run: |
+        git clone "$API_APP_REPOSITORY" practice_api_test_server
+        git -C practice_api_test_server checkout --detach "$API_APP_REF"
       shell: bash
 
-    - name: Установка зависимостей API сервера
+    - name: Создание окружения API сервера
       run: |
-        cd practice_api_test_server
-        pip install -r requirements.txt
+        python -m venv .backend-venv
+        .backend-venv/bin/python -m pip install -r practice_api_test_server/requirements.txt
       shell: bash
 
     - name: Применение миграций
@@ -26,7 +29,7 @@ runs:
         ADMIN_PHONE: +71234567890
       run: |
         cd practice_api_test_server
-        alembic upgrade head
+        ../.backend-venv/bin/python -m alembic upgrade head
       shell: bash
 
     - name: Запуск API сервера
@@ -35,13 +38,13 @@ runs:
         SECRET_KEY: test-secret
       run: |
         cd practice_api_test_server
-        python app.py &
+        ../.backend-venv/bin/python app.py &
       shell: bash
 
     - name: Ожидание запуска API сервера
       run: |
         for i in {1..30}; do
-          curl -s http://localhost:8080/health && exit 0
+          curl --fail --silent http://localhost:8080/openapi.json > /dev/null && exit 0
           sleep 2
         done
         exit 1

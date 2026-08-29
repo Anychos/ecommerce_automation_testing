@@ -1,116 +1,175 @@
-**E-commerce Test Automation Framework (UI + API)**
----
+# E-commerce Test Automation Framework
 
-Это комплексный учебный проект по автоматизации тестирования e-commerce приложения.
-Проект объединяет API и UI тестирование в едином фреймворке и демонстрирует применение современных инструментов и практик AQA.
+[![CI](https://github.com/Anychos/ecommerce_automation_testing/actions/workflows/tests.yml/badge.svg)](https://github.com/Anychos/ecommerce_automation_testing/actions/workflows/tests.yml)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Pytest](https://img.shields.io/badge/tested%20with-pytest-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
+[![Playwright](https://img.shields.io/badge/UI-Playwright-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/python/)
 
-**Цель проекта**
+Учебный проект Automation QA на Python: API-, UI- и end-to-end тесты e-commerce приложения, единый Allure Report и запуск в GitHub Actions.
 
-- Построение масштабируемой архитектуры авто-тестов
-- Покрытие критических пользовательских сценариев на уровнях API и UI
-- Практика изолированных, стабильных и поддерживаемых тестов
-- Интеграция авто-тестов в CI/CD
----
+[Открыть Allure Report](https://anychos.github.io/ecommerce_automation_testing/)
 
-**API Automation**
----
+## Что проверяется
 
-Реализованы позитивные и негативные тесты для следующих сущностей:
+Последняя выполненная коллекция проекта содержит 94 теста:
 
-- **Authentication** — регистрация и авторизация пользователей
-- **Users** — управление пользователями
-- **Products** — управление товарами
-- **Carts** — работа с корзиной
-- **Orders** — создание и получение заказов
----
+| Уровень | Тестов | Покрытие |
+|---|---:|---|
+| API | 58 | Authentication, users, products, carts, orders; positive и negative cases |
+| UI / E2E | 30 | Registration, login, catalog, product, cart, checkout, orders, header, footer |
+| Unit | 6 | Маскирование sensitive data в Allure cURL и environment metadata |
 
-**API Стек**
+Ключевые технические решения:
 
-- **Python 3.13**
-- **Pytest** — фреймворк для написания тестов и управления ими (фикстуры, плагины, маркеры)
-- **HTTPX** — современная HTTP библиотека для взаимодействия с API
-- **Pydantic** — библиотека для типизации и валидации схем запросов и ответов
-- **Faker** библиотека для генерации тестовых данных
-- **Allure** — инструмент для генерации отчетов (шаги, теги, критичность)
-- **Swagger coverage tool** — инструмент для измерения покрытия API тестами
-___
+- отдельные API clients и Pydantic-схемы для доменных сущностей;
+- Factory fixtures для подготовки независимых test data;
+- Page Object Model вместе с Page Component Pattern;
+- параллельный запуск через `pytest-xdist` и повтор нестабильных integration tests через `pytest-rerunfailures`;
+- cURL requests, Allure labels и Playwright trace для диагностики падений;
+- маскирование passwords, tokens, cookies и authorization headers в публичном отчёте;
+- revisions тестируемых приложений передаются в CI через GitHub Repository Variables;
+- dependencies framework, API target и UI target установлены в изолированные virtual environments.
 
-**API Архитектура**
+## Test targets
 
-- **API Clients** — API каждой сущности инкапсулирован в отдельный клиент. Это позволяет отделить логику взаимодействия с API от бизнес-логики тестов
-- **Pydantic схемы** — для каждого API запроса и ответа используются Pydantic схемы для их типизации и валидации
-- **Fixtures + Factory pattern** — фикстуры используются для предоставления готовых объектов и клиентов, а фабрики для параметризованного создания объектов и управления их состоянием
-- **Изолированные тесты** — все тесты независимы друг от друга и могут выполняться в любом порядке
-- **Реальная БД** — тесты выполняются на реальной базе данных. В среде CI используется PostgreSQL service, что позволяет поднимать изолированную временную БД на каждый прогон тестов
-- **CI/CD** — проект настроен на автоматический запуск тестов в CI/CD GitHub Actions при каждом коммите в main ветку
-- **Swagger coverage** — измерение покрытия OpenAPI спецификации
----
+Код приложений намеренно хранится отдельно от проекта автоматизации. Workflow ожидает следующие GitHub Repository Variables:
 
-**UI Automation**
----
+| Variable | Значение |
+|---|---|
+| `API_APP_REPOSITORY` | URL совместимого REST API repository |
+| `API_APP_REF` | протестированный commit SHA API target |
+| `UI_APP_REPOSITORY` | URL совместимого Web UI repository |
+| `UI_APP_REF` | протестированный commit SHA UI target |
 
-**Smoke-покрытие**
+Так репозиторий остаётся сфокусированным на AQA-коде, а GitHub Actions поднимает воспроизводимое test environment из указанных revisions. Пока variables не настроены, CI выполняет только независимые unit tests; API/UI jobs пропускаются. Для локального полного прогона оба приложения должны быть запущены: API на `http://localhost:8080`, UI на `http://127.0.0.1:5000`.
 
-- Регистрация пользователя
-- Авторизация пользователя
-- Открытие карточки товара
-- Добавление товара в корзину
-- Оформление заказа
-- Проверка статуса заказа
----
+## Стек
 
-**E2E сценарии**
+- Python 3.12, Pytest, pytest-xdist, pytest-rerunfailures
+- HTTPX, Pydantic, Faker, JSON Schema
+- Playwright, pytest-playwright
+- Allure Pytest, Swagger Coverage Tool
+- GitHub Actions, PostgreSQL 16, GitHub Pages
 
-- Регистрация → Логин → Добавление в корзину → Оформление заказа → Проверка статуса
-- Навигация по страницам
----
+Версии Python-пакетов закреплены в [`requirements.txt`](requirements.txt).
 
-**UI Стек**
+## Архитектура
 
-- Python 3.13
-- Playwright — библиотека для автоматизации UI тестов
-- Pytest
-- Allure
-- Faker
-- Playwright Tracing — инструмент для записи и анализа тестовых сессий
----
+```text
+src/
+├── api/
+│   ├── clients/       # HTTP clients и Pydantic schemas
+│   ├── fixtures/      # API fixtures и factories
+│   └── tools/         # assertions, routes, cURL, data generation
+└── ui/
+    ├── pages/         # Page Objects
+    ├── components/    # переиспользуемые UI components
+    ├── fixtures/      # browser contexts и storage state
+    └── models/        # UI test data models
+tests/
+├── api/               # API integration tests
+├── ui/                # UI и E2E tests
+└── unit/              # isolated framework tests
+utils/
+├── allure/            # labels и безопасный environment.properties
+└── fixtures/          # общие Pytest plugins
+```
 
-**UI Архитектура**
+## Быстрый старт
 
-- Проект построен на комбинации Page Object Model + Page Component Pattern
-- Pages — описывают страницы целиком (URL, навигация, high-level действия)
-- Components — переиспользуемые компоненты страниц (карточка товара, корзина и т.д.)
-- Fixtures — управление браузером, страницами и состоянием тестов
-- Tools — утилиты и вспомогательные модули
----
+Требования:
 
-**Общие принципы проекта**
----
+- Python 3.12;
+- Git;
+- Chromium для Playwright;
+- запущенные API/UI test targets для integration tests;
+- Allure CLI — только если отчёт нужно открыть локально.
 
-- Единая структура для UI и API
-- Чистая архитектура и разделение ответственности
-- Минимизация дублирования кода
-- Поддерживаемость и масштабируемость
-- Реализация реальных бизнес-сценариев
-- Профессиональный подход к логированию и отчетности
----
+```bash
+git clone https://github.com/Anychos/ecommerce_automation_testing.git
+cd ecommerce_automation_testing
 
-**Результат**
----
+python -m venv .venv
+```
 
-Проект демонстрирует:
+Активация окружения:
 
-- Понимание архитектуры авто-тестов
-- Работу с REST API и UI
-- Применение современных инструментов AQA
-- Опыт интеграции тестов в CI/CD
-- Allure отчетность
+```bash
+# Linux / macOS
+source .venv/bin/activate
 
-**TO DO**
----
-- Добавить E2E UI тесты   
-- Оптимизировать скорость запуска на CI/CD
-- Интегрировать запуск тестов в Docker 
-- Написать тесты для фильтрации и сортировки товаров
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
 
+Установка зависимостей и Chromium:
 
+```bash
+python -m pip install -r requirements.txt
+playwright install chromium
+```
+
+Создание локальной конфигурации:
+
+```bash
+# Linux / macOS
+cp .env.example .env
+
+# Windows PowerShell
+Copy-Item .env.example .env
+```
+
+В `.env.example` находятся только local URLs и synthetic test credentials. Nested settings используют разделитель `__`, например `HTTP_CLIENT__BASE_URL` и `TEST_USER__EMAIL`.
+
+Инструкции запуска test targets следует хранить в их отдельных репозиториях. Их URL и commit SHA должны совпадать с Repository Variables, используемыми в CI.
+
+## Запуск тестов
+
+```bash
+# Unit tests без внешних сервисов
+pytest tests/unit --reruns 0
+
+# API tests — требуется REST API
+pytest tests/api
+
+# UI tests — требуются REST API, Web UI и Chromium
+pytest tests/ui
+
+# Полный прогон с Allure results
+pytest tests --alluredir=allure-results
+```
+
+Примеры выборочного запуска:
+
+```bash
+pytest tests/api -m authentication_api
+pytest tests/ui -m smoke
+pytest tests/ui -m e2e
+pytest tests/api -n 3
+pytest tests/ui -n 2
+```
+
+Основные markers объявлены в [`pytest.ini`](pytest.ini): `api`, `ui`, `smoke`, `regression`, `e2e` и markers отдельных сущностей или страниц.
+
+## Отчётность и CI
+
+Локальный Allure Report:
+
+```bash
+pytest tests --alluredir=allure-results
+allure serve allure-results
+```
+
+В отчёт добавляются steps, severity, feature/story labels и безопасные cURL-команды. Playwright trace прикладывается только к упавшим тестам. Использовать framework следует только на изолированном test environment, а не с production credentials.
+
+Workflow `.github/workflows/tests.yml` выполняет:
+
+1. unit tests;
+2. API tests с PostgreSQL и revision из `API_APP_REF`, если target настроен;
+3. UI/E2E tests с Chromium и revision из `UI_APP_REF`, если target настроен;
+4. объединение результатов и публикацию Allure Report в GitHub Pages;
+5. optional Telegram notification, если настроены repository secrets.
+
+## Назначение проекта
+
+Репозиторий создан как часть портфолио Python Automation QA Engineer. Он демонстрирует проектирование test framework, работу с REST API и browser automation, организацию test data, диагностику падений и CI-интеграцию.

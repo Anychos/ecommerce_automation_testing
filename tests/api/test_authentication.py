@@ -12,7 +12,7 @@ import pytest
 from src.api.clients.authentication.client import AuthenticationAPIClient
 from src.api.clients.authentication.schemas import LoginRequestSchema, LoginResponseSchema, RegistrationRequestSchema, \
     RegistrationResponseSchema
-from src.api.clients.error_shemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
+from src.api.clients.error_schemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
 from utils.allure.epic import Epic
 from utils.allure.feature import Feature
 from utils.allure.severity import Severity
@@ -38,7 +38,7 @@ class TestAuthenticationPositive:
         request = RegistrationRequestSchema()
 
         response = auth_client.registration_api(request=request)
-        assert_status_code(response.status_code, HTTPStatus.OK)
+        assert_status_code(response.status_code, HTTPStatus.CREATED)
 
         response_data = RegistrationResponseSchema.model_validate_json(response.text)
         assert_register_response(actual=response_data, expected=request)
