@@ -1,175 +1,256 @@
-# E-commerce Test Automation Framework
+# 🛒 E-commerce Test Automation Framework
 
-[![CI](https://github.com/Anychos/ecommerce_automation_testing/actions/workflows/tests.yml/badge.svg)](https://github.com/Anychos/ecommerce_automation_testing/actions/workflows/tests.yml)
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Pytest](https://img.shields.io/badge/tested%20with-pytest-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
-[![Playwright](https://img.shields.io/badge/UI-Playwright-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/python/)
+[CI](https://github.com/Anychos/ecommerce_automation_testing/actions/workflows/tests.yml)
+[Python 3.12](https://www.python.org/)
+[Pytest](https://docs.pytest.org/)
+[Playwright](https://playwright.dev/python/)
+[Allure](https://docs.qameta.io/allure/)
 
-Учебный проект Automation QA на Python: API-, UI- и end-to-end тесты e-commerce приложения, единый Allure Report и запуск в GitHub Actions.
+**Проект-портфолио Python Automation QA Engineer.** Фреймворк автоматизации тестирования e-commerce приложения: API-, UI- и end-to-end тесты, единый Allure Report и полный CI-пайплайн в GitHub Actions с публикацией отчёта.
 
-[Открыть Allure Report](https://anychos.github.io/ecommerce_automation_testing/)
+🔗 **[Allure Report последнего прогона](https://anychos.github.io/ecommerce_automation_testing/)**
 
-## Что проверяется
+## Содержание
 
-Последняя выполненная коллекция проекта содержит 94 теста:
+- [Что покрывают тесты](#что-покрывают-тесты)
+- [Стек](#стек)
+- [Ключевые технические решения](#ключевые-технические-решения)
+- [Структура репозитория](#структура-репозитория)
+- [Быстрый старт](#быстрый-старт)
+- [Запуск тестов](#запуск-тестов)
+- [Маркеры](#маркеры)
+- [Отчётность](#отчётность)
+- [CI и test targets](#ci-и-test-targets)
 
-| Уровень | Тестов | Покрытие |
-|---|---:|---|
-| API | 58 | Authentication, users, products, carts, orders; positive и negative cases |
-| UI / E2E | 30 | Registration, login, catalog, product, cart, checkout, orders, header, footer |
-| Unit | 6 | Маскирование sensitive data в Allure cURL и environment metadata |
+---
 
-Ключевые технические решения:
 
-- отдельные API clients и Pydantic-схемы для доменных сущностей;
-- Factory fixtures для подготовки независимых test data;
-- Page Object Model вместе с Page Component Pattern;
-- параллельный запуск через `pytest-xdist` и повтор нестабильных integration tests через `pytest-rerunfailures`;
-- cURL requests, Allure labels и Playwright trace для диагностики падений;
-- маскирование passwords, tokens, cookies и authorization headers в публичном отчёте;
-- revisions тестируемых приложений передаются в CI через GitHub Repository Variables;
-- dependencies framework, API target и UI target установлены в изолированные virtual environments.
 
-## Test targets
+## Что покрывают тесты
 
-Код приложений намеренно хранится отдельно от проекта автоматизации. Workflow ожидает следующие GitHub Repository Variables:
+Последний выполненный прогон — **94 теста**:
 
-| Variable | Значение |
-|---|---|
-| `API_APP_REPOSITORY` | URL совместимого REST API repository |
-| `API_APP_REF` | протестированный commit SHA API target |
-| `UI_APP_REPOSITORY` | URL совместимого Web UI repository |
-| `UI_APP_REF` | протестированный commit SHA UI target |
 
-Так репозиторий остаётся сфокусированным на AQA-коде, а GitHub Actions поднимает воспроизводимое test environment из указанных revisions. Пока variables не настроены, CI выполняет только независимые unit tests; API/UI jobs пропускаются. Для локального полного прогона оба приложения должны быть запущены: API на `http://localhost:8080`, UI на `http://127.0.0.1:5000`.
+| Уровень      | Тестов | Покрытие                                                                                          |
+| ------------ | ------ | ------------------------------------------------------------------------------------------------- |
+| 🔌 API       | 58     | Authentication, users, products, carts, orders; positive + negative cases, валидация схем ответов |
+| 🖥️ UI / E2E | 30     | Registration, login, каталог, карточка товара, корзина, checkout, orders, header, footer          |
+
+
+
+
+### API-тесты (`tests/api/`)
+
+
+| Файл                     | Что проверяется                                                         |
+| ------------------------ | ----------------------------------------------------------------------- |
+| `test_authentication.py` | Регистрация, логин, refresh/logout, авторизация access/refresh токенами |
+| `test_user.py`           | Профиль: получение, обновление, изменение пароля, негативные сценарии   |
+| `test_product.py`        | Список и карточки товаров, пагинация, несуществующие товары             |
+| `test_cart.py`           | Добавление/обновление/удаление позиций, лимиты, чужие корзины           |
+| `test_order.py`          | Оформление заказа из корзины, история заказов, доступность заказов      |
+
+
+
+
+### UI / E2E-тесты (`tests/ui/`)
+
+
+| Файл                                            | Что проверяется                                          |
+| ----------------------------------------------- | -------------------------------------------------------- |
+| `test_authentication/test_registration_page.py` | Регистрация нового пользователя                          |
+| `test_authentication/test_login_page.py`        | Логин, валидация формы                                   |
+| `test_home_page.py`                             | Каталог на главной, пагинация                            |
+| `test_product_detail_page.py`                   | Карточка товара, добавление в корзину                    |
+| `test_cart_page.py`                             | Корзина: изменение количества, удаление позиций          |
+| `test_checkout_page.py`                         | Оформление заказа, валидация данных                      |
+| `test_orders/…`                                 | История заказов и детали заказа                          |
+| `test_header.py`, `test_footer.py`              | Навигация и элементы шапки/футера                        |
+| `test_e2e.py`                                   | Сквозной сценарий: регистрация → логин → корзина → заказ |
+
+
+---
+
+
 
 ## Стек
 
-- Python 3.12, Pytest, pytest-xdist, pytest-rerunfailures
-- HTTPX, Pydantic, Faker, JSON Schema
-- Playwright, pytest-playwright
-- Allure Pytest, Swagger Coverage Tool
-- GitHub Actions, PostgreSQL 16, GitHub Pages
 
-Версии Python-пакетов закреплены в [`requirements.txt`](requirements.txt).
+| Инструмент                                    | Назначение                                                |
+| --------------------------------------------- | --------------------------------------------------------- |
+| Python 3.12                                   | Основной язык                                             |
+| Pytest + pytest-xdist + pytest-rerunfailures  | Тестовый раннер, параллельный запуск, авто-ретраи         |
+| HTTPX                                         | HTTP-клиент для API-тестов                                |
+| Pydantic + pydantic-settings                  | Схемы API-ответов и типизированная конфигурация из `.env` |
+| Playwright + pytest-playwright                | Браузерная автоматизация (Chromium)                       |
+| Faker                                         | Генерация тестовых данных                                 |
+| JSON Schema (jsonschema)                      | Валидация контрактов API-ответов                          |
+| Allure Pytest                                 | Отчётность: steps, labels, severity, вложения             |
+| Swagger Coverage Tool                         | Проверка покрытия endpoints по Swagger-спецификации       |
+| GitHub Actions + PostgreSQL 16 + GitHub Pages | CI, БД для API-target, хостинг отчёта                     |
 
-## Архитектура
+
+Версии пакетов закреплены в `[requirements.txt](requirements.txt)`.
+
+## Ключевые технические решения
+
+- **API clients + Pydantic-схемы** — типизированные клиенты и доменные модели вместо «сырых» запросов;
+- **Factory fixtures** — независимая подготовка test data для каждого теста;
+- **Page Object Model + Page Component Pattern** — страницы собраны из переиспользуемых компонентов;
+- **Параллельный запуск** (`pytest-xdist`) и **повтор нестабильных integration-тестов** (`pytest-rerunfailures`);
+- **Диагностика падений** — cURL-команды, Allure labels, Playwright trace (только для упавших тестов);
+- **Безопасность отчёта** — маскирование passwords, tokens, cookies и authorization headers в публичном Allure Report;
+- **Изолированные окружения** — зависимости framework, API target и UI target установлены в отдельные virtual environments.
+
+
+
+## Структура репозитория
 
 ```text
-src/
-├── api/
-│   ├── clients/       # HTTP clients и Pydantic schemas
-│   ├── fixtures/      # API fixtures и factories
-│   └── tools/         # assertions, routes, cURL, data generation
-└── ui/
-    ├── pages/         # Page Objects
-    ├── components/    # переиспользуемые UI components
-    ├── fixtures/      # browser contexts и storage state
-    └── models/        # UI test data models
-tests/
-├── api/               # API integration tests
-├── ui/                # UI и E2E tests
-└── unit/              # isolated framework tests
-utils/
-├── allure/            # labels и безопасный environment.properties
-└── fixtures/          # общие Pytest plugins
+├── config.py                # типизированные nested-настройки (pydantic-settings, .env)
+├── conftest.py              # корневые fixtures
+├── pytest.ini               # конфигурация запуска и маркеры
+├── .env.example             # шаблон локальной конфигурации
+│
+├── src/                     # сам фреймворк
+│   ├── api/
+│   │   ├── clients/         # HTTP-клиенты по сущностям + Pydantic-схемы, base client, event hooks
+│   │   ├── fixtures/        # API fixtures и factory-фабрики test data (auth, user, product, cart, order)
+│   │   └── tools/           # assertions, маршруты, HTTP-обёртки, генерация данных
+│   └── ui/
+│       ├── pages/           # Page Objects (home, registration, login, product, cart, checkout, orders)
+│       ├── components/      # переиспользуемые UI-компоненты страниц
+│       ├── fixtures/        # browser context, page fixtures, storage state
+│       ├── models/          # модели UI test data
+│       └── tools/           # UI-маршруты и генерация данных
+│
+├── tests/                   # сами тесты
+│   ├── api/                 # API integration-тесты (auth, user, product, cart, order)
+│   ├── ui/                  # UI- и E2E-тесты
+│   └── unit/                # изолированные unit-тесты фреймворка (без внешних сервисов)
+│
+└── utils/
+    ├── allure/              # labels (epic/feature/story/severity), environment.properties, redaction
+    └── fixtures/            # общие pytest-плагины для Allure
 ```
+
+---
+
+
 
 ## Быстрый старт
 
-Требования:
-
-- Python 3.12;
-- Git;
-- Chromium для Playwright;
-- запущенные API/UI test targets для integration tests;
-- Allure CLI — только если отчёт нужно открыть локально.
+**Требования:** Python 3.12, Git, Chromium для Playwright; для integration-тестов — запущенные API/UI test targets; Allure CLI — только для локального просмотра отчёта.
 
 ```bash
 git clone https://github.com/Anychos/ecommerce_automation_testing.git
 cd ecommerce_automation_testing
 
 python -m venv .venv
-```
-
-Активация окружения:
-
-```bash
 # Linux / macOS
 source .venv/bin/activate
-
 # Windows PowerShell
 .venv\Scripts\Activate.ps1
-```
 
-Установка зависимостей и Chromium:
-
-```bash
 python -m pip install -r requirements.txt
 playwright install chromium
 ```
 
-Создание локальной конфигурации:
+Создать локальную конфигурацию:
 
 ```bash
 # Linux / macOS
 cp .env.example .env
-
 # Windows PowerShell
 Copy-Item .env.example .env
 ```
 
-В `.env.example` находятся только local URLs и synthetic test credentials. Nested settings используют разделитель `__`, например `HTTP_CLIENT__BASE_URL` и `TEST_USER__EMAIL`.
+`.env.example` содержит только local URLs и synthetic test credentials. Nested settings используют разделитель `__`, например `HTTP_CLIENT__BASE_URL`, `TEST_USER__EMAIL`.
 
-Инструкции запуска test targets следует хранить в их отдельных репозиториях. Их URL и commit SHA должны совпадать с Repository Variables, используемыми в CI.
+Для полного локального прогона оба приложения-цели должны быть запущены: **API** — `http://localhost:8080`, **UI** — `http://127.0.0.1:5000`.
 
 ## Запуск тестов
 
 ```bash
-# Unit tests без внешних сервисов
+# Unit-тесты (без внешних сервисов)
 pytest tests/unit --reruns 0
 
-# API tests — требуется REST API
+# API-тесты (нужен запущенный REST API)
 pytest tests/api
 
-# UI tests — требуются REST API, Web UI и Chromium
+# UI-тесты (нужны REST API, Web UI и Chromium)
 pytest tests/ui
 
 # Полный прогон с Allure results
 pytest tests --alluredir=allure-results
 ```
 
-Примеры выборочного запуска:
+Выборочный запуск по маркерам и параллельно:
 
 ```bash
-pytest tests/api -m authentication_api
-pytest tests/ui -m smoke
-pytest tests/ui -m e2e
-pytest tests/api -n 3
-pytest tests/ui -n 2
+pytest tests/api -m authentication_api   # только API-тесты аутентификации
+pytest tests/ui -m smoke                 # smoke-тесты UI
+pytest tests/ui -m e2e                   # end-to-end сценарии
+pytest tests/api -n 3                    # параллельный запуск API
+pytest tests/ui -n 2                     # параллельный запуск UI
 ```
 
-Основные markers объявлены в [`pytest.ini`](pytest.ini): `api`, `ui`, `smoke`, `regression`, `e2e` и markers отдельных сущностей или страниц.
 
-## Отчётность и CI
 
-Локальный Allure Report:
+## Маркеры
+
+Объявлены в `[pytest.ini](pytest.ini)`:
+
+
+| Категория    | Маркеры                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Общие        | `smoke`, `regression`, `e2e`                                                                                             |
+| Уровни       | `api`, `ui`                                                                                                              |
+| API-сущности | `authentication_api`, `user_api`, `product_api`, `cart_api`, `order_api`                                                 |
+| UI-страницы  | `registration`, `login`, `home`, `product_detail`, `cart`, `checkout`, `order_detail`, `orders_list`, `header`, `footer` |
+
+
+
+
+## Отчётность
+
+Локально:
 
 ```bash
 pytest tests --alluredir=allure-results
 allure serve allure-results
 ```
 
-В отчёт добавляются steps, severity, feature/story labels и безопасные cURL-команды. Playwright trace прикладывается только к упавшим тестам. Использовать framework следует только на изолированном test environment, а не с production credentials.
+В отчёт входят steps, severity, feature/story labels и безопасные cURL-команды; Playwright trace прикрепляется только к упавшим тестам. Пароли, токены, cookies и authorization headers маскируются — отчёт можно публиковать.
 
-Workflow `.github/workflows/tests.yml` выполняет:
+> ⚠️ Framework предназначен для изолированного test environment. Не используйте его с production-окружением и production credentials.
 
-1. unit tests;
-2. API tests с PostgreSQL и revision из `API_APP_REF`, если target настроен;
-3. UI/E2E tests с Chromium и revision из `UI_APP_REF`, если target настроен;
-4. объединение результатов и публикацию Allure Report в GitHub Pages;
-5. optional Telegram notification, если настроены repository secrets.
+
+
+## CI и test targets
+
+Workflow `[.github/workflows/tests.yml](.github/workflows/tests.yml)`:
+
+1. запускает unit-тесты;
+2. API-тесты с PostgreSQL и ревизией API-target из `API_APP_REF` (если target настроен);
+3. UI/E2E-тесты с Chromium и ревизией UI-target из `UI_APP_REF` (если target настроен);
+4. объединяет результаты и публикует Allure Report в GitHub Pages;
+5. опционально шлёт Telegram-уведомление (если настроены secrets).
+
+Код самих приложений намеренно хранится в отдельных репозиториях — этот репозиторий сфокусирован только на AQA-коде. CI ожидает GitHub Repository Variables:
+
+
+| Variable         | Значение                                                                                           |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `APP_REPOSITORY` | [https://github.com/Anychos/test_automation__app](https://github.com/Anychos/test_automation__app) |
+
+
+GitHub Actions поднимает воспроизводимое test environment из указанного репозитория.
+
+---
+
+
 
 ## Назначение проекта
 
-Репозиторий создан как часть портфолио Python Automation QA Engineer. Он демонстрирует проектирование test framework, работу с REST API и browser automation, организацию test data, диагностику падений и CI-интеграцию.
+Репозиторий создан как часть портфолио **Python Automation QA Engineer** и демонстрирует: проектирование test framework с нуля, работу с REST API и browser automation, организацию test data, диагностику падений, обеспечение безопасности отчётов и интеграцию с CI/CD.
