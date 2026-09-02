@@ -83,6 +83,10 @@ jobs:
           HTTP_CLIENT__BASE_URL=http://localhost:8080
           HTTP_CLIENT__TIMEOUT=10
           SWAGGER_COVERAGE_SERVICES=[{"key":"online_shop_test_api","name":"Online Shop Test API","repository":"${API_APP_REPOSITORY}","swagger_url":"http://localhost:8080/openapi.json"}]
+          SWAGGER_COVERAGE_RESULTS_DIR=coverage-results
+          SWAGGER_COVERAGE_HISTORY_FILE=swagger-coverage-report/coverage-history.json
+          SWAGGER_COVERAGE_HTML_REPORT_FILE=swagger-coverage-report/index.html
+          SWAGGER_COVERAGE_JSON_REPORT_FILE=swagger-coverage-report/coverage-report.json
           ADMIN_DATA__EMAIL=test_admin@mail.ru
           ADMIN_DATA__PASSWORD=test_admin_password
 
@@ -111,12 +115,25 @@ jobs:
                  --reruns 3 \
                  --reruns-delay 2
 
+      - name: Генерация Swagger coverage отчёта
+        if: always()
+        run: |
+          mkdir -p swagger-coverage-report
+          swagger-coverage-tool save-report
+
       - name: Upload API Allure results
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: allure-api
           path: allure-results-api
+
+      - name: Upload Swagger coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: swagger-coverage-api
+          path: swagger-coverage-report
 
   ui-tests:
     if: ${{ vars.API_APP_REPOSITORY != '' && vars.API_APP_REF != '' && vars.UI_APP_REPOSITORY != '' && vars.UI_APP_REF != '' }}

@@ -97,7 +97,7 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для обновления продукта
         :return: Ответ сервера с данными обновленного продукта
         """
-        return self.patch(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump(exclude_none=True))
+        return self.patch(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump(exclude_unset=True))
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на удаление продукта")

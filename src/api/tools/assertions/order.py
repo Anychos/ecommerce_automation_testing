@@ -61,8 +61,9 @@ def assert_create_order_response(
     assert_field_value(actual.items_total_amount, expected_items_total, "items_total_amount")
     assert_field_exists(actual.delivery_fee_amount, "delivery_fee_amount")
     assert_field_value(actual.total_amount, actual.items_total_amount + actual.delivery_fee_amount, "total_amount")
-    assert_field_exists(actual.payment_status, "payment_status")
-    assert_field_exists(actual.delivery_status, "delivery_status")
+    assert_field_value(actual.payment_status, "unpaid", "payment_status")
+    assert_field_value(actual.delivery_status, "not_requested", "delivery_status")
+    assert_field_value(actual.paid_at, None, "paid_at")
     assert_field_exists(actual.items, "items")
 
     assert_product_in_order(actual=actual, cart=cart, index=product_index)

@@ -8,6 +8,9 @@ class Routes(str, Enum):
     PRODUCTS = "/products"
     CARTS = "/cart"
     ORDERS = "/orders"
+    DELIVERIES = "/deliveries"
+    PAYMENTS = "/payments"
+    HEALTH = "/health"
 
     def __str__(self):
         return self.value

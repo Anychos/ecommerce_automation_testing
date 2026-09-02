@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Callable, TYPE_CHECKING, Any, Generator
+from http import HTTPStatus
+from typing import Callable, TYPE_CHECKING, Generator
 
 from src.api.tools.data_generator import fake_ru
 
@@ -85,10 +86,7 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ge
     created_products: list[CreateProductFixture] = []
 
     def _create_product(
-            *,
-            is_available: bool = True,
-            stock_quantity: int = 5,
-            price: float = 500
+            **overrides
     ) -> CreateProductFixture:
         """
         Создает продукт с указанными параметрами
@@ -96,9 +94,7 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ge
         :return: Объект ProductFixture с информацией о продукте
         """
         request = CreateProductRequestSchema(
-            is_available=is_available,
-            stock_quantity=stock_quantity,
-            price=price
+            **overrides
         )
         response = admin_private_product_client.create_product(request=request)
 
@@ -106,10 +102,28 @@ def create_product_factory(admin_private_product_client: ProductAPIClient) -> Ge
         created_products.append(product)
         return product
 
-    yield _create_product
+    try:
+        yield _create_product
+    finally:
+        cleanup_errors: list[Exception] = []
 
-    for product in created_products:
-        admin_private_product_client.delete_product_api(product_id=product.product_id)
+        for product in created_products:
+            try:
+                response = admin_private_product_client.delete_product_api(product_id=product.product_id)
+                if not 200 <= response.status_code < 300 and response.status_code != HTTPStatus.NOT_FOUND:
+                    cleanup_errors.append(
+                        RuntimeError(
+                            f"Не удалось удалить продукт {product.product_id}: "
+                            f"HTTP {response.status_code} {response.reason_phrase}"
+                        )
+                    )
+            except Exception as error:
+                cleanup_errors.append(
+                    RuntimeError(f"Не удалось удалить продукт {product.product_id}: {error}")
+                )
+
+        if cleanup_errors:
+            raise ExceptionGroup("Ошибки очистки тестовых продуктов", cleanup_errors)
 
 @pytest.fixture
 def create_available_product(create_product_factory: Callable[..., CreateProductFixture]) -> CreateProductFixture:
@@ -119,7 +133,7 @@ def create_available_product(create_product_factory: Callable[..., CreateProduct
     :param create_product_factory: Фабрика для создания продукта
     :return: Объект ProductFixture с информацией о продукте
     """
-    return create_product_factory()
+    return create_product_factory(is_available=True)
 
 @pytest.fixture
 def update_product_factory(admin_private_product_client: ProductAPIClient) -> Callable[..., UpdateProductFixture]:
@@ -129,15 +143,8 @@ def update_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
     :param admin_private_product_client: Приватный HTTP клиент для доступа к API продукта
     """
     def _update_product(
-            *,
             product_id: int,
-            description: str = fake_ru.description(),
-            image_url: str = fake_ru.image_url(),
-            category: str = fake_ru.category(),
-            is_available: bool = True,
-            name: str = fake_ru.product_name(),
-            price: float = fake_ru.price(),
-            stock_quantity: int = 2
+            **overrides,
     ) -> UpdateProductFixture:
         """
         Обновляет продукт с указанными параметрами
@@ -145,13 +152,7 @@ def update_product_factory(admin_private_product_client: ProductAPIClient) -> Ca
         :return: Объект ProductFixture с информацией об обновленном продукте
         """
         request = FullUpdateProductRequestSchema(
-            description=description,
-            image_url=image_url,
-            category=category,
-            name=name,
-            price=price,
-            is_available=is_available,
-            stock_quantity=stock_quantity
+            **overrides,
         )
         response = admin_private_product_client.full_update_product(product_id=product_id, request=request)
         return UpdateProductFixture(request=request, response=response)

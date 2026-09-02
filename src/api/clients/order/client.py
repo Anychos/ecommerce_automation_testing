@@ -11,10 +11,7 @@ from src.api.tools.routes import Routes
 
 
 class OrderAPIClient(BaseAPIClient):
-    """
-    Клиент для работы с API заказа
-    """
-
+    """Клиент для работы с API заказа"""
     @tracker.track_coverage_httpx(Routes.ORDERS)
     @allure.step("Отправка запроса на создание заказа")
     def create_order_api(self,
@@ -27,7 +24,6 @@ class OrderAPIClient(BaseAPIClient):
         :param request: Данные для создания заказа
         :return: Ответ сервера с данными созданного заказа
         """
-
         return self.post(url=Routes.ORDERS, json=request.model_dump())
 
     def create_order(self,
@@ -35,7 +31,7 @@ class OrderAPIClient(BaseAPIClient):
                      request: CreateOrderRequestSchema
                      ) -> CreateOrderResponseSchema:
         response = self.create_order_api(request=request)
-        return CreateOrderResponseSchema.model_validate_json(response.text)
+        return CreateOrderResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(f"{Routes.ORDERS}/" + "{order_id}")
     @allure.step("Отправка запроса на получение заказа")
@@ -49,7 +45,6 @@ class OrderAPIClient(BaseAPIClient):
         :param order_id: Идентификатор заказа
         :return: Ответ сервера с данными заказа
         """
-
         return self.get(url=f"{Routes.ORDERS}/{order_id}")
 
     @tracker.track_coverage_httpx(Routes.ORDERS)
@@ -60,15 +55,11 @@ class OrderAPIClient(BaseAPIClient):
 
         :return: Ответ сервера со списком заказов
         """
-
         return self.get(url=Routes.ORDERS)
 
 
 def get_public_order_client() -> OrderAPIClient:
-    """
-    Создает HTTP клиент для доступа к публичному API заказа
-    """
-
+    """Создает HTTP клиент для доступа к публичному API заказа"""
     return OrderAPIClient(client=public_client_builder())
 
 def get_private_order_client(
@@ -80,5 +71,4 @@ def get_private_order_client(
 
     :param user: Данные пользователя для авторизации
     """
-
     return OrderAPIClient(client=private_user_client_builder(user=user))

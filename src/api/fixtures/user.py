@@ -1,4 +1,5 @@
-from typing import Callable, Any, Generator
+from http import HTTPStatus
+from typing import Callable, Generator
 
 import pytest
 from pydantic import BaseModel
@@ -71,10 +72,28 @@ def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callab
         created_users.append(user)
         return user
 
-    yield _create_user
+    try:
+        yield _create_user
+    finally:
+        cleanup_errors: list[Exception] = []
 
-    for user in created_users:
-        private_admin_client.delete_user_api(user_id=user.user_id)
+        for user in created_users:
+            try:
+                response = private_admin_client.delete_user_api(user_id=user.user_id)
+                if not 200 <= response.status_code < 300 and response.status_code != HTTPStatus.NOT_FOUND:
+                    cleanup_errors.append(
+                        RuntimeError(
+                            f"Не удалось удалить пользователя {user.user_id}: "
+                            f"HTTP {response.status_code} {response.reason_phrase}"
+                        )
+                    )
+            except Exception as error:
+                cleanup_errors.append(
+                    RuntimeError(f"Не удалось удалить пользователя {user.user_id}: {error}")
+                )
+
+        if cleanup_errors:
+            raise ExceptionGroup("Ошибки очистки тестовых пользователей", cleanup_errors)
 
 @pytest.fixture
 def user(create_user_factory: Callable[..., UserFixture]) -> UserFixture:

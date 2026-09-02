@@ -149,9 +149,10 @@ class TestCartNegative:
     @allure.title("Добавление количества одного товара в корзину больше чем доступно")
     def test_add_more_than_available_product_to_cart(self,
                                                      private_cart_client: CartAPIClient,
-                                                     create_available_product: CreateProductFixture
+                                                     create_product_factory: Callable[..., CreateProductFixture]
                                                      ) -> None:
-        request = AddItemCartRequestSchema(product_id=create_available_product.product_id, quantity=6)
+        product = create_product_factory(is_available=True, stock_quantity=1)
+        request = AddItemCartRequestSchema(product_id=product.product_id, quantity=2)
 
         response = private_cart_client.add_item_cart_api(request=request)
         assert_status_code(response.status_code, HTTPStatus.BAD_REQUEST)

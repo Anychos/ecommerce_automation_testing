@@ -28,12 +28,16 @@
 
 ## Что покрывают тесты
 
-Последний выполненный прогон — **94 теста**:
+API-набор содержит **57 сценариев**. Последний подтверждённый API-прогон выполнен
+**2026-08-31** против
+[`Anychos/test_automation__app`](https://github.com/Anychos/test_automation__app/tree/b52fcdedd37060418e27942ce86ef88a5993a595/pizza_shop_test_api_3)
+на commit `b52fcdedd37060418e27942ce86ef88a5993a595`:
+**57 passed, 0 failed, 2 warnings**.
 
 
 | Уровень      | Тестов | Покрытие                                                                                          |
 | ------------ | ------ | ------------------------------------------------------------------------------------------------- |
-| 🔌 API       | 58     | Authentication, users, products, carts, orders; positive + negative cases, валидация схем ответов |
+| 🔌 API       | 57     | Authentication, users, products, carts, orders; positive + negative cases, валидация схем ответов |
 | 🖥️ UI / E2E | 30     | Registration, login, каталог, карточка товара, корзина, checkout, orders, header, footer          |
 
 
@@ -44,11 +48,11 @@
 
 | Файл                     | Что проверяется                                                         |
 | ------------------------ | ----------------------------------------------------------------------- |
-| `test_authentication.py` | Регистрация, логин, refresh/logout, авторизация access/refresh токенами |
-| `test_user.py`           | Профиль: получение, обновление, изменение пароля, негативные сценарии   |
-| `test_product.py`        | Список и карточки товаров, пагинация, несуществующие товары             |
-| `test_cart.py`           | Добавление/обновление/удаление позиций, лимиты, чужие корзины           |
-| `test_order.py`          | Оформление заказа из корзины, история заказов, доступность заказов      |
+| `test_authentication.py` | Регистрация и логин пользователя/админа, невалидные учётные данные      |
+| `test_user.py`           | Создание, профиль, обновление, удаление и валидация данных пользователя |
+| `test_product.py`        | CRUD товаров, список, обязательные поля, форматы данных и image URL     |
+| `test_cart.py`           | Добавление, получение, обновление, удаление и ограничения остатков      |
+| `test_order.py`          | Создание, получение и список заказов, пустая корзина, недоступный товар |
 
 
 
@@ -175,8 +179,8 @@ Copy-Item .env.example .env
 # Unit-тесты (без внешних сервисов)
 pytest tests/unit --reruns 0
 
-# API-тесты (нужен запущенный REST API)
-pytest tests/api
+# API-тесты без параллелизма и автоматических reruns (нужен запущенный REST API)
+python -m pytest tests/api -q -rA -o addopts=
 
 # UI-тесты (нужны REST API, Web UI и Chromium)
 pytest tests/ui
@@ -234,8 +238,9 @@ Workflow `[.github/workflows/tests.yml](.github/workflows/tests.yml)`:
 1. запускает unit-тесты;
 2. API-тесты с PostgreSQL и ревизией API-target из `API_APP_REF` (если target настроен);
 3. UI/E2E-тесты с Chromium и ревизией UI-target из `UI_APP_REF` (если target настроен);
-4. объединяет результаты и публикует Allure Report в GitHub Pages;
-5. опционально шлёт Telegram-уведомление (если настроены secrets).
+4. генерирует Swagger coverage HTML/JSON и загружает артефакт `swagger-coverage-api`;
+5. объединяет результаты и публикует Allure Report в GitHub Pages;
+6. опционально шлёт Telegram-уведомление (если настроены secrets).
 
 Код самих приложений намеренно хранится в отдельных репозиториях — этот репозиторий сфокусирован только на AQA-коде. CI ожидает GitHub Repository Variables:
 

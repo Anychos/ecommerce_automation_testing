@@ -86,7 +86,6 @@ def assert_update_cart_response(
     :param actual: Фактический ответ на запрос обновления продукта в корзине
     :param expected: Ожидаемый ответ на запрос обновления продукта в корзине
     """
-    assert_field_exists(actual.product_id, "item_id")
     assert_field_exists(actual.product_id, "product_id")
     assert_field_value(actual.quantity, expected.quantity, "quantity")
 

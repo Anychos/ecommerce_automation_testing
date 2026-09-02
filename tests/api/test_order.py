@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.api.fixtures.cart import CartFixture
     from src.api.fixtures.order import OrderFixture
-    from src.api.fixtures.product import CreateProductFixture
+    from src.api.fixtures.product import UpdateProductFixture
 
 import allure
 import pytest
@@ -94,7 +94,7 @@ class TestOrderNegative:
     def test_create_order_without_availability_items_in_cart(self,
                                                              private_order_client: OrderAPIClient,
                                                              create_cart: CartFixture,
-                                                             update_product_factory: Callable[..., CreateProductFixture]
+                                                             update_product_factory: Callable[..., UpdateProductFixture]
                                                              ) -> None:
         update_product_factory(product_id=create_cart.product_id, is_available=False, stock_quantity=0)
 

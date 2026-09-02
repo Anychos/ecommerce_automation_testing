@@ -17,7 +17,7 @@ def assert_error(
     assert_field_value(actual.location, expected.location, "location")
     assert_field_value(actual.message, expected.message, "message")
     assert_field_value(actual.input, expected.input, "input")
-    assert_field_value(actual.context, expected.context, "reason")
+    assert_field_value(actual.context, expected.context, "context")
 
 def assert_input_validation_error_response(
         *,
