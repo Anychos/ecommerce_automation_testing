@@ -43,5 +43,14 @@ class DataGenerator:
     def category(self) -> str:
         return f"Автотест Категория {self.faker.uuid4()[:8]}"
 
+    def dropoff_address(self) -> str:
+        return self.faker.address()
+
+    def dropoff_latitude(self) -> float:
+        return self.faker.pyfloat(min_value=-90, max_value=90)
+
+    def dropoff_longitude(self) -> float:
+        return self.faker.pyfloat(min_value=-180, max_value=180)
+
 
 fake_ru = DataGenerator(Faker("ru_RU"))

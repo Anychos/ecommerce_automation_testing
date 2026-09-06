@@ -8,5 +8,7 @@ pytest_plugins = [
     "src.ui.fixtures.browser",
     "src.ui.fixtures.page",
     "src.ui.fixtures.data",
-    "src.api.fixtures.health"
+    "src.api.fixtures.health",
+    "src.api.fixtures.deliveries",
+    "src.api.fixtures.payments"
     ]

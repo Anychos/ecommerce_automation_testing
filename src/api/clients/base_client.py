@@ -17,7 +17,7 @@ class BaseAPIClient:
     def get(self,
             *,
             url: str | URL,
-            params: str | None = None,
+            params: dict[str, str | int | float | bool] | None = None,
             headers: dict[str, str] | None = None
             ) -> Response:
         """
@@ -34,8 +34,8 @@ class BaseAPIClient:
     def post(self,
              *,
              url: str | URL,
-             json: Any,
-             params: str | None = None,
+             json: Any | None,
+             params: dict[str, str | int | float | bool] | None = None,
              headers: dict[str, str] | None = None
              ) -> Response:
         """
@@ -54,7 +54,7 @@ class BaseAPIClient:
             *,
             url: str | URL,
             json: Any,
-            params: str | None = None,
+            params: dict[str, str | int | float | bool] | None = None,
             headers: dict[str, str] | None = None
             ) -> Response:
         """
@@ -73,7 +73,7 @@ class BaseAPIClient:
             *,
             url: str | URL,
             json: Any,
-            params: str | None = None,
+            params: dict[str, str | int | float | bool] | None = None,
             headers: dict[str, str] | None = None
             ) -> Response:
         """
@@ -91,7 +91,7 @@ class BaseAPIClient:
     def delete(self,
                *,
                url: str | URL,
-               params: str | None = None,
+               params: dict[str, str | int | float | bool] | None = None,
                headers: dict[str, str] | None = None
                ) -> Response:
         """
