@@ -36,10 +36,26 @@ class CreateOrderDeliveryRequestSchema(QuoteRequestSchema):
 class CreateOrderDeliveryResponseSchema(QuoteBaseSchema):
     delivery_id: int
     order_id: int
-    status: str
+    status: Literal[
+        "selected",
+        "activation_failed",
+        "pending",
+        "assigned",
+        "picked_up",
+        "delivered",
+        "canceled",
+    ]
     provider: Literal["fake"]
     external_delivery_id: str | None = None
-    order_delivery_status: str
+    order_delivery_status: Literal[
+        "selected",
+        "activation_failed",
+        "pending",
+        "assigned",
+        "picked_up",
+        "delivered",
+        "canceled",
+    ]
     created_at: datetime
     updated_at: datetime
     assigned_at: datetime | None = None

@@ -7,7 +7,7 @@ from pydantic import BaseModel
 class CreateOrderPaymentResponseSchema(BaseModel):
     payment_id: int
     order_id: int
-    status: str
+    status: Literal["pending", "succeeded", "canceled", "error"]
     provider: Literal["fake", "yookassa"]
     attempt_no: int
     external_payment_id: str | None = None
@@ -15,7 +15,7 @@ class CreateOrderPaymentResponseSchema(BaseModel):
     is_test: bool
     amount_value: float
     currency: str
-    order_payment_status: str
+    order_payment_status: Literal["unpaid", "pending", "paid", "canceled"]
     created_at: datetime
     updated_at: datetime
     finalized_at: datetime | None = None

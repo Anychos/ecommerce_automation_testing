@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, EmailStr, Field
 
 from src.api.clients.user.schemas import CreateUserResponseSchema
@@ -6,7 +8,7 @@ from src.api.tools.data_generator import fake_ru
 
 class AuthenticationResponseSchema(BaseModel):
     access_token: str
-    token_type: str
+    token_type: Literal["bearer"]
     user: CreateUserResponseSchema
 
 

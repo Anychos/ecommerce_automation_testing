@@ -1,6 +1,4 @@
-from typing import List
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class CartItemSchema(BaseModel):
@@ -8,7 +6,7 @@ class CartItemSchema(BaseModel):
     quantity: int
     product_name: str
     product_price: float
-    product_image_url: str
+    product_image_url: HttpUrl
     is_available: bool
     has_enough_stock: bool
     available_quantity: int
@@ -30,7 +28,7 @@ class GetCartResponseSchema(BaseModel):
     user_id: int
     total_quantity: int
     total_price: float
-    items: List[CartItemSchema]
+    items: list[CartItemSchema]
 
 
 class UpdateCartItemRequestSchema(BaseModel):

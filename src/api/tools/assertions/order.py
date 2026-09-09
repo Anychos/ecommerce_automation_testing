@@ -29,7 +29,7 @@ def assert_product_in_order(
 
     assert_field_value(item.product_id, cart.product_id, "product_id")
     assert_field_value(item.product_name, product.request.name, "product_name")
-    assert_field_value(item.product_image_url, product.request.image_url, "product_image_url")
+    assert_field_value(str(item.product_image_url), product.request.image_url, "product_image_url")
     assert_field_value(item.unit_price, product.request.price, "unit_price")
     assert_field_value(item.quantity, cart.request.quantity, "quantity")
     assert_field_value(item.line_total, product.request.price * cart.request.quantity, "line_total")
@@ -95,7 +95,11 @@ def assert_get_order_response(
     for actual_item, expected_item in zip(actual.items, expected.items):
         assert_field_value(actual_item.product_id, expected_item.product_id, "product_id")
         assert_field_value(actual_item.product_name, expected_item.product_name, "product_name")
-        assert_field_value(actual_item.product_image_url, expected_item.product_image_url, "product_image_url")
+        assert_field_value(
+            str(actual_item.product_image_url),
+            str(expected_item.product_image_url),
+            "product_image_url"
+        )
         assert_field_value(actual_item.unit_price, expected_item.unit_price, "unit_price")
         assert_field_value(actual_item.quantity, expected_item.quantity, "quantity")
         assert_field_value(actual_item.line_total, expected_item.line_total, "line_total")

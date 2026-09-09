@@ -134,14 +134,19 @@ python -m pytest tests/ui
 python -m pytest tests --alluredir=allure-results
 ```
 
-Для выборочного и параллельного запуска используйте маркеры и xdist:
+Для выборочного запуска используйте маркеры. Для воспроизводимой локальной проверки отключайте параметры из `pytest.ini` и `xdist`; для быстрого параллельного прогона можно включить `xdist` и reruns, как в CI:
 
 ```bash
 python -m pytest tests/api -m authentication_api
 python -m pytest tests/ui -m smoke
 python -m pytest tests/ui -m e2e
-python -m pytest tests/api -n 3
-python -m pytest tests/ui -n 2
+
+# Последовательная диагностика без reruns и xdist
+python -m pytest tests/api -q -rA -o addopts= -n0
+
+# Быстрый параллельный прогон с управляемыми повторами
+python -m pytest tests/api -n 3 --reruns 3 --reruns-delay 2
+python -m pytest tests/ui -n 2 --reruns 3 --reruns-delay 2
 ```
 
 ## Маркеры
@@ -183,11 +188,10 @@ Workflow [.github/workflows/tests.yml](.github/workflows/tests.yml) выполн
 
 Контекст, критерии готовности и список рисков собраны в [API_AQA_project_review_ru.md](API_AQA_project_review_ru.md). Ближайшие направления работы:
 
-- независимо проверить checkout-поток delivery/payment и его контракт с API target;
 - расширить матрицу доступа: `401`, `403`, invalid/expired token, ownership/IDOR и удалённый пользователь;
 - сделать контрактную валидацию независимой от тех же Pydantic-моделей, которые используются для разбора ответа;
-- выделить последовательный запуск без reruns и параллельный запуск с reruns в явные команды;
-- сделать негативные сценарии детерминированными и уточнить типы моделей после подтверждения OpenAPI-контракта.
+- регистрировать для cleanup сущности, успешно созданные прямыми API-вызовами в тестах;
+- сделать негативные сценарии детерминированными.
 
 ## Назначение проекта
 

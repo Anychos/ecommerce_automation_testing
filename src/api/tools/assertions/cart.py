@@ -45,7 +45,7 @@ def assert_product_in_cart(
     assert_field_value(item.quantity, cart.request.quantity, "quantity")
     assert_field_value(item.product_name, product.request.name, "product_name")
     assert_field_value(item.product_price, product.request.price, "product_price")
-    assert_field_value(item.product_image_url, product.request.image_url, "product_image_url")
+    assert_field_value(str(item.product_image_url), product.request.image_url, "product_image_url")
     assert_field_value(item.is_available, product.request.is_available, "is_available")
     assert_field_value(item.has_enough_stock, product.request.stock_quantity >= cart.request.quantity, "has_enough_stock")
     assert_field_value(item.available_quantity, product.request.stock_quantity, "available_quantity")

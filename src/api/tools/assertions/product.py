@@ -25,7 +25,7 @@ def assert_product(
     assert_field_value(actual.price, expected.price, "price")
     assert_field_value(actual.category, expected.category, "category")
     assert_field_value(actual.is_available, expected.is_available, "is_available")
-    assert_field_value(actual.image_url, expected.image_url, "image_url")
+    assert_field_value(str(actual.image_url), str(expected.image_url), "image_url")
     assert_field_value(actual.stock_quantity, expected.stock_quantity, "stock_quantity")
 
 @allure.step("Проверка ответа на запрос создания продукта")
@@ -115,6 +115,9 @@ def assert_partial_update_product_response(
 
     for field, expected_value in expected_data.items():
         actual_value = getattr(actual, field)
+        if field == "image_url":
+            actual_value = str(actual_value)
+            expected_value = str(expected_value)
         assert_field_value(actual_value, expected_value, field)
 
 @allure.step("Проверка ответа на запрос удаления продукта")

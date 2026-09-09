@@ -1,6 +1,4 @@
-from typing import List
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 from src.api.tools.data_generator import fake_ru
 
@@ -18,7 +16,7 @@ class ProductSchema(BaseModel):
 class ProductInOrderSchema(BaseModel):
     product_id: int
     product_name: str
-    product_image_url: str
+    product_image_url: HttpUrl
     unit_price: float
     quantity: int
     line_total: float
@@ -36,6 +34,7 @@ class CreateProductRequestSchema(ProductSchema):
 
 class CreateProductResponseSchema(ProductSchema):
     id: int
+    image_url: HttpUrl
 
 
 class FullUpdateProductRequestSchema(CreateProductRequestSchema):
@@ -60,7 +59,7 @@ class GetProductResponseSchema(CreateProductResponseSchema):
     pass
 
 
-GetProductsResponseSchema = List[GetProductResponseSchema]
+GetProductsResponseSchema = list[GetProductResponseSchema]
 
 
 class DeleteProductResponseSchema(BaseModel):
