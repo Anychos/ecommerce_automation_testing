@@ -1,8 +1,11 @@
-from typing import Any, Generator
+from collections.abc import Generator
 
 import pytest
 
-from src.api.clients.authentication.client import AuthenticationAPIClient, get_authentication_client
+from src.api.clients.authentication.client import (
+    AuthenticationAPIClient,
+    get_authentication_client,
+)
 
 
 @pytest.fixture

@@ -1,7 +1,8 @@
-import allure
-import pytest
 from hashlib import sha256
 from pathlib import Path
+
+import allure
+import pytest
 from _pytest.fixtures import SubRequest
 from playwright.sync_api import BrowserContext, Page, Playwright
 
@@ -18,9 +19,8 @@ def _trace_path(request: SubRequest) -> Path:
 
 
 def _stop_trace_and_attach_on_failure(
-        context: BrowserContext,
-        request: SubRequest
-        ) -> None:
+    context: BrowserContext, request: SubRequest
+) -> None:
     trace_path = _trace_path(request)
     trace_path.parent.mkdir(parents=True, exist_ok=True)
     context.tracing.stop(path=trace_path)
@@ -56,9 +56,10 @@ def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     """
 
     browser = playwright.chromium.launch(headless=settings.headless)
-    context = browser.new_context(base_url=settings.get_base_url(),
-                                  viewport=settings.browser_viewport.model_dump()
-                                  )
+    context = browser.new_context(
+        base_url=settings.get_base_url(),
+        viewport=settings.browser_viewport.model_dump(),
+    )
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
     yield page
@@ -90,7 +91,7 @@ def session_get_browser_state(playwright: Playwright) -> None:
         name=settings.test_user.name,
         phone=settings.test_user.phone,
         password=settings.test_user.password,
-        confirm_password=settings.test_user.confirm_password
+        confirm_password=settings.test_user.confirm_password,
     )
     registration_page.registration_form.click_registration_button()
     home_page.check_success_registration_message()
@@ -102,7 +103,9 @@ def session_get_browser_state(playwright: Playwright) -> None:
 
 
 @pytest.fixture
-def function_get_browser_state(playwright: Playwright, user_data_function: UserData) -> None:
+def function_get_browser_state(
+    playwright: Playwright, user_data_function: UserData
+) -> None:
     """
     Запускает Chromium браузер, создает и сохраняет состояние браузера зарегистрированного пользователя
 
@@ -123,7 +126,7 @@ def function_get_browser_state(playwright: Playwright, user_data_function: UserD
         name=user_data_function.name,
         phone=user_data_function.phone,
         password=user_data_function.password,
-        confirm_password=user_data_function.confirm_password
+        confirm_password=user_data_function.confirm_password,
     )
     registration_page.registration_form.click_registration_button()
     home_page.check_success_registration_message()
@@ -135,7 +138,9 @@ def function_get_browser_state(playwright: Playwright, user_data_function: UserD
 
 
 @pytest.fixture
-def session_chromium_page_with_state(request: SubRequest, session_get_browser_state, playwright: Playwright) -> Page:
+def session_chromium_page_with_state(
+    request: SubRequest, session_get_browser_state, playwright: Playwright
+) -> Page:
     """
     Запускает Chromium браузер и открывает страницу приложения с сохраненным состоянием
 
@@ -149,7 +154,7 @@ def session_chromium_page_with_state(request: SubRequest, session_get_browser_st
     context = browser.new_context(
         base_url=settings.get_base_url(),
         storage_state=settings.session_browser_state_file,
-        viewport=settings.browser_viewport.model_dump()
+        viewport=settings.browser_viewport.model_dump(),
     )
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
@@ -162,7 +167,9 @@ def session_chromium_page_with_state(request: SubRequest, session_get_browser_st
 
 
 @pytest.fixture
-def function_chromium_page_with_state(request: SubRequest, function_get_browser_state, playwright: Playwright) -> Page:
+def function_chromium_page_with_state(
+    request: SubRequest, function_get_browser_state, playwright: Playwright
+) -> Page:
     """
     Запускает Chromium браузер и открывает страницу приложения с сохраненным состоянием
 
@@ -176,7 +183,7 @@ def function_chromium_page_with_state(request: SubRequest, function_get_browser_
     context = browser.new_context(
         base_url=settings.get_base_url(),
         storage_state=settings.function_browser_state_file,
-        viewport=settings.browser_viewport.model_dump()
+        viewport=settings.browser_viewport.model_dump(),
     )
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()

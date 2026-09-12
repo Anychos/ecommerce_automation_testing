@@ -29,10 +29,9 @@ class TestHomePage:
     @allure.story(Story.PAGE_VISIBILITY)
     @allure.severity(Severity.MAJOR)
     @allure.title("Отображение главной страницы")
-    def test_check_home_page_with_products(self,
-                             create_available_product: CreateProductFixture,
-                             home_page: HomePage
-                             ):
+    def test_check_home_page_with_products(
+        self, create_available_product: CreateProductFixture, home_page: HomePage
+    ):
         home_page.open_url(Route.Home)
 
         home_page.check_visibility()
@@ -49,14 +48,14 @@ class TestHomePage:
             lambda card: card.click_title(),
             lambda card: card.click_details_link(),
         ],
-        ids=["image", "title", "details"]
+        ids=["image", "title", "details"],
     )
     def test_click_product_card(
-            self,
-            create_available_product: CreateProductFixture,
-            home_page: HomePage,
-            click_action,
-            product_detail_page: ProductDetailPage
+        self,
+        create_available_product: CreateProductFixture,
+        home_page: HomePage,
+        click_action,
+        product_detail_page: ProductDetailPage,
     ):
         home_page.open_url(Route.Home)
 
@@ -68,13 +67,14 @@ class TestHomePage:
     @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.MAJOR)
     @allure.title("Добавление товара в корзину без авторизации")
-    def test_click_add_to_cart_button_unauthorized(self,
-                                                   create_available_product: CreateProductFixture,
-                                                   home_page: HomePage
-                                                   ):
+    def test_click_add_to_cart_button_unauthorized(
+        self, create_available_product: CreateProductFixture, home_page: HomePage
+    ):
         home_page.open_url(Route.Home)
 
-        home_page.get_product_card(create_available_product.product_id).click_add_to_cart_button()
+        home_page.get_product_card(
+            create_available_product.product_id
+        ).click_add_to_cart_button()
 
         home_page.check_add_to_cart_fail_notification()
 
@@ -83,13 +83,15 @@ class TestHomePage:
     @allure.story(Story.USER_ADD_ITEM_TO_CART)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Добавление товара в корзину с авторизацией")
-    def test_click_add_to_cart_button_authorized(self,
-                                                 create_available_product: CreateProductFixture,
-                                                 home_page_with_state: HomePage
-                                                 ):
+    def test_click_add_to_cart_button_authorized(
+        self,
+        create_available_product: CreateProductFixture,
+        home_page_with_state: HomePage,
+    ):
         home_page_with_state.open_url(Route.Home)
 
-        home_page_with_state.get_product_card(create_available_product.product_id).click_add_to_cart_button()
+        home_page_with_state.get_product_card(
+            create_available_product.product_id
+        ).click_add_to_cart_button()
 
         home_page_with_state.check_add_to_cart_success_notification()
-

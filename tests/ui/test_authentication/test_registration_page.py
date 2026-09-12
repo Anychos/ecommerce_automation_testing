@@ -28,11 +28,12 @@ class TestRegistration:
     @allure.story(Story.USER_REGISTRATION)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Регистрация нового пользователя")
-    def test_registration_success(self,
-                                  registration_page: RegistrationPage,
-                                  home_page: HomePage,
-                                  user_data_function
-                                  ):
+    def test_registration_success(
+        self,
+        registration_page: RegistrationPage,
+        home_page: HomePage,
+        user_data_function,
+    ):
         registration_page.open_url(Route.Registration)
 
         registration_page.registration_form.fill(
@@ -40,17 +41,15 @@ class TestRegistration:
             name=user_data_function.name,
             phone=user_data_function.phone,
             password=user_data_function.password,
-            confirm_password=user_data_function.password
+            confirm_password=user_data_function.password,
         )
         registration_page.registration_form.check_filled(
             email=user_data_function.email,
             name=user_data_function.name,
             phone=user_data_function.phone,
             password=user_data_function.password,
-            confirm_password=user_data_function.confirm_password
+            confirm_password=user_data_function.confirm_password,
         )
         registration_page.registration_form.click_registration_button()
 
         home_page.check_success_registration_message()
-
-

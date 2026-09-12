@@ -9,7 +9,7 @@ class BasePage:
     Базовый класс для работы со страницей
     """
 
-    def __init__ (self, page: Page):
+    def __init__(self, page: Page):
 
         self.page = page
 
@@ -31,12 +31,9 @@ class BasePage:
 
         self.page.reload(wait_until="domcontentloaded")
 
-    def check_current_url(self,
-                          expected: str | re.Pattern,
-                          *,
-                          exact: bool = False,
-                          timeout: int = 10000
-                          ) -> None:
+    def check_current_url(
+        self, expected: str | re.Pattern, *, exact: bool = False, timeout: int = 10000
+    ) -> None:
         """
         Проверяет текущий URL страницы
 
@@ -48,16 +45,12 @@ class BasePage:
         :param timeout: Время ожидания загрузки страницы
         """
 
-        if isinstance(expected, re.Pattern):
-            expect(self.page).to_have_url(expected, timeout=timeout)
-
-        elif exact:
+        if isinstance(expected, re.Pattern) or exact:
             expect(self.page).to_have_url(expected, timeout=timeout)
 
         else:
             expect(self.page).to_have_url(
-                re.compile(re.escape(expected)),
-                timeout=timeout
+                re.compile(re.escape(expected)), timeout=timeout
             )
 
     @allure.step("Проверка что URL содержит {value}")
@@ -89,4 +82,3 @@ class BasePage:
         """
 
         self.check_current_url(pattern)
-

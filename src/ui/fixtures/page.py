@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from src.api.fixtures.product import CreateProductFixture
 
 import pytest
-from playwright.sync_api import Page, Browser
+from playwright.sync_api import Page
 
 from src.ui.pages.cart import CartPage
 from src.ui.pages.checkout import CheckoutPage
@@ -47,13 +47,16 @@ def cart_page(function_chromium_page_with_state: Page) -> CartPage:
 
 
 @pytest.fixture
-def cart_page_with_product(create_available_product: CreateProductFixture,
-                           home_page_with_state: HomePage,
-                           cart_page: CartPage
-                           ) -> CartPage:
+def cart_page_with_product(
+    create_available_product: CreateProductFixture,
+    home_page_with_state: HomePage,
+    cart_page: CartPage,
+) -> CartPage:
     home_page_with_state.open_url(Route.Home)
 
-    home_page_with_state.get_product_card(create_available_product.product_id).click_add_to_cart_button()
+    home_page_with_state.get_product_card(
+        create_available_product.product_id
+    ).click_add_to_cart_button()
     home_page_with_state.check_add_to_cart_success_notification()
 
     return cart_page
@@ -65,7 +68,9 @@ def product_detail_page(chromium_page: Page) -> ProductDetailPage:
 
 
 @pytest.fixture
-def product_detail_page_with_state(function_chromium_page_with_state: Page) -> ProductDetailPage:
+def product_detail_page_with_state(
+    function_chromium_page_with_state: Page,
+) -> ProductDetailPage:
     return ProductDetailPage(function_chromium_page_with_state)
 
 
@@ -90,16 +95,16 @@ def order_detail_page(order_list_page_with_order: OrdersListPage) -> OrderDetail
 
 
 @pytest.fixture
-def order_list_page_with_order(checkout_page: CheckoutPage,
-                               order_list_page: OrdersListPage
-                               ) -> OrdersListPage:
+def order_list_page_with_order(
+    checkout_page: CheckoutPage, order_list_page: OrdersListPage
+) -> OrdersListPage:
     checkout_page.open_url(Route.Checkout)
 
     checkout_page.delivery_details_form.fill(
         name=fake_ru.full_name(),
         phone=fake_ru.phone_number(),
         email=fake_ru.email(),
-        address=fake_ru.address()
+        address=fake_ru.address(),
     )
     checkout_page.delivery_details_form.click_terms_checkbox()
     checkout_page.summary_info.click_button("place-order")
@@ -107,4 +112,3 @@ def order_list_page_with_order(checkout_page: CheckoutPage,
     order_list_page.check_url_matches(re.compile(r"/orders/\d+"))
 
     return order_list_page
-

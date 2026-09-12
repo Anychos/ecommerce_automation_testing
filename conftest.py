@@ -10,5 +10,5 @@ pytest_plugins = [
     "src.ui.fixtures.data",
     "src.api.fixtures.health",
     "src.api.fixtures.deliveries",
-    "src.api.fixtures.payments"
-    ]
+    "src.api.fixtures.payments",
+]

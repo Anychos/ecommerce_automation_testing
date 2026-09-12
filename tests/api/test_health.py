@@ -2,8 +2,10 @@ from http import HTTPStatus
 
 from src.api.clients.health.client import HealthCheckAPIClient
 from src.api.clients.health.schema import HealthCheckResponseSchema
-from src.api.fixtures.health import check_health_client
-from src.api.tools.assertions.base_assertions import assert_status_code, assert_json_schema
+from src.api.tools.assertions.base_assertions import (
+    assert_json_schema,
+    assert_status_code,
+)
 from src.api.tools.assertions.health import assert_heath_check_response
 
 

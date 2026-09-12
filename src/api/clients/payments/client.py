@@ -3,13 +3,16 @@ from httpx import Response
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.base_client import BaseAPIClient
 from src.api.clients.payments.schemas import CreateOrderPaymentResponseSchema
-from src.api.clients.private_builder import private_user_client_builder
+from src.api.clients.private_builder import (
+    private_client_builder,
+)
 from src.api.clients.public_builder import public_client_builder
 from src.api.tools.routes import Routes
 
 
 class PaymentsAPIClient(BaseAPIClient):
     """Клиент для работы с API оплаты"""
+
     def create_order_payment_api(self, order_id: int) -> Response:
         """
         Отправляет запрос на создание оплаты для заказа
@@ -48,7 +51,9 @@ class PaymentsAPIClient(BaseAPIClient):
         :param payment_id: Идентификатор оплаты
         :return: Ответ сервера с данными возврата оплаты
         """
-        return self.get(url=f"{Routes.PAYMENTS}/return", params={"payment_id": payment_id})
+        return self.get(
+            url=f"{Routes.PAYMENTS}/return", params={"payment_id": payment_id}
+        )
 
     def get_fake_checkout_payment_api(self, payment_id: int) -> Response:
         """
@@ -83,13 +88,10 @@ def get_public_payments_client() -> PaymentsAPIClient:
     return PaymentsAPIClient(client=public_client_builder())
 
 
-def get_private_payments_client(
-        *,
-        user: LoginRequestSchema
-) -> PaymentsAPIClient:
+def get_private_payments_client(*, user: LoginRequestSchema) -> PaymentsAPIClient:
     """
     Создает HTTP клиент для доступа к приватному API оплаты
 
     :param user: Данные пользователя для авторизации
     """
-    return PaymentsAPIClient(client=private_user_client_builder(user=user))
+    return PaymentsAPIClient(client=private_client_builder(user=user))

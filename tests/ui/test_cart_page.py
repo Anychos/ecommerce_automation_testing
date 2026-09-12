@@ -58,9 +58,10 @@ class TestCartPage:
     @allure.story(Story.USER_CREATE_ORDER)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Переход на страницу оформления заказа")
-    def test_click_checkout(self, cart_page_with_product: CartPage, checkout_page: CheckoutPage):
+    def test_click_checkout(
+        self, cart_page_with_product: CartPage, checkout_page: CheckoutPage
+    ):
         cart_page_with_product.open_url(Route.Cart)
 
         cart_page_with_product.summary_info.click_button("checkout")
         checkout_page.check_url_exact(Route.Checkout)
-

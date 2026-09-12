@@ -1,20 +1,27 @@
 import allure
 from pydantic import EmailStr
 
-from src.api.clients.authentication.schemas import LoginResponseSchema, RegistrationResponseSchema, \
-    RegistrationRequestSchema
-from src.api.clients.error_schemas import HTTPValidationErrorResponseSchema, InputValidationErrorResponseSchema
+from src.api.clients.authentication.schemas import (
+    LoginResponseSchema,
+    RegistrationRequestSchema,
+    RegistrationResponseSchema,
+)
+from src.api.clients.error_schemas import (
+    HTTPValidationErrorResponseSchema,
+    InputValidationErrorResponseSchema,
+)
 from src.api.clients.user.schemas import CreateUserResponseSchema
-from src.api.tools.assertions.base_assertions import assert_field_exists, assert_field_value
+from src.api.tools.assertions.base_assertions import (
+    assert_field_exists,
+    assert_field_value,
+)
 from src.api.tools.assertions.error import assert_http_validation_error_response
 from src.api.tools.assertions.user import assert_user
 
 
 @allure.step("Проверка ответа на запрос логина пользователя")
 def assert_login_response(
-        *,
-        actual: LoginResponseSchema,
-        expected: CreateUserResponseSchema
+    *, actual: LoginResponseSchema, expected: CreateUserResponseSchema
 ) -> None:
     """
     Проверяет ответ на запрос логина пользователя
@@ -27,11 +34,10 @@ def assert_login_response(
     assert_field_exists(actual.user.id, "user_id")
     assert_user(actual.user, expected)
 
+
 @allure.step("Проверка ответа на запрос регистрации пользователя")
 def assert_register_response(
-        *,
-        actual: RegistrationResponseSchema,
-        expected: RegistrationRequestSchema
+    *, actual: RegistrationResponseSchema, expected: RegistrationRequestSchema
 ) -> None:
     """
     Проверяет ответ на запрос регистрации пользователя
@@ -47,6 +53,7 @@ def assert_register_response(
     assert_field_value(actual.user.phone, expected.phone, "phone")
     assert_field_value(actual.user.is_admin, False, "is_admin")
 
+
 @allure.step("Проверка ответа на запрос логина пользователя с некорректными данными")
 def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) -> None:
     """
@@ -54,28 +61,30 @@ def assert_wrong_login_data_response(actual: HTTPValidationErrorResponseSchema) 
 
     :param actual: Фактический ответ на запрос логина пользователя с некорректными данными
     """
-    expected = HTTPValidationErrorResponseSchema(
-        detail="Неверный email или пароль"
-    )
+    expected = HTTPValidationErrorResponseSchema(detail="Неверный email или пароль")
     assert_http_validation_error_response(actual=actual, expected=expected)
 
-@allure.step("Проверка ответа на запрос регистрации пользователя с уже зарегистрированным email")
-def assert_already_registered_email_response(actual: HTTPValidationErrorResponseSchema) -> None:
+
+@allure.step(
+    "Проверка ответа на запрос регистрации пользователя с уже зарегистрированным email"
+)
+def assert_already_registered_email_response(
+    actual: HTTPValidationErrorResponseSchema,
+) -> None:
     """
     Проверяет ответ на запрос регистрации пользователя с уже зарегистрированным email
 
     :param actual: Фактический ответ на запрос регистрации пользователя с уже зарегистрированным email
     """
-    expected = HTTPValidationErrorResponseSchema(
-        detail="Email уже зарегистрирован"
-    )
+    expected = HTTPValidationErrorResponseSchema(detail="Email уже зарегистрирован")
     assert_http_validation_error_response(actual=actual, expected=expected)
 
-@allure.step("Проверка ответа на запрос логина пользователя с некорректным форматом email")
+
+@allure.step(
+    "Проверка ответа на запрос логина пользователя с некорректным форматом email"
+)
 def assert_invalid_email_format_response(
-        *,
-        actual: InputValidationErrorResponseSchema,
-        email: EmailStr
+    *, actual: InputValidationErrorResponseSchema, email: EmailStr
 ) -> None:
     """
     Проверяет ответ на запрос логина пользователя с некорректным форматом email
@@ -104,4 +113,3 @@ def assert_invalid_email_format_response(
     assert error.input == email
     assert error.context, "Контекст ошибки отсутствует"
     assert "reason" in error.context
-

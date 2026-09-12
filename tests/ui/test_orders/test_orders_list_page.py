@@ -26,7 +26,9 @@ class TestOrdersList:
     @allure.story(Story.PAGE_VISIBILITY)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Отображение списка заказов с заказом")
-    def test_check_orders_list_page_with_order(self, order_list_page_with_order: OrdersListPage):
+    def test_check_orders_list_page_with_order(
+        self, order_list_page_with_order: OrdersListPage
+    ):
         order_list_page_with_order.open_url(Route.OrdersList)
 
         order_list_page_with_order.check_visibility(is_empty=False)

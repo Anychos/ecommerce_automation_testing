@@ -24,7 +24,7 @@ class DataGenerator:
         prefix = self.faker.random_element(("8", "7", "+7"))
         number = self.faker.numerify("9#########")
         return f"{prefix}{number}"
-        
+
     def password(self) -> str:
         return self.faker.password()
 

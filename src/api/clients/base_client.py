@@ -1,11 +1,12 @@
 from typing import Any
 
 import allure
-from httpx import Client, URL, Response
+from httpx import URL, Client, Response
 
 
 class BaseAPIClient:
     """Базовый API клиент"""
+
     def __init__(self, client: Client):
         self.client = client
 
@@ -14,12 +15,13 @@ class BaseAPIClient:
         self.client.close()
 
     @allure.step("Отправка GET запроса на {url}")
-    def get(self,
-            *,
-            url: str | URL,
-            params: dict[str, str | int | float | bool] | None = None,
-            headers: dict[str, str] | None = None
-            ) -> Response:
+    def get(
+        self,
+        *,
+        url: str | URL,
+        params: dict[str, str | int | float | bool] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         """
         Отправляет GET запрос
 
@@ -31,13 +33,14 @@ class BaseAPIClient:
         return self.client.get(url=url, params=params, headers=headers)
 
     @allure.step("Отправка POST запроса на {url}")
-    def post(self,
-             *,
-             url: str | URL,
-             json: Any | None,
-             params: dict[str, str | int | float | bool] | None = None,
-             headers: dict[str, str] | None = None
-             ) -> Response:
+    def post(
+        self,
+        *,
+        url: str | URL,
+        json: Any | None,
+        params: dict[str, str | int | float | bool] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         """
         Отправляет POST запрос
 
@@ -50,13 +53,14 @@ class BaseAPIClient:
         return self.client.post(url=url, json=json, params=params, headers=headers)
 
     @allure.step("Отправка PUT запроса на {url}")
-    def put(self,
-            *,
-            url: str | URL,
-            json: Any,
-            params: dict[str, str | int | float | bool] | None = None,
-            headers: dict[str, str] | None = None
-            ) -> Response:
+    def put(
+        self,
+        *,
+        url: str | URL,
+        json: Any,
+        params: dict[str, str | int | float | bool] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         """
         Отправляет PUT запрос
 
@@ -69,13 +73,14 @@ class BaseAPIClient:
         return self.client.put(url=url, json=json, params=params, headers=headers)
 
     @allure.step("Отправка PATCH запроса на {url}")
-    def patch(self,
-            *,
-            url: str | URL,
-            json: Any,
-            params: dict[str, str | int | float | bool] | None = None,
-            headers: dict[str, str] | None = None
-            ) -> Response:
+    def patch(
+        self,
+        *,
+        url: str | URL,
+        json: Any,
+        params: dict[str, str | int | float | bool] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         """
         Отправляет PATCH запрос
 
@@ -88,12 +93,13 @@ class BaseAPIClient:
         return self.client.patch(url=url, json=json, params=params, headers=headers)
 
     @allure.step("Отправка DELETE запроса на {url}")
-    def delete(self,
-               *,
-               url: str | URL,
-               params: dict[str, str | int | float | bool] | None = None,
-               headers: dict[str, str] | None = None
-               ) -> Response:
+    def delete(
+        self,
+        *,
+        url: str | URL,
+        params: dict[str, str | int | float | bool] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         """
         Отправляет DELETE запрос
 

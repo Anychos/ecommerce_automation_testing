@@ -1,10 +1,13 @@
+from collections.abc import Generator
 from http import HTTPStatus
-from typing import Generator
 
 import pytest
 from httpx import RequestError
 
-from src.api.clients.health.client import HealthCheckAPIClient, get_public_health_check_client
+from src.api.clients.health.client import (
+    HealthCheckAPIClient,
+    get_public_health_check_client,
+)
 from src.api.clients.health.schema import HealthCheckResponseSchema
 
 
@@ -18,6 +21,7 @@ def check_health_client() -> Generator[HealthCheckAPIClient, None, None]:
     finally:
         client.close()
 
+
 @pytest.fixture(scope="session", autouse=True)
 def check_environment_is_ready(check_health_client: HealthCheckAPIClient) -> None:
     try:
@@ -26,9 +30,6 @@ def check_environment_is_ready(check_health_client: HealthCheckAPIClient) -> Non
         pytest.exit(f"Окружение недоступно: {error}")
 
     if response.status_code != HTTPStatus.OK:
-        pytest.exit(
-            f"Окружение недоступно: "
-            f"Получен статус код {response.status_code}"
-        )
+        pytest.exit(f"Окружение недоступно: Получен статус код {response.status_code}")
 
     HealthCheckResponseSchema.model_validate_json(response.content)

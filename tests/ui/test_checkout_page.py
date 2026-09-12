@@ -38,7 +38,7 @@ class TestCheckoutPage:
             name=fake_ru.full_name(),
             phone=fake_ru.phone_number(),
             email=fake_ru.email(),
-            address=fake_ru.address()
+            address=fake_ru.address(),
         )
         checkout_page.delivery_details_form.click_terms_checkbox()
         checkout_page.summary_info.click_button("place-order")

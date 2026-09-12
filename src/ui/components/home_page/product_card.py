@@ -22,7 +22,9 @@ class ProductCard(BaseComponent):
         self.description = self.root.locator('[data-testid^="product-description-"]')
         self.price = self.root.locator('[data-testid^="product-price-"] span')
         self.stock_quantity = self.root.locator('[data-testid^="product-stock-"]')
-        self.add_to_cart_button = self.root.locator('[data-testid^="add-to-cart-button-"]')
+        self.add_to_cart_button = self.root.locator(
+            '[data-testid^="add-to-cart-button-"]'
+        )
         self.details_link = self.root.locator('[data-testid^="product-details-link-"]')
 
     @allure.step("Проверка видимости элементов карточки товара")

@@ -85,8 +85,3 @@ class TestHeader:
         home_page_with_state.header.click_dropdown_menu_link("logout")
         home_page_with_state.check_success_logout_message()
         home_page_with_state.header.check_visibility()
-
-
-
-
-

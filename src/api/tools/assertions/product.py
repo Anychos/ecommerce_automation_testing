@@ -1,19 +1,27 @@
-from typing import Any, List
+from typing import Any
 
 import allure
 
 from src.api.clients.error_schemas import InputValidationErrorResponseSchema
-from src.api.clients.product.schemas import CreateProductResponseSchema, CreateProductRequestSchema, ProductSchema, \
-    GetProductResponseSchema, UpdateProductResponseSchema, FullUpdateProductRequestSchema, DeleteProductResponseSchema, \
-    PartialUpdateProductRequestSchema, GetProductsResponseSchema
-from src.api.tools.assertions.base_assertions import assert_field_exists, assert_field_value
+from src.api.clients.product.schemas import (
+    CreateProductRequestSchema,
+    CreateProductResponseSchema,
+    DeleteProductResponseSchema,
+    FullUpdateProductRequestSchema,
+    GetProductResponseSchema,
+    GetProductsResponseSchema,
+    PartialUpdateProductRequestSchema,
+    ProductSchema,
+    UpdateProductResponseSchema,
+)
+from src.api.tools.assertions.base_assertions import (
+    assert_field_exists,
+    assert_field_value,
+)
 
 
 @allure.step("Проверка данных продукта по схеме")
-def assert_product(
-        actual: ProductSchema,
-        expected: ProductSchema
-) -> None:
+def assert_product(actual: ProductSchema, expected: ProductSchema) -> None:
     """
     Проверяет данные продукта по схеме
 
@@ -28,11 +36,10 @@ def assert_product(
     assert_field_value(str(actual.image_url), str(expected.image_url), "image_url")
     assert_field_value(actual.stock_quantity, expected.stock_quantity, "stock_quantity")
 
+
 @allure.step("Проверка ответа на запрос создания продукта")
 def assert_create_product_response(
-        *,
-        actual: CreateProductResponseSchema,
-        expected: CreateProductRequestSchema
+    *, actual: CreateProductResponseSchema, expected: CreateProductRequestSchema
 ) -> None:
     """
     Проверяет ответ на запрос создания продукта
@@ -43,11 +50,10 @@ def assert_create_product_response(
     assert_field_exists(actual.id, "id")
     assert_product(actual, expected)
 
+
 @allure.step("Проверка ответа на запрос получения продукта")
 def assert_get_product_response(
-        *,
-        actual: GetProductResponseSchema,
-        expected: CreateProductResponseSchema
+    *, actual: GetProductResponseSchema, expected: CreateProductResponseSchema
 ) -> None:
     """
     Проверяет ответ на запрос получения продукта
@@ -58,11 +64,12 @@ def assert_get_product_response(
     assert_field_value(actual.id, expected.id, "id")
     assert_product(actual, expected)
 
+
 @allure.step("Проверка ответа на запрос списка продуктов")
 def assert_get_products_response(
-        *,
-        get_products_response: GetProductsResponseSchema,
-        create_product_responses: List[CreateProductResponseSchema]
+    *,
+    get_products_response: GetProductsResponseSchema,
+    create_product_responses: list[CreateProductResponseSchema],
 ) -> None:
     """
     Проверяет ответ на запрос списка продуктов
@@ -72,9 +79,7 @@ def assert_get_products_response(
     """
     assert get_products_response, "Список продуктов пуст"
 
-    products_by_id = {
-        product.id: product for product in get_products_response
-    }
+    products_by_id = {product.id: product for product in get_products_response}
 
     for created_product in create_product_responses:
         assert created_product.id in products_by_id, (
@@ -84,11 +89,10 @@ def assert_get_products_response(
         actual_product = products_by_id[created_product.id]
         assert_product(actual_product, created_product)
 
+
 @allure.step("Проверка ответа на запрос полного обновления продукта")
 def assert_full_update_product_response(
-        *,
-        actual: UpdateProductResponseSchema,
-        expected: FullUpdateProductRequestSchema
+    *, actual: UpdateProductResponseSchema, expected: FullUpdateProductRequestSchema
 ) -> None:
     """
     Проверяет ответ на запрос полного обновления продукта
@@ -99,11 +103,10 @@ def assert_full_update_product_response(
     assert_field_exists(actual.id, "id")
     assert_product(actual, expected)
 
+
 @allure.step("Проверка ответа на запрос частичного обновления продукта")
 def assert_partial_update_product_response(
-        *,
-        actual: UpdateProductResponseSchema,
-        expected: PartialUpdateProductRequestSchema
+    *, actual: UpdateProductResponseSchema, expected: PartialUpdateProductRequestSchema
 ) -> None:
     """
     Проверяет ответ на запрос частичного обновления продукта
@@ -120,6 +123,7 @@ def assert_partial_update_product_response(
             expected_value = str(expected_value)
         assert_field_value(actual_value, expected_value, field)
 
+
 @allure.step("Проверка ответа на запрос удаления продукта")
 def assert_delete_product_response(actual: DeleteProductResponseSchema) -> None:
     """
@@ -129,12 +133,12 @@ def assert_delete_product_response(actual: DeleteProductResponseSchema) -> None:
     """
     assert_field_value(actual.message, "Продукт удален", "message")
 
-@allure.step("Проверка ответа на запрос создания продукта с некорректным форматом в данных")
+
+@allure.step(
+    "Проверка ответа на запрос создания продукта с некорректным форматом в данных"
+)
 def assert_wrong_data_format_response(
-        *,
-        actual: InputValidationErrorResponseSchema,
-        wrong_field: str,
-        wrong_value: Any
+    *, actual: InputValidationErrorResponseSchema, wrong_field: str, wrong_value: Any
 ) -> None:
     """
     Проверяет ответ на запрос создания продукта с некорректным форматом в данных
@@ -145,7 +149,7 @@ def assert_wrong_data_format_response(
     """
     error_messages = [
         "Input should be a valid string",
-        "Input should be a valid number, unable to parse string as a number"
+        "Input should be a valid number, unable to parse string as a number",
     ]
 
     assert actual.detail, "Список ошибок пуст"
@@ -160,12 +164,10 @@ def assert_wrong_data_format_response(
     )
     assert error.input == wrong_value
 
+
 @allure.step("Проверка ответа на запрос создания продукта с пустым обязательным полем")
 def assert_empty_required_field_response(
-        *,
-        actual: InputValidationErrorResponseSchema,
-        wrong_field: str,
-        wrong_value: Any
+    *, actual: InputValidationErrorResponseSchema, wrong_field: str, wrong_value: Any
 ) -> None:
     """
     Проверяет ответ на запрос создания продукта с пустым обязательным полем
@@ -178,14 +180,9 @@ def assert_empty_required_field_response(
         "String should have at least 2 characters",
         "String should have at least 10 characters",
         "Input should be greater than 0",
-        "Value error, URL изображения не может быть пустым"
+        "Value error, URL изображения не может быть пустым",
     ]
-    error_types = [
-        "string_too_short",
-        "string_too_long",
-        "greater_than",
-        "value_error"
-    ]
+    error_types = ["string_too_short", "string_too_long", "greater_than", "value_error"]
 
     assert actual.detail, "Список ошибок пуст"
     assert len(actual.detail) == 1, "В ответе более одной ошибки"
@@ -200,10 +197,12 @@ def assert_empty_required_field_response(
     assert error.input == wrong_value
     assert error.context, "Контекст ошибки пуст"
 
-@allure.step("Проверка ответа на запрос создания продукта с некорректным URL изображения")
+
+@allure.step(
+    "Проверка ответа на запрос создания продукта с некорректным URL изображения"
+)
 def assert_invalid_image_url_response(
-        actual: InputValidationErrorResponseSchema,
-        image_url: str
+    actual: InputValidationErrorResponseSchema, image_url: str
 ) -> None:
     """
     Проверяет ответ на запрос создания продукта с некорректным URL изображения
@@ -213,7 +212,7 @@ def assert_invalid_image_url_response(
     """
     error_messages = [
         "Value error, URL должен быть в формате: jpg, jpeg, png, webp",
-        "Value error, Некорректный URL изображения"
+        "Value error, Некорректный URL изображения",
     ]
 
     assert actual.detail, "Список ошибок пуст"

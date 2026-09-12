@@ -1,20 +1,29 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Generator
+from collections.abc import Generator
+from typing import TYPE_CHECKING
 
 import pytest
 from pydantic import BaseModel
 
 if TYPE_CHECKING:
-    from src.api.fixtures.user import UserFixture
     from src.api.fixtures.cart import CartFixture
+    from src.api.fixtures.user import UserFixture
 
-from src.api.clients.order.client import OrderAPIClient, get_public_order_client, get_private_order_client
-from src.api.clients.order.schemas import CreateOrderRequestSchema, CreateOrderResponseSchema
+from src.api.clients.order.client import (
+    OrderAPIClient,
+    get_private_order_client,
+    get_public_order_client,
+)
+from src.api.clients.order.schemas import (
+    CreateOrderRequestSchema,
+    CreateOrderResponseSchema,
+)
 
 
 class OrderFixture(BaseModel):
     """Хранит данные о созданном заказе"""
+
     request: CreateOrderRequestSchema
     response: CreateOrderResponseSchema
 
@@ -33,6 +42,7 @@ def public_order_client() -> Generator[OrderAPIClient, None, None]:
     finally:
         client.close()
 
+
 @pytest.fixture
 def private_order_client(user: UserFixture) -> Generator[OrderAPIClient, None, None]:
     """
@@ -47,10 +57,10 @@ def private_order_client(user: UserFixture) -> Generator[OrderAPIClient, None, N
     finally:
         client.close()
 
+
 @pytest.fixture
 def create_order(
-        private_order_client: OrderAPIClient,
-        create_cart: CartFixture
+    private_order_client: OrderAPIClient, create_cart: CartFixture
 ) -> OrderFixture:
     """
     Создает заказ

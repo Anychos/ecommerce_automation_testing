@@ -4,7 +4,6 @@ from collections.abc import Iterable, MutableMapping
 from pathlib import Path
 from typing import Any
 
-
 REDACTED = "<redacted>"
 SENSITIVE_NAME_PARTS = (
     "password",
@@ -24,7 +23,9 @@ SENSITIVE_ASSIGNMENT = re.compile(
 
 
 def is_sensitive_name(name: str) -> bool:
-    normalized = "".join(character for character in name.casefold() if character.isalnum())
+    normalized = "".join(
+        character for character in name.casefold() if character.isalnum()
+    )
     return any(part in normalized for part in SENSITIVE_NAME_PARTS)
 
 
@@ -70,9 +71,9 @@ def _sanitize_json_value(value: Any, secret_values: Iterable[str]) -> Any:
 
 
 def redact_parameters(
-        parameters: MutableMapping[str, str],
-        secret_values: Iterable[str] = (),
-        ) -> None:
+    parameters: MutableMapping[str, str],
+    secret_values: Iterable[str] = (),
+) -> None:
     """Маскирует sensitive values в параметрах Allure step in place."""
 
     sensitive_indicator = any(
@@ -82,25 +83,31 @@ def redact_parameters(
     )
 
     for name, value in parameters.items():
-        if is_sensitive_name(name):
-            parameters[name] = REDACTED
-        elif sensitive_indicator and name in {"actual", "expected", "input", "value"}:
+        if (
+            is_sensitive_name(name)
+            or sensitive_indicator
+            and name in {"actual", "expected", "input", "value"}
+        ):
             parameters[name] = REDACTED
         else:
             parameters[name] = redact_text(value, secret_values)
 
 
 def sanitize_allure_results(
-        results_directory: Path,
-        secret_values: Iterable[str] = (),
-        ) -> None:
+    results_directory: Path,
+    secret_values: Iterable[str] = (),
+) -> None:
     """Маскирует sensitive text в созданных Allure result files."""
 
     if not results_directory.exists():
         return
 
     for artifact in results_directory.rglob("*"):
-        if not artifact.is_file() or artifact.suffix not in {".json", ".txt", ".properties"}:
+        if not artifact.is_file() or artifact.suffix not in {
+            ".json",
+            ".txt",
+            ".properties",
+        }:
             continue
 
         content = artifact.read_text(encoding="utf-8", errors="replace")

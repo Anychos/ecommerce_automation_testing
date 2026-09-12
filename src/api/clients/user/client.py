@@ -4,20 +4,25 @@ from httpx import Response
 from src.api.clients.api_coverage import tracker
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.base_client import BaseAPIClient
-from src.api.clients.private_builder import private_user_client_builder, private_admin_client_builder
-from src.api.clients.user.schemas import CreateUserRequestSchema, CreateUserResponseSchema, UpdateUserRequestSchema, \
-    UpdatePasswordRequestSchema
+from src.api.clients.private_builder import (
+    private_client_builder,
+)
+from src.api.clients.user.schemas import (
+    CreateUserRequestSchema,
+    CreateUserResponseSchema,
+    DeleteUserResponseSchema,
+    UpdatePasswordRequestSchema,
+    UpdateUserRequestSchema,
+)
 from src.api.tools.routes import Routes
 
 
 class UserAPIClient(BaseAPIClient):
     """Клиент для работы с API пользователя"""
+
     @tracker.track_coverage_httpx(Routes.USERS)
     @allure.step("Отправка запроса на создание пользователя")
-    def create_user_api(self,
-                        *,
-                        request: CreateUserRequestSchema
-                        ) -> Response:
+    def create_user_api(self, *, request: CreateUserRequestSchema) -> Response:
         """
         Отправляет запрос на создание пользователя
 
@@ -26,19 +31,15 @@ class UserAPIClient(BaseAPIClient):
         """
         return self.post(url=Routes.USERS, json=request.model_dump())
 
-    def create_user(self,
-                    *,
-                    request: CreateUserRequestSchema
-                    ) -> CreateUserResponseSchema:
+    def create_user(
+        self, *, request: CreateUserRequestSchema
+    ) -> CreateUserResponseSchema:
         response = self.create_user_api(request=request)
         return CreateUserResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(f"{Routes.USERS}/" + "{user_id}")
     @allure.step("Отправка запроса на получение пользователя по id")
-    def get_user_api(self,
-                     *,
-                     user_id: int
-                     ) -> Response:
+    def get_user_api(self, *, user_id: int) -> Response:
         """
         Отправляет запрос на получение пользователя
 
@@ -59,11 +60,9 @@ class UserAPIClient(BaseAPIClient):
 
     @tracker.track_coverage_httpx(f"{Routes.USERS}/" + "{user_id}")
     @allure.step("Отправка запроса на обновление данных пользователя")
-    def update_user_api(self,
-                        *,
-                        user_id: int,
-                        request: UpdateUserRequestSchema
-                        ) -> Response:
+    def update_user_api(
+        self, *, user_id: int, request: UpdateUserRequestSchema
+    ) -> Response:
         """
         Отправляет запрос на обновление пользователя
 
@@ -75,11 +74,9 @@ class UserAPIClient(BaseAPIClient):
 
     @tracker.track_coverage_httpx(f"{Routes.USERS}/" + "{user_id}/password")
     @allure.step("Отправка запроса на обновление пароля пользователя")
-    def update_password_api(self,
-                            *,
-                            user_id: int,
-                            request: UpdatePasswordRequestSchema
-                            ) -> Response:
+    def update_password_api(
+        self, *, user_id: int, request: UpdatePasswordRequestSchema
+    ) -> Response:
         """
         Отправляет запрос на обновление пароля пользователя
 
@@ -87,14 +84,13 @@ class UserAPIClient(BaseAPIClient):
         :param user_id: Идентификатор пользователя
         :return: Ответ сервера с данными обновленного пользователя
         """
-        return self.patch(url=f"{Routes.USERS}/{user_id}/password", json=request.model_dump())
+        return self.patch(
+            url=f"{Routes.USERS}/{user_id}/password", json=request.model_dump()
+        )
 
     @tracker.track_coverage_httpx(f"{Routes.USERS}/" + "{user_id}")
     @allure.step("Отправка запроса на удаление пользователя")
-    def delete_user_api(self,
-                        *,
-                        user_id: int
-                        ) -> Response:
+    def delete_user_api(self, *, user_id: int) -> Response:
         """
         Отправляет запрос на удаление пользователя
 
@@ -103,19 +99,20 @@ class UserAPIClient(BaseAPIClient):
         """
         return self.delete(url=f"{Routes.USERS}/{user_id}")
 
+    def delete_user(self, *, user_id: int) -> DeleteUserResponseSchema:
+        response = self.delete_user_api(user_id=user_id)
+        return DeleteUserResponseSchema.model_validate_json(response.content)
 
-def get_private_user_client(
-        *,
-        user: LoginRequestSchema
-) -> UserAPIClient:
+
+def get_private_user_client(*, user: LoginRequestSchema) -> UserAPIClient:
     """
     Создает HTTP клиент пользователя для доступа к приватному API пользователя
 
     :param user: Данные пользователя для авторизации
     """
-    return UserAPIClient(client=private_user_client_builder(user=user))
+    return UserAPIClient(client=private_client_builder(user=user))
 
-def get_private_admin_client() -> UserAPIClient:
+
+def get_private_admin_client(*, user: LoginRequestSchema) -> UserAPIClient:
     """Создает HTTP клиент администратора для доступа к приватному API пользователя"""
-    return UserAPIClient(client=private_admin_client_builder())
-
+    return UserAPIClient(client=private_client_builder(user=user))

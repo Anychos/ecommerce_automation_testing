@@ -1,22 +1,28 @@
 import allure
 from httpx import Response
 
+from config import settings
 from src.api.clients.api_coverage import tracker
-from src.api.clients.authentication.schemas import LoginRequestSchema, LoginResponseSchema, RegistrationRequestSchema, \
-    RegistrationResponseSchema
+from src.api.clients.authentication.schemas import (
+    LoginRequestSchema,
+    LoginResponseSchema,
+    RegistrationRequestSchema,
+    RegistrationResponseSchema,
+)
 from src.api.clients.base_client import BaseAPIClient
+from src.api.clients.private_builder import (
+    private_client_builder,
+)
 from src.api.clients.public_builder import public_client_builder
 from src.api.tools.routes import Routes
 
 
 class AuthenticationAPIClient(BaseAPIClient):
     """Клиент для работы с API аутентификации"""
+
     @tracker.track_coverage_httpx(Routes.LOGIN)
     @allure.step("Отправка запроса на логин пользователя")
-    def login_api(self,
-                  *,
-                  request: LoginRequestSchema
-                  ) -> Response:
+    def login_api(self, *, request: LoginRequestSchema) -> Response:
         """
         Отправляет запрос на логин пользователя
 
@@ -25,19 +31,13 @@ class AuthenticationAPIClient(BaseAPIClient):
         """
         return self.post(url=Routes.LOGIN, json=request.model_dump())
 
-    def login(self,
-              *,
-              request: LoginRequestSchema
-              ) -> LoginResponseSchema:
+    def login(self, *, request: LoginRequestSchema) -> LoginResponseSchema:
         response = self.login_api(request=request)
         return LoginResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(Routes.REGISTRATION)
     @allure.step("Отправка запроса на регистрацию пользователя")
-    def registration_api(self,
-                         *,
-                         request: RegistrationRequestSchema
-                         ) -> Response:
+    def registration_api(self, *, request: RegistrationRequestSchema) -> Response:
         """
         Отправляет запрос на регистрацию пользователя
 
@@ -46,10 +46,9 @@ class AuthenticationAPIClient(BaseAPIClient):
         """
         return self.post(url=Routes.REGISTRATION, json=request.model_dump())
 
-    def registration(self,
-              *,
-              request: RegistrationRequestSchema
-              ) -> RegistrationResponseSchema:
+    def registration(
+        self, *, request: RegistrationRequestSchema
+    ) -> RegistrationResponseSchema:
         response = self.registration_api(request=request)
         return RegistrationResponseSchema.model_validate_json(response.content)
 
@@ -57,3 +56,13 @@ class AuthenticationAPIClient(BaseAPIClient):
 def get_authentication_client() -> AuthenticationAPIClient:
     """Создает публичный HTTP клиент для доступа к API аутентификации"""
     return AuthenticationAPIClient(client=public_client_builder())
+
+
+def get_authentication_client_expired_token(user_type: str) -> AuthenticationAPIClient:
+    """Создает публичный HTTP клиент для доступа к API аутентификации"""
+    if user_type == "admin":
+        token = settings.expired_admin_token
+    if user_type == "user":
+        token = settings.expired_user_token
+
+    return AuthenticationAPIClient(client=private_client_builder(token=token))

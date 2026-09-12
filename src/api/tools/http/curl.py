@@ -11,11 +11,15 @@ OMITTED_BODY = "<non-JSON body omitted>"
 
 def _sanitize_url(url: str) -> str:
     parsed = urlsplit(url)
-    query = urlencode([
-        (key, REDACTED if is_sensitive_name(key) else value)
-        for key, value in parse_qsl(parsed.query, keep_blank_values=True)
-    ])
-    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, query, parsed.fragment))
+    query = urlencode(
+        [
+            (key, REDACTED if is_sensitive_name(key) else value)
+            for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+        ]
+    )
+    return urlunsplit(
+        (parsed.scheme, parsed.netloc, parsed.path, query, parsed.fragment)
+    )
 
 
 def _sanitize_body(body: bytes) -> str:
@@ -24,7 +28,9 @@ def _sanitize_body(body: bytes) -> str:
     except (UnicodeDecodeError, json.JSONDecodeError):
         return OMITTED_BODY
 
-    return json.dumps(redact_nested_value(payload), ensure_ascii=False, separators=(",", ":"))
+    return json.dumps(
+        redact_nested_value(payload), ensure_ascii=False, separators=(",", ":")
+    )
 
 
 def get_curl_from_request(request: Request) -> str:

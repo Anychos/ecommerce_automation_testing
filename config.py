@@ -1,9 +1,7 @@
 from enum import Enum
-from typing import List
 from typing import Self
 
-from pydantic import BaseModel, HttpUrl, DirectoryPath, Field
-from pydantic import FilePath
+from pydantic import BaseModel, DirectoryPath, FilePath, HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -50,19 +48,19 @@ class SwaggerService(BaseModel):
 
 class APISettings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        env_nested_delimiter="__"
+        env_file=".env", env_file_encoding="utf-8", env_nested_delimiter="__"
     )
     http_client: HTTPClientSettings
-    swagger_coverage_services: List[SwaggerService]
+    swagger_coverage_services: list[SwaggerService]
     admin_data: AdminLoginSchema
+    expired_user_token: str
+    expired_admin_token: str
 
 
 class UISettings(APISettings):
     base_url: HttpUrl
     headless: bool
-    browser: List[Browser]
+    browser: list[Browser]
     browser_viewport: BrowserViewport
     session_browser_state_file: FilePath
     function_browser_state_file: FilePath
@@ -88,7 +86,7 @@ class Settings(UISettings):
         return Settings(
             session_browser_state_file=session_browser_state_file,
             function_browser_state_file=function_browser_state_file,
-            allure_results_dir=allure_results_dir
+            allure_results_dir=allure_results_dir,
         )
 
 

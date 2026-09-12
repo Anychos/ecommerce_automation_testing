@@ -8,6 +8,7 @@ from src.api.tools.routes import Routes
 
 class HealthCheckAPIClient(BaseAPIClient):
     """Клиент для работы с API проверки состояния сервера"""
+
     def health_check_api(self) -> Response:
         """
         Отправляет запрос на проверку состояния сервера

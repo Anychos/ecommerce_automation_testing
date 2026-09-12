@@ -17,9 +17,10 @@ def user_data_function() -> UserData:
         phone=fake_ru.phone_number(),
         password=password,
         confirm_password=password,
-        address=fake_ru.address()
+        address=fake_ru.address(),
     )
     return data
+
 
 @pytest.fixture(scope="session")
 def user_data_session() -> UserData:
@@ -33,6 +34,6 @@ def user_data_session() -> UserData:
         name=fake_ru.first_name(),
         phone=fake_ru.phone_number(),
         password=password,
-        confirm_password=password
+        confirm_password=password,
     )
     return data

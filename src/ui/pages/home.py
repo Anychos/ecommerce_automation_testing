@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page, expect, Locator
+from playwright.sync_api import Locator, Page, expect
 
 from src.ui.components.common.empty_view import EmptyView
 from src.ui.components.common.footer import Footer
@@ -32,14 +32,11 @@ class HomePage(BasePage):
     def get_product_card(self, product_id: int) -> ProductCard:
         return ProductCard(self.page, product_id)
 
-    def add_to_cart_notification(self, alert_type: str ) -> Locator:
+    def add_to_cart_notification(self, alert_type: str) -> Locator:
         return self.page.locator(f".alert-{alert_type}").first
 
     @allure.step("Проверка видимости элементов главной страницы")
-    def check_visibility(self,
-                         *,
-                         is_empty: bool = False
-                         ) -> None:
+    def check_visibility(self, *, is_empty: bool = False) -> None:
         """
         Проверяет видимость элементов главной страницы
 
@@ -82,7 +79,9 @@ class HomePage(BasePage):
         """
 
         expect(self.add_to_cart_notification("success")).to_be_visible()
-        expect(self.add_to_cart_notification("success")).to_have_text("Товар добавлен в корзину")
+        expect(self.add_to_cart_notification("success")).to_have_text(
+            "Товар добавлен в корзину"
+        )
 
     @allure.step("Проверка нотификации неуспешного добавления товара в корзину")
     def check_add_to_cart_fail_notification(self) -> None:
@@ -91,7 +90,9 @@ class HomePage(BasePage):
         """
 
         expect(self.add_to_cart_notification("warning")).to_be_visible()
-        expect(self.add_to_cart_notification("warning")).to_have_text("Необходимо авторизоваться")
+        expect(self.add_to_cart_notification("warning")).to_have_text(
+            "Необходимо авторизоваться"
+        )
 
     @allure.step("Проверка нотификации успешного выхода из системы")
     def check_success_logout_message(self) -> None:
@@ -101,5 +102,3 @@ class HomePage(BasePage):
 
         expect(self.success_logout_message).to_be_visible()
         expect(self.success_logout_message).to_have_text("Вы вышли из системы")
-
-

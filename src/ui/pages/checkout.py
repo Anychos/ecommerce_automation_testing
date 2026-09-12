@@ -14,9 +14,13 @@ class CheckoutPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
-        self.checkout_success_notification = self.page.get_by_test_id("checkout-notification")
+        self.checkout_success_notification = self.page.get_by_test_id(
+            "checkout-notification"
+        )
         self.delivery_details_form = DeliveryDetailsForm(self.page)
-        self.summary_info = OrderSummary(self.page, self.page.get_by_test_id("order-summary-card"))
+        self.summary_info = OrderSummary(
+            self.page, self.page.get_by_test_id("order-summary-card")
+        )
 
     @allure.step("Проверка нотификации успешного оформления заказа")
     def check_success_order_notification(self) -> None:

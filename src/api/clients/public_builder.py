@@ -9,5 +9,5 @@ def public_client_builder() -> Client:
     return Client(
         base_url=settings.http_client.url,
         timeout=settings.http_client.timeout,
-        event_hooks={"request": [request_curl_event_hook]}
+        event_hooks={"request": [request_curl_event_hook]},
     )

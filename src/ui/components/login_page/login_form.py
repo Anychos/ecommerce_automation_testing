@@ -23,7 +23,7 @@ class LoginForm(BaseComponent):
         return self.page.get_by_test_id(f"{label}-label")
 
     def input(self, input_id: str) -> Locator:
-        return self.page.locator(f'input#{input_id}')
+        return self.page.locator(f"input#{input_id}")
 
     @allure.step("Проверка видимости элементов формы логина")
     def check_visibility(self) -> None:
@@ -54,11 +54,7 @@ class LoginForm(BaseComponent):
         expect(self.registration_text).to_have_text("Нет аккаунта? Зарегистрируйтесь")
 
     @allure.step("Заполнение формы логина")
-    def fill(self,
-             *,
-             email: str,
-             password: str
-             ) -> None:
+    def fill(self, *, email: str, password: str) -> None:
         """
         Заполняет форму логина
 
@@ -73,11 +69,7 @@ class LoginForm(BaseComponent):
         self.input("password").fill(password)
 
     @allure.step("Проверка заполнения формы логина")
-    def check_filled(self,
-                     *,
-                     email: str,
-                     password: str
-                     ) -> None:
+    def check_filled(self, *, email: str, password: str) -> None:
         """
         Проверяет заполнение формы логина
 
@@ -97,10 +89,7 @@ class LoginForm(BaseComponent):
         self.remember_me_checkbox.click()
 
     @allure.step("Проверка состояния чекбокса запомнить меня")
-    def check_remember_me_checkbox(self,
-                                   *,
-                                   is_checked: bool = False
-                                   ) -> None:
+    def check_remember_me_checkbox(self, *, is_checked: bool = False) -> None:
         """
         Проверяет состояние чекбокса запомнить меня
 

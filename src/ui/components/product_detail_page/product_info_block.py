@@ -27,15 +27,18 @@ class ProductInfoBlock(BaseComponent):
         self.stock_text = self.info_container.get_by_test_id("stock-quantity-text")
         self.description_title = self.info_container.get_by_test_id("description-title")
         self.description = self.info_container.get_by_test_id("product-description")
-        self.add_to_cart_button = self.info_container.get_by_test_id("add-to-cart-button")
-        self.login_to_add_button = self.info_container.get_by_test_id("login-to-add-button")
-        self.additional_info_section = self.info_container.get_by_test_id("additional-info-section")
+        self.add_to_cart_button = self.info_container.get_by_test_id(
+            "add-to-cart-button"
+        )
+        self.login_to_add_button = self.info_container.get_by_test_id(
+            "login-to-add-button"
+        )
+        self.additional_info_section = self.info_container.get_by_test_id(
+            "additional-info-section"
+        )
 
     @allure.step("Проверка видимости элементов блока информации о товаре")
-    def check_visibility(self,
-                         *,
-                         is_authorized: bool = False
-                         ) -> None:
+    def check_visibility(self, *, is_authorized: bool = False) -> None:
         """
         Проверяет видимость элементов блока информации о товаре
 
@@ -62,7 +65,9 @@ class ProductInfoBlock(BaseComponent):
             expect(self.add_to_cart_button).to_have_text("Добавить в корзину")
         else:
             expect(self.login_to_add_button).to_be_visible()
-            expect(self.login_to_add_button).to_have_text("Войдите, чтобы добавить в корзину")
+            expect(self.login_to_add_button).to_have_text(
+                "Войдите, чтобы добавить в корзину"
+            )
 
         expect(self.additional_info_section).to_be_visible()
 
@@ -81,4 +86,3 @@ class ProductInfoBlock(BaseComponent):
         """
 
         self.login_to_add_button.click()
-

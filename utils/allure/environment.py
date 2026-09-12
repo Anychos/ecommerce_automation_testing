@@ -12,8 +12,7 @@ def create_allure_environment_file(output_directory: Path) -> None:
         "browsers": ",".join(browser.value for browser in settings.browser),
         "headless": str(settings.headless).lower(),
         "viewport": (
-            f"{viewport.width}x{viewport.height}"
-            f"@{viewport.device_scale_factor}"
+            f"{viewport.width}x{viewport.height}@{viewport.device_scale_factor}"
         ),
         "os": platform.platform(),
         "python_version": platform.python_version(),

@@ -1,14 +1,14 @@
-from typing import Any, Sized
+from collections.abc import Sized
+from typing import Any
 
 import allure
-from jsonschema.validators import validate, Draft202012Validator
+from jsonschema.validators import Draft202012Validator, validate
 
 
-@allure.step("Проверка соответствия статус кода ответа. Ожидался {expected}, получен {actual}")
-def assert_status_code(
-        actual: int,
-        expected: int
-) -> None:
+@allure.step(
+    "Проверка соответствия статус кода ответа. Ожидался {expected}, получен {actual}"
+)
+def assert_status_code(actual: int, expected: int) -> None:
     """
     Проверяет статус код ответа
 
@@ -19,12 +19,11 @@ def assert_status_code(
         f"Некорректный код ответа. Получен: {actual}, ожидался: {expected}"
     )
 
-@allure.step("Проверка соответствия значения в поле {field_name}. Ожидалось {expected}, получено {actual}")
-def assert_field_value(
-        actual: Any,
-        expected: Any,
-        field_name: str
-) -> None:
+
+@allure.step(
+    "Проверка соответствия значения в поле {field_name}. Ожидалось {expected}, получено {actual}"
+)
+def assert_field_value(actual: Any, expected: Any, field_name: str) -> None:
     """
     Проверяет соответствие значения в поле ответа
 
@@ -36,27 +35,20 @@ def assert_field_value(
         f"Некорректное значение в поле {field_name}. Получено: {actual}, ожидалось: {expected}"
     )
 
+
 @allure.step("Проверка наличия поля {field_name} в ответе")
-def assert_field_exists(
-        actual: Any,
-        field_name: str
-) -> None:
+def assert_field_exists(actual: Any, field_name: str) -> None:
     """
     Проверяет присутствие поля в ответе
 
     :param field_name: Название проверяемого поля
     :param actual: Фактическое значение
     """
-    assert actual is not None, (
-        f"Поле {field_name} отсутствует в ответе"
-    )
+    assert actual is not None, f"Поле {field_name} отсутствует в ответе"
+
 
 @allure.step("Проверка длины объекта {name}. Ожидалась {expected}, получена {actual}")
-def assert_length(
-        actual: Sized,
-        expected: Sized,
-        name: str
-) -> None:
+def assert_length(actual: Sized, expected: Sized, name: str) -> None:
     """
     Проверяет совпадение длины двух объектов
 
@@ -70,19 +62,20 @@ def assert_length(
         f"Фактическая длина: {len(actual)}"
     )
 
+
 @allure.step("Валидация JSON схемы ответа")
-def assert_json_schema(
-        actual: Any,
-        schema: dict
-) -> None:
+def assert_json_schema(actual: Any, schema: dict) -> None:
     """
     Проверяет соответствие JSON в ответе заданной схеме
 
     :param actual: Ответ в формате JSON
     :param schema: Ожидаемая JSON схема
     """
-    validate(
-        instance=actual,
-        schema=schema,
-        format_checker=Draft202012Validator.FORMAT_CHECKER
-    ), "JSON в ответе не соответствует схеме"
+    (
+        validate(
+            instance=actual,
+            schema=schema,
+            format_checker=Draft202012Validator.FORMAT_CHECKER,
+        ),
+        "JSON в ответе не соответствует схеме",
+    )

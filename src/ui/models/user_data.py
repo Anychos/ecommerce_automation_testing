@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr
 
 
 class UserData(BaseModel):
@@ -7,4 +7,3 @@ class UserData(BaseModel):
     phone: str
     password: str
     confirm_password: str
-

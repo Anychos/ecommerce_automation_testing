@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page, expect, Locator
+from playwright.sync_api import Locator, Page, expect
 
 from src.ui.components.base import BaseComponent
 
@@ -88,19 +88,22 @@ class DeliveryDetailsForm(BaseComponent):
         expect(self.terms_checkbox).to_be_visible()
         expect(self.terms_checkbox).not_to_be_checked()
         expect(self.field_label("terms")).to_be_visible()
-        expect(self.field_label("terms")).to_have_text("Я соглашаюсь с условиями обработки персональных данных и политикой конфиденциальности *")
+        expect(self.field_label("terms")).to_have_text(
+            "Я соглашаюсь с условиями обработки персональных данных и политикой конфиденциальности *"
+        )
 
     @allure.step("Заполнение формы")
-    def fill(self,
-             *,
-             name: str,
-             phone: str,
-             email: str,
-             address: str,
-             zip: str = "",
-             comment: str = "",
-             is_full_data: bool = False
-             ) -> None:
+    def fill(
+        self,
+        *,
+        name: str,
+        phone: str,
+        email: str,
+        address: str,
+        zip: str = "",
+        comment: str = "",
+        is_full_data: bool = False,
+    ) -> None:
         """
         Заполняет форму доставки
 
@@ -133,16 +136,17 @@ class DeliveryDetailsForm(BaseComponent):
             self.comment_input.fill(comment)
 
     @allure.step("Проверка заполнения формы")
-    def check_filled(self,
-                     *,
-                     name: str,
-                     phone: str,
-                     email: str,
-                     address: str,
-                     zip: str = "",
-                     comment: str = "",
-                     is_full_data: bool = False
-                     ) -> None:
+    def check_filled(
+        self,
+        *,
+        name: str,
+        phone: str,
+        email: str,
+        address: str,
+        zip: str = "",
+        comment: str = "",
+        is_full_data: bool = False,
+    ) -> None:
         """
         Проверяет заполнение формы доставки
 

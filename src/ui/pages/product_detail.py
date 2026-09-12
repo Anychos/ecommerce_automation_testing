@@ -18,18 +18,21 @@ class ProductDetailPage(BasePage):
         self.header = Header(self.page)
 
         self.navigation_chain = self.page.get_by_test_id("breadcrumb-list")
-        self.navigation_chain_home_link = self.navigation_chain.get_by_test_id("breadcrumb-home-link")
-        self.navigation_chain_current = self.navigation_chain.get_by_test_id("breadcrumb-current")
+        self.navigation_chain_home_link = self.navigation_chain.get_by_test_id(
+            "breadcrumb-home-link"
+        )
+        self.navigation_chain_current = self.navigation_chain.get_by_test_id(
+            "breadcrumb-current"
+        )
         self.product_info_block = ProductInfoBlock(self.page)
-        self.add_to_cart_success_message = self.page.get_by_test_id("action-notification")
+        self.add_to_cart_success_message = self.page.get_by_test_id(
+            "action-notification"
+        )
 
         self.footer = Footer(self.page)
 
     @allure.step("Проверка видимости элементов страницы деталей товара")
-    def check_visibility(self,
-                         *,
-                         is_authorized: bool = False
-                         ) -> None:
+    def check_visibility(self, *, is_authorized: bool = False) -> None:
         """
         Проверяет видимость элементов страницы деталей товара
 
@@ -56,6 +59,6 @@ class ProductDetailPage(BasePage):
         """
 
         expect(self.add_to_cart_success_message).to_be_visible()
-        expect(self.add_to_cart_success_message).to_have_text("Товар добавлен в корзину")
-
-
+        expect(self.add_to_cart_success_message).to_have_text(
+            "Товар добавлен в корзину"
+        )

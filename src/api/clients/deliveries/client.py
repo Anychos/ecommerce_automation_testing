@@ -2,15 +2,21 @@ from httpx import Response
 
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.base_client import BaseAPIClient
-from src.api.clients.deliveries.schemas import CreateOrderDeliveryRequestSchema, QuoteRequestSchema, \
-    CreateOrderDeliveryResponseSchema
-from src.api.clients.private_builder import private_user_client_builder
+from src.api.clients.deliveries.schemas import (
+    CreateOrderDeliveryRequestSchema,
+    CreateOrderDeliveryResponseSchema,
+    QuoteRequestSchema,
+)
+from src.api.clients.private_builder import (
+    private_client_builder,
+)
 from src.api.clients.public_builder import public_client_builder
 from src.api.tools.routes import Routes
 
 
 class DeliveriesAPIClient(BaseAPIClient):
     """Клиент для работы с API доставки"""
+
     def quote_delivery_api(self, request: QuoteRequestSchema) -> Response:
         """
         Отправляет запрос на получение стоимости доставки
@@ -20,7 +26,9 @@ class DeliveriesAPIClient(BaseAPIClient):
         """
         return self.post(url=f"{Routes.DELIVERIES}/quote", json=request.model_dump())
 
-    def create_order_delivery_api(self, order_id: int, request: CreateOrderDeliveryRequestSchema) -> Response:
+    def create_order_delivery_api(
+        self, order_id: int, request: CreateOrderDeliveryRequestSchema
+    ) -> Response:
         """
         Отправляет запрос на создание доставки для заказа
 
@@ -28,9 +36,14 @@ class DeliveriesAPIClient(BaseAPIClient):
         :param order_id: Идентификатор заказа
         :return: Ответ сервера с данными созданной доставки
         """
-        return self.post(url=f"{Routes.ORDERS}/{order_id}{Routes.DELIVERIES}", json=request.model_dump())
+        return self.post(
+            url=f"{Routes.ORDERS}/{order_id}{Routes.DELIVERIES}",
+            json=request.model_dump(),
+        )
 
-    def create_order_delivery(self, order_id: int, request: CreateOrderDeliveryRequestSchema) -> CreateOrderDeliveryResponseSchema:
+    def create_order_delivery(
+        self, order_id: int, request: CreateOrderDeliveryRequestSchema
+    ) -> CreateOrderDeliveryResponseSchema:
         response = self.create_order_delivery_api(order_id=order_id, request=request)
         return CreateOrderDeliveryResponseSchema.model_validate_json(response.content)
 
@@ -59,7 +72,9 @@ class DeliveriesAPIClient(BaseAPIClient):
         :param delivery_id: Идентификатор доставки
         :return: Ответ сервера с данными доставки с назначенным курьером
         """
-        return self.post(url=f"{Routes.DELIVERIES}/fake/{delivery_id}/assign", json=None)
+        return self.post(
+            url=f"{Routes.DELIVERIES}/fake/{delivery_id}/assign", json=None
+        )
 
     def fake_pickup_delivery_api(self, delivery_id: int) -> Response:
         """
@@ -68,7 +83,9 @@ class DeliveriesAPIClient(BaseAPIClient):
         :param delivery_id: Идентификатор доставки
         :return: Ответ сервера с данными полученной доставки
         """
-        return self.post(url=f"{Routes.DELIVERIES}/fake/{delivery_id}/pickup", json=None)
+        return self.post(
+            url=f"{Routes.DELIVERIES}/fake/{delivery_id}/pickup", json=None
+        )
 
     def fake_deliver_delivery_api(self, delivery_id: int) -> Response:
         """
@@ -77,7 +94,9 @@ class DeliveriesAPIClient(BaseAPIClient):
         :param delivery_id: Идентификатор доставки
         :return: Ответ сервера с данными доставленного заказа
         """
-        return self.post(url=f"{Routes.DELIVERIES}/fake/{delivery_id}/deliver", json=None)
+        return self.post(
+            url=f"{Routes.DELIVERIES}/fake/{delivery_id}/deliver", json=None
+        )
 
     def fake_cancel_delivery_api(self, delivery_id: int) -> Response:
         """
@@ -86,7 +105,9 @@ class DeliveriesAPIClient(BaseAPIClient):
         :param delivery_id: Идентификатор доставки
         :return: Ответ сервера с данными отмененной доставки
         """
-        return self.post(url=f"{Routes.DELIVERIES}/fake/{delivery_id}/cancel", json=None)
+        return self.post(
+            url=f"{Routes.DELIVERIES}/fake/{delivery_id}/cancel", json=None
+        )
 
 
 def get_public_deliveries_client() -> DeliveriesAPIClient:
@@ -94,13 +115,10 @@ def get_public_deliveries_client() -> DeliveriesAPIClient:
     return DeliveriesAPIClient(client=public_client_builder())
 
 
-def get_private_deliveries_client(
-        *,
-        user: LoginRequestSchema
-) -> DeliveriesAPIClient:
+def get_private_deliveries_client(*, user: LoginRequestSchema) -> DeliveriesAPIClient:
     """
     Создает HTTP клиент для доступа к приватному API доставки
 
     :param user: Данные пользователя для авторизации
     """
-    return DeliveriesAPIClient(client=private_user_client_builder(user=user))
+    return DeliveriesAPIClient(client=private_client_builder(user=user))

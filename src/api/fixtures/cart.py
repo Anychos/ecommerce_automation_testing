@@ -1,20 +1,29 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Any, Generator
+from collections.abc import Generator
+from typing import TYPE_CHECKING
 
 import pytest
 from pydantic import BaseModel
 
 if TYPE_CHECKING:
-    from src.api.fixtures.user import UserFixture, private_admin_client
+    from src.api.fixtures.user import UserFixture
 
-from src.api.clients.cart.client import CartAPIClient, get_public_cart_client, get_private_cart_client
-from src.api.clients.cart.schemas import AddItemCartRequestSchema, AddItemCartResponseSchema
+from src.api.clients.cart.client import (
+    CartAPIClient,
+    get_private_cart_client,
+    get_public_cart_client,
+)
+from src.api.clients.cart.schemas import (
+    AddItemCartRequestSchema,
+    AddItemCartResponseSchema,
+)
 from src.api.fixtures.product import CreateProductFixture
 
 
 class CartFixture(BaseModel):
     """Хранит данные о созданной корзине"""
+
     request: AddItemCartRequestSchema
     response: AddItemCartResponseSchema
     product: CreateProductFixture
@@ -38,6 +47,7 @@ def public_cart_client() -> Generator[CartAPIClient, None, None]:
     finally:
         client.close()
 
+
 @pytest.fixture
 def private_cart_client(user: UserFixture) -> Generator[CartAPIClient, None, None]:
     """
@@ -52,10 +62,10 @@ def private_cart_client(user: UserFixture) -> Generator[CartAPIClient, None, Non
     finally:
         client.close()
 
+
 @pytest.fixture
 def create_cart(
-        private_cart_client: CartAPIClient,
-        create_available_product: CreateProductFixture
+    private_cart_client: CartAPIClient, create_available_product: CreateProductFixture
 ) -> Generator[CartFixture, None, None]:
     """
     Создает корзину с продуктом
@@ -67,16 +77,18 @@ def create_cart(
     request = AddItemCartRequestSchema(product_id=create_available_product.product_id)
 
     response = private_cart_client.add_item_cart(request=request)
-    cart = CartFixture(request=request, response=response, product=create_available_product)
+    cart = CartFixture(
+        request=request, response=response, product=create_available_product
+    )
 
     yield cart
 
     private_cart_client.clear_cart_api()
 
+
 @pytest.fixture
 def empty_cart(
-    private_cart_client: CartAPIClient,
-    create_cart: CartFixture
+    private_cart_client: CartAPIClient, create_cart: CartFixture
 ) -> CartFixture:
     """
     Создает корзину и очищает ее

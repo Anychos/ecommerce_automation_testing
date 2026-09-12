@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page, expect, Locator
+from playwright.sync_api import Locator, Page, expect
 
 from src.ui.components.base import BaseComponent
 
@@ -59,14 +59,9 @@ class RegistrationForm(BaseComponent):
         expect(self.already_registered_text).to_have_text("Уже есть аккаунт? Войдите")
 
     @allure.step("Заполнение формы регистрации")
-    def fill(self,
-             *,
-             email: str,
-             name: str,
-             phone: str,
-             password: str,
-             confirm_password: str
-             ) -> None:
+    def fill(
+        self, *, email: str, name: str, phone: str, password: str, confirm_password: str
+    ) -> None:
         """
         Заполняет форму регистрации
 
@@ -93,14 +88,9 @@ class RegistrationForm(BaseComponent):
         self.input("confirm_password").fill(confirm_password)
 
     @allure.step("Проверка заполнения формы регистрации")
-    def check_filled(self,
-                     *,
-                     email: str,
-                     name: str,
-                     phone: str,
-                     password: str,
-                     confirm_password: str
-                     ) -> None:
+    def check_filled(
+        self, *, email: str, name: str, phone: str, password: str, confirm_password: str
+    ) -> None:
         """
         Проверяет заполнение формы регистрации
 

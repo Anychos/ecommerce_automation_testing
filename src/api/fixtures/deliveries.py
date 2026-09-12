@@ -1,10 +1,16 @@
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
 from pydantic import BaseModel
 
-from src.api.clients.deliveries.client import DeliveriesAPIClient, get_private_deliveries_client
-from src.api.clients.deliveries.schemas import CreateOrderDeliveryRequestSchema, CreateOrderDeliveryResponseSchema
+from src.api.clients.deliveries.client import (
+    DeliveriesAPIClient,
+    get_private_deliveries_client,
+)
+from src.api.clients.deliveries.schemas import (
+    CreateOrderDeliveryRequestSchema,
+    CreateOrderDeliveryResponseSchema,
+)
 from src.api.fixtures.order import OrderFixture
 from src.api.fixtures.user import UserFixture
 
@@ -23,7 +29,9 @@ class DeliveryFixture(BaseModel):
 
 
 @pytest.fixture
-def private_delivery_client(user: UserFixture) -> Generator[DeliveriesAPIClient, None, None]:
+def private_delivery_client(
+    user: UserFixture,
+) -> Generator[DeliveriesAPIClient, None, None]:
     """
     Возвращает готовый HTTP клиент для доступа к приватному API доставки
 
@@ -36,10 +44,14 @@ def private_delivery_client(user: UserFixture) -> Generator[DeliveriesAPIClient,
     finally:
         client.close()
 
+
 @pytest.fixture
-def create_delivery(private_delivery_client: DeliveriesAPIClient,
-                    create_order: OrderFixture) -> DeliveryFixture:
+def create_delivery(
+    private_delivery_client: DeliveriesAPIClient, create_order: OrderFixture
+) -> DeliveryFixture:
     order_id = create_order.order_id
     request = CreateOrderDeliveryRequestSchema()
-    response = private_delivery_client.create_order_delivery(order_id=order_id, request=request)
+    response = private_delivery_client.create_order_delivery(
+        order_id=order_id, request=request
+    )
     return DeliveryFixture(request=request, response=response)

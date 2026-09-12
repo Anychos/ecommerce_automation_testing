@@ -45,4 +45,3 @@ class DeleteCartItemResponseSchema(BaseModel):
 
 class DeleteCartResponseSchema(BaseModel):
     message: str
-

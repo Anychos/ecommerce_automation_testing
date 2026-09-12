@@ -28,21 +28,11 @@ class TestLogin:
     @allure.story(Story.USER_LOGIN)
     @allure.severity(Severity.BLOCKER)
     @allure.title("Логин существующего пользователя")
-    def test_login_success(self,
-                           user,
-                           login_page: LoginPage,
-                           home_page: HomePage
-                           ):
+    def test_login_success(self, user, login_page: LoginPage, home_page: HomePage):
         login_page.open_url(Route.Login)
 
-        login_page.login_form.fill(
-            email=user.email,
-            password=user.password
-        )
-        login_page.login_form.check_filled(
-            email=user.email,
-            password=user.password
-        )
+        login_page.login_form.fill(email=user.email, password=user.password)
+        login_page.login_form.check_filled(email=user.email, password=user.password)
         login_page.login_form.click_login_button()
 
         home_page.check_success_login_message()

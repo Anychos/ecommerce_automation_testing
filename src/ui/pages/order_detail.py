@@ -1,7 +1,7 @@
 import re
 
 import allure
-from playwright.sync_api import Page, Locator, expect
+from playwright.sync_api import Locator, Page, expect
 
 from src.ui.pages.base import BasePage
 
@@ -56,17 +56,23 @@ class OrderDetailPage(BasePage):
         expect(self.step_title(1)).to_be_visible()
         expect(self.step_title(1)).to_have_text("Подтверждение")
         expect(self.step_description(1)).to_be_visible()
-        expect(self.step_description(1)).to_have_text("Мы свяжемся с вами для подтверждения заказа")
+        expect(self.step_description(1)).to_have_text(
+            "Мы свяжемся с вами для подтверждения заказа"
+        )
 
         expect(self.step_title(2)).to_be_visible()
         expect(self.step_title(2)).to_have_text("Обработка")
         expect(self.step_description(2)).to_be_visible()
-        expect(self.step_description(2)).to_have_text("Заказ будет собран и подготовлен к отправке")
+        expect(self.step_description(2)).to_have_text(
+            "Заказ будет собран и подготовлен к отправке"
+        )
 
         expect(self.step_title(3)).to_be_visible()
         expect(self.step_title(3)).to_have_text("Доставка")
         expect(self.step_description(3)).to_be_visible()
-        expect(self.step_description(3)).to_have_text("Курьер доставит заказ по указанному адресу")
+        expect(self.step_description(3)).to_have_text(
+            "Курьер доставит заказ по указанному адресу"
+        )
 
         expect(self.button("view-orders")).to_be_visible()
         expect(self.button("view-orders")).to_have_text("Перейти к моим заказам")
@@ -91,7 +97,3 @@ class OrderDetailPage(BasePage):
 
         expect(self.button(test_id)).to_be_visible()
         self.button(test_id).click()
-
-
-
-

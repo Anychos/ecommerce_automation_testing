@@ -1,17 +1,26 @@
+from collections.abc import Callable, Generator
 from http import HTTPStatus
-from typing import Callable, Generator
 
 import pytest
 from pydantic import BaseModel
 
+from config import settings
 from src.api.clients.authentication.schemas import LoginRequestSchema
-from src.api.clients.user.client import UserAPIClient, get_private_admin_client, \
-    get_private_user_client
-from src.api.clients.user.schemas import CreateUserRequestSchema, CreateUserResponseSchema
+from src.api.clients.user.client import (
+    UserAPIClient,
+    get_private_admin_client,
+    get_private_user_client,
+)
+from src.api.clients.user.schemas import (
+    CreateUserRequestSchema,
+    CreateUserResponseSchema,
+    DeleteUserResponseSchema,
+)
 
 
 class UserFixture(BaseModel):
     """Хранит данные о созданном пользователе"""
+
     request: CreateUserRequestSchema
     response: CreateUserResponseSchema
 
@@ -30,24 +39,38 @@ class UserFixture(BaseModel):
     @property
     def user_schema(self) -> LoginRequestSchema:
         schema = LoginRequestSchema(
-            email=self.request.email,
-            password=self.request.password
+            email=self.request.email, password=self.request.password
         )
         return schema
+
+
+class DeletedUserFixture(UserFixture):
+    """Хранит данные об удаленном пользователе"""
+
+    request: CreateUserRequestSchema
+    response: DeleteUserResponseSchema
 
 
 @pytest.fixture
 def private_admin_client() -> Generator[UserAPIClient, None, None]:
     """Возвращает готовый HTTP клиент для доступа администратора к приватному API пользователя"""
-    client = get_private_admin_client()
+    admin = LoginRequestSchema(
+        email=settings.admin_data.email,
+        password=settings.admin_data.password,
+    )
+
+    client = get_private_admin_client(user=admin)
 
     try:
         yield client
     finally:
         client.close()
 
+
 @pytest.fixture
-def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callable[..., UserFixture], None, None]:
+def create_user_factory(
+    private_admin_client: UserAPIClient,
+) -> Generator[Callable[..., UserFixture], None, None]:
     """
     Возвращает фабрику для создания пользователя
 
@@ -55,10 +78,7 @@ def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callab
     """
     created_users: list[UserFixture] = []
 
-    def _create_user(
-            *,
-            is_admin: bool = False
-    ) -> UserFixture:
+    def _create_user(*, is_admin: bool = False) -> UserFixture:
         """
         Создает пользователя с указанными параметрами
 
@@ -80,7 +100,10 @@ def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callab
         for user in created_users:
             try:
                 response = private_admin_client.delete_user_api(user_id=user.user_id)
-                if not 200 <= response.status_code < 300 and response.status_code != HTTPStatus.NOT_FOUND:
+                if (
+                    not 200 <= response.status_code < 300
+                    and response.status_code != HTTPStatus.NOT_FOUND
+                ):
                     cleanup_errors.append(
                         RuntimeError(
                             f"Не удалось удалить пользователя {user.user_id}: "
@@ -89,11 +112,16 @@ def create_user_factory(private_admin_client: UserAPIClient) -> Generator[Callab
                     )
             except Exception as error:
                 cleanup_errors.append(
-                    RuntimeError(f"Не удалось удалить пользователя {user.user_id}: {error}")
+                    RuntimeError(
+                        f"Не удалось удалить пользователя {user.user_id}: {error}"
+                    )
                 )
 
         if cleanup_errors:
-            raise ExceptionGroup("Ошибки очистки тестовых пользователей", cleanup_errors)
+            raise ExceptionGroup(
+                "Ошибки очистки тестовых пользователей", cleanup_errors
+            )
+
 
 @pytest.fixture
 def user(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
@@ -104,6 +132,7 @@ def user(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
     :return: Объект UserFixture с информацией о пользователе
     """
     return create_user_factory()
+
 
 @pytest.fixture
 def private_user_client(user: UserFixture) -> Generator[UserAPIClient, None, None]:
@@ -119,6 +148,7 @@ def private_user_client(user: UserFixture) -> Generator[UserAPIClient, None, Non
     finally:
         client.close()
 
+
 @pytest.fixture
 def admin(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
     """
@@ -130,4 +160,16 @@ def admin(create_user_factory: Callable[..., UserFixture]) -> UserFixture:
     return create_user_factory(is_admin=True)
 
 
+@pytest.fixture
+def delete_user(
+    create_user_factory: Callable[..., UserFixture], private_admin_client: UserAPIClient
+) -> DeletedUserFixture:
+    """
+    Удаляет созданного пользователя
 
+    :param create_user_factory: Фабрика для создания пользователя
+    :param private_admin_client: Приватный HTTP клиент для доступа администратора к API пользователя
+    """
+    user = create_user_factory(is_admin=False)
+    response = private_admin_client.delete_user(user_id=user.user_id)
+    return DeletedUserFixture(request=user.request, response=response)

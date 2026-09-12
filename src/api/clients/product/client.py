@@ -4,21 +4,26 @@ from httpx import Response
 from src.api.clients.api_coverage import tracker
 from src.api.clients.authentication.schemas import LoginRequestSchema
 from src.api.clients.base_client import BaseAPIClient
-from src.api.clients.private_builder import private_user_client_builder
-from src.api.clients.product.schemas import CreateProductRequestSchema, CreateProductResponseSchema, \
-    FullUpdateProductRequestSchema, PartialUpdateProductRequestSchema, UpdateProductResponseSchema
+from src.api.clients.private_builder import (
+    private_client_builder,
+)
+from src.api.clients.product.schemas import (
+    CreateProductRequestSchema,
+    CreateProductResponseSchema,
+    FullUpdateProductRequestSchema,
+    PartialUpdateProductRequestSchema,
+    UpdateProductResponseSchema,
+)
 from src.api.clients.public_builder import public_client_builder
 from src.api.tools.routes import Routes
 
 
 class ProductAPIClient(BaseAPIClient):
     """Клиент для работы с API продукта"""
+
     @tracker.track_coverage_httpx(Routes.PRODUCTS)
     @allure.step("Отправка запроса на создание продукта")
-    def create_product_api(self,
-                           *,
-                           request: CreateProductRequestSchema
-                           ) -> Response:
+    def create_product_api(self, *, request: CreateProductRequestSchema) -> Response:
         """
         Отправляет запрос на создание продукта
 
@@ -27,19 +32,15 @@ class ProductAPIClient(BaseAPIClient):
         """
         return self.post(url=Routes.PRODUCTS, json=request.model_dump())
 
-    def create_product(self,
-                       *,
-                       request: CreateProductRequestSchema
-                       ) -> CreateProductResponseSchema:
+    def create_product(
+        self, *, request: CreateProductRequestSchema
+    ) -> CreateProductResponseSchema:
         response = self.create_product_api(request=request)
         return CreateProductResponseSchema.model_validate_json(response.content)
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на получение продукта")
-    def get_product_api(self,
-                        *,
-                        product_id: int
-                        ) -> Response:
+    def get_product_api(self, *, product_id: int) -> Response:
         """
         Отправляет запрос на получение продукта
 
@@ -60,11 +61,9 @@ class ProductAPIClient(BaseAPIClient):
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на полное обновление продукта")
-    def full_update_product_api(self,
-                                *,
-                                product_id: int,
-                                request: FullUpdateProductRequestSchema
-                                ) -> Response:
+    def full_update_product_api(
+        self, *, product_id: int, request: FullUpdateProductRequestSchema
+    ) -> Response:
         """
         Отправляет запрос на полное обновление продукта
 
@@ -72,24 +71,21 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для обновления продукта
         :return: Ответ сервера с данными обновленного продукта
         """
-        return self.put(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump())
+        return self.put(
+            url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump()
+        )
 
     def full_update_product(
-            self,
-            *,
-            product_id: int,
-            request: FullUpdateProductRequestSchema
+        self, *, product_id: int, request: FullUpdateProductRequestSchema
     ) -> UpdateProductResponseSchema:
         response = self.full_update_product_api(product_id=product_id, request=request)
         return UpdateProductResponseSchema.model_validate_json(response.text)
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на частичное обновление продукта")
-    def partial_update_product_api(self,
-                                *,
-                                product_id: int,
-                                request: PartialUpdateProductRequestSchema
-                                ) -> Response:
+    def partial_update_product_api(
+        self, *, product_id: int, request: PartialUpdateProductRequestSchema
+    ) -> Response:
         """
         Отправляет запрос на частичное обновление продукта
 
@@ -97,14 +93,14 @@ class ProductAPIClient(BaseAPIClient):
         :param request: Данные для обновления продукта
         :return: Ответ сервера с данными обновленного продукта
         """
-        return self.patch(url=f"{Routes.PRODUCTS}/{product_id}", json=request.model_dump(exclude_unset=True))
+        return self.patch(
+            url=f"{Routes.PRODUCTS}/{product_id}",
+            json=request.model_dump(exclude_unset=True),
+        )
 
     @tracker.track_coverage_httpx(f"{Routes.PRODUCTS}/" + "{product_id}")
     @allure.step("Отправка запроса на удаление продукта")
-    def delete_product_api(self,
-                           *,
-                           product_id: int
-                           ) -> Response:
+    def delete_product_api(self, *, product_id: int) -> Response:
         """
         Отправляет запрос на удаление продукта
 
@@ -118,13 +114,11 @@ def get_public_product_client() -> ProductAPIClient:
     """Создает HTTP клиент для доступа к публичному API продукта"""
     return ProductAPIClient(client=public_client_builder())
 
-def get_private_product_client(
-        *,
-        user: LoginRequestSchema
-) -> ProductAPIClient:
+
+def get_private_product_client(*, user: LoginRequestSchema) -> ProductAPIClient:
     """
     Создает HTTP клиент для доступа к приватному API продукта
 
     :param user: Данные пользователя для авторизации
     """
-    return ProductAPIClient(client=private_user_client_builder(user=user))
+    return ProductAPIClient(client=private_client_builder(user=user))

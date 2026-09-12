@@ -61,4 +61,3 @@ class ConfirmCleaningModalWindow(BaseComponent):
         """
 
         self.confirm_button.click()
-

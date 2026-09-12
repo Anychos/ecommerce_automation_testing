@@ -1,7 +1,7 @@
 import re
 
 import allure
-from playwright.sync_api import Page, Locator, expect
+from playwright.sync_api import Locator, Page, expect
 
 from src.ui.components.common.empty_view import EmptyView
 from src.ui.components.orders_list_page.order_item import OrderItem
@@ -29,10 +29,7 @@ class OrdersListPage(BasePage):
         return self.page.get_by_test_id(f"order-{test_id}-header")
 
     @allure.step("Проверка видимости элементов страницы списка заказов")
-    def check_visibility(self,
-                         *,
-                         is_empty: bool = False
-                         ) -> None:
+    def check_visibility(self, *, is_empty: bool = False) -> None:
         """
         Проверяет видимость элементов страницы списка заказов
 
@@ -48,7 +45,9 @@ class OrdersListPage(BasePage):
             expect(self.start_shopping_button).to_have_text("Начать покупки")
         else:
             expect(self.orders_counter_text).to_be_visible()
-            expect(self.orders_counter_text).to_have_text(re.compile(r"Всего заказов:\s\d+"))
+            expect(self.orders_counter_text).to_have_text(
+                re.compile(r"Всего заказов:\s\d+")
+            )
             expect(self.last_updated_text).to_be_visible()
 
             expect(self.column_name("id")).to_be_visible()
@@ -63,6 +62,3 @@ class OrdersListPage(BasePage):
             expect(self.column_name("actions")).to_have_text("Действия")
 
             self.order_item.check_visibility()
-
-
-

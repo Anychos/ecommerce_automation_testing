@@ -32,10 +32,9 @@ from utils.allure.severity import Severity
 class TestE2E:
     @allure.severity(Severity.BLOCKER)
     @allure.title("E2E путь пользователя")
-    def test_e2e_user_flow(self,
-                           chromium_page: Page,
-                           create_available_product: CreateProductFixture
-                           ):
+    def test_e2e_user_flow(
+        self, chromium_page: Page, create_available_product: CreateProductFixture
+    ):
         home_page = HomePage(chromium_page)
         registration_page = RegistrationPage(chromium_page)
         login_page = LoginPage(chromium_page)
@@ -56,14 +55,14 @@ class TestE2E:
             name=settings.test_user.name,
             phone=settings.test_user.phone,
             password=settings.test_user.password,
-            confirm_password=settings.test_user.confirm_password
+            confirm_password=settings.test_user.confirm_password,
         )
         registration_page.registration_form.check_filled(
             email=settings.test_user.email,
             name=settings.test_user.name,
             phone=settings.test_user.phone,
             password=settings.test_user.password,
-            confirm_password=settings.test_user.confirm_password
+            confirm_password=settings.test_user.confirm_password,
         )
         registration_page.registration_form.click_registration_button()
 
@@ -78,12 +77,10 @@ class TestE2E:
 
         login_page.login_form.check_visibility()
         login_page.login_form.fill(
-            email=settings.test_user.email,
-            password=settings.test_user.password
+            email=settings.test_user.email, password=settings.test_user.password
         )
         login_page.login_form.check_filled(
-            email=settings.test_user.email,
-            password=settings.test_user.password
+            email=settings.test_user.email, password=settings.test_user.password
         )
         login_page.login_form.click_login_button()
 
@@ -103,7 +100,7 @@ class TestE2E:
             name=settings.test_user.name,
             phone=settings.test_user.phone,
             email=settings.test_user.email,
-            address=fake_ru.address()
+            address=fake_ru.address(),
         )
         checkout_page.delivery_details_form.click_terms_checkbox()
         checkout_page.summary_info.click_button("place-order")
@@ -112,4 +109,3 @@ class TestE2E:
 
         home_page.header.click_nav_link("orders")
         order_list_page.check_visibility()
-
